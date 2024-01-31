@@ -48,6 +48,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -88,6 +91,20 @@
       <DependentUpon>FtpBrowser.vb</DependentUpon>
     </Compile>
     <Compile Include="forms\FtpBrowser.vb" />
+    <Compile Include="forms\FtpSettings.designer.vb">
+      <DependentUpon>FtpSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\FtpSettings.vb" />
+    <Compile Include="forms\Form Process Settings.Designer.vb">
+      <DependentUpon>Form Process Settings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Form Process Settings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gloabals.vb" />
+    <Compile Include="libraries\AOA_Timer.vb" />
+    <Compile Include="libraries\FileSettingsCreator2.vb" />
+    <Compile Include="libraries\ProcessSettings.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -112,6 +129,12 @@
     <EmbeddedResource Include="forms\FtpBrowser.resx">
       <DependentUpon>FtpBrowser.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\FtpSettings.resx">
+      <DependentUpon>FtpSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\Form Process Settings.resx">
+      <DependentUpon>Form Process Settings.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -130,6 +153,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
