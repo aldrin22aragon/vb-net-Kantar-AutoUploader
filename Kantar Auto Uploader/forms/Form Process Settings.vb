@@ -19,7 +19,8 @@ Public Class Form_Process_Settings
          Return New ProcessSettings() With {
             .destinationDirectory = TxDestionationFolderFTP.Text,
             .sourceDirectory = TxSourceLocal.Text,
-            .checkIntervalMins = NCheckInterval.Value
+            .checkIntervalMins = NCheckInterval.Value,
+            .simultaneousUpload = NumSimultaneousUpload.Value
          }
       End Get
       Set(value As ProcessSettings)
@@ -27,10 +28,12 @@ Public Class Form_Process_Settings
             TxDestionationFolderFTP.Text = value.destinationDirectory
             TxSourceLocal.Text = value.sourceDirectory
             NCheckInterval.Value = value.checkIntervalMins
+            NumSimultaneousUpload.Value = value.simultaneousUpload
          Else
             TxDestionationFolderFTP.Text = ""
             TxSourceLocal.Text = ""
-            NCheckInterval.Value = 3
+            NCheckInterval.Value = 1
+            NumSimultaneousUpload.Value = 1
          End If
 
       End Set

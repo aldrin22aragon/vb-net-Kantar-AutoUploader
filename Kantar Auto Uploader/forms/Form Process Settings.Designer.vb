@@ -29,7 +29,10 @@ Partial Class Form_Process_Settings
         Me.TxDestionationFolderFTP = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.NCheckInterval = New System.Windows.Forms.NumericUpDown()
+        Me.NumSimultaneousUpload = New System.Windows.Forms.NumericUpDown()
+        Me.Label4 = New System.Windows.Forms.Label()
         CType(Me.NCheckInterval, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumSimultaneousUpload, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TxSourceLocal
@@ -51,7 +54,7 @@ Partial Class Form_Process_Settings
         '
         'BtnSave
         '
-        Me.BtnSave.Location = New System.Drawing.Point(435, 76)
+        Me.BtnSave.Location = New System.Drawing.Point(435, 96)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(75, 23)
         Me.BtnSave.TabIndex = 2
@@ -91,11 +94,30 @@ Partial Class Form_Process_Settings
         Me.NCheckInterval.Size = New System.Drawing.Size(54, 22)
         Me.NCheckInterval.TabIndex = 6
         '
+        'NumSimultaneousUpload
+        '
+        Me.NumSimultaneousUpload.Location = New System.Drawing.Point(220, 75)
+        Me.NumSimultaneousUpload.Name = "NumSimultaneousUpload"
+        Me.NumSimultaneousUpload.Size = New System.Drawing.Size(54, 22)
+        Me.NumSimultaneousUpload.TabIndex = 8
+        Me.NumSimultaneousUpload.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(98, 77)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(116, 13)
+        Me.Label4.TabIndex = 7
+        Me.Label4.Text = "Simultaneous Upload"
+        '
         'Form_Process_Settings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(523, 107)
+        Me.ClientSize = New System.Drawing.Size(523, 131)
+        Me.Controls.Add(Me.NumSimultaneousUpload)
+        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.NCheckInterval)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -110,6 +132,7 @@ Partial Class Form_Process_Settings
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Process_Settings"
         CType(Me.NCheckInterval, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumSimultaneousUpload, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -122,4 +145,6 @@ Partial Class Form_Process_Settings
     Friend WithEvents TxDestionationFolderFTP As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents NCheckInterval As NumericUpDown
+    Friend WithEvents NumSimultaneousUpload As NumericUpDown
+    Friend WithEvents Label4 As Label
 End Class

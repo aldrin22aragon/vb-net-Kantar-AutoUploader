@@ -48,6 +48,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>D:\aldrin Files\Soft012 Files\DRS_AQA_2014_AutoUpload\bin\Debug\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -104,6 +107,7 @@
     <Compile Include="Gloabals.vb" />
     <Compile Include="libraries\AOA_Timer.vb" />
     <Compile Include="libraries\FileSettingsCreator2.vb" />
+    <Compile Include="libraries\ICSharpCode_Zip.vb" />
     <Compile Include="libraries\ProcessSettings.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
