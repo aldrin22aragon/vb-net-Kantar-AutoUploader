@@ -11,6 +11,7 @@ Imports System.IO.Compression
 Public Class UploadFile
    ReadOnly sesOptions As SessionOptions
    Public filePath As String
+   Public originalFilePath As String
    ReadOnly ftpDestinationFolder As String
    '
    Public status As New STAT_INFO()
@@ -18,6 +19,7 @@ Public Class UploadFile
    Public setup As New SetupProp
 
    Sub New(filePath As String, ftpDestinationFolder As String, sesOption As WinSCP.SessionOptions)
+      Me.originalFilePath = filePath
       Me.filePath = filePath
       Me.sesOptions = sesOption
       Me.ftpDestinationFolder = ftpDestinationFolder
@@ -46,8 +48,8 @@ Public Class UploadFile
 
    Sub StartUpload()
       status = New STAT_INFO() With {
-         .isErr = False,
-         .errMsg = "",
+         .[error] = Nothing,
+         .message = "",
          .isRunning = True,
          .isUploaded = False,
          .isDoneRunning = False
@@ -63,9 +65,6 @@ Public Class UploadFile
                                               End Sub
          ses.Open(Me.sesOptions)
          Try
-            Dim transferOpt As New WinSCP.TransferOptions With {
-               .TransferMode = TransferMode.Binary
-            }
             Dim flNameWOext1 As String = IO.Path.GetFileNameWithoutExtension(Me.filePath)
             Dim extWithDot1 As String = IO.Path.GetExtension(Me.filePath)
             Dim dest1 As String = RemotePath.Combine(Me.ftpDestinationFolder, String.Concat(flNameWOext1, extWithDot1))
@@ -75,11 +74,11 @@ Public Class UploadFile
             'Possible error FileExists
             If ses.FileExists(dest1) Then
                status = New STAT_INFO() With {
-                  .isErr = False,
-                  .errMsg = "File already uploaded.",
+                  .[error] = New Exception("File already uploaded."),
                   .isRunning = False,
-                  .isUploaded = False,
-                  .isDoneRunning = True
+                  .isUploaded = True,
+                  .isDoneRunning = True,
+                  .compressingStatus = STAT_INFO.CompresStatus.CompressDone
                }
             Else
                If setup.toZip Then
@@ -91,8 +90,7 @@ Public Class UploadFile
                         status.compressingStatus = STAT_INFO.CompresStatus.CompressDone
                      Else
                         status = New STAT_INFO() With {
-                                    .isErr = True,
-                                    .errMsg = compress.ErrorInfo.Message,
+                                    .[error] = compress.ErrorInfo,
                                     .isRunning = False,
                                     .isUploaded = False,
                                     .isDoneRunning = True,
@@ -107,8 +105,7 @@ Public Class UploadFile
                         status.compressingStatus = STAT_INFO.CompresStatus.CompressDone
                      Else
                         status = New STAT_INFO() With {
-                                    .isErr = True,
-                                    .errMsg = compress.ErrorInfo.Message,
+                                    .[error] = compress.ErrorInfo,
                                     .isRunning = False,
                                     .isUploaded = False,
                                     .isDoneRunning = True,
@@ -127,12 +124,37 @@ Public Class UploadFile
                Dim extWithDot As String = IO.Path.GetExtension(Me.filePath)
                Dim tmpDest As String = RemotePath.Combine(Me.ftpDestinationFolder, String.Concat(flNameWOext, extWithDot, ".uploading"))
                Dim dest As String = RemotePath.Combine(Me.ftpDestinationFolder, String.Concat(flNameWOext, extWithDot))
+               '
+               If Not ses.FileExists(Me.ftpDestinationFolder) Then
+                  Dim slice As String() = ftpDestinationFolder.Split("/")
+                  Dim p As String = ""
+                  For Each i As String In slice
+                     If i = "" Then
+                        p = ""
+                     Else
+                        p = p & "/" & i
+                        If Not ses.FileExists(p) Then
+                           Try
+                              ses.CreateDirectory(p)
+                           Catch ex As Exception
+                              If ses.FileExists(p) Then
+                                 Continue For
+                              End If
+                           End Try
+                        End If
+                     End If
+                  Next
+               End If
                'Possible error FileExists
                If ses.FileExists(tmpDest) Then
                   'Possible error RemoveFile
                   ses.RemoveFile(tmpDest)
                End If
                'Possible error PutFiles
+
+               Dim transferOpt As New WinSCP.TransferOptions With {
+                  .TransferMode = TransferMode.Binary
+               }
                transferResult = ses.PutFiles(Me.filePath, tmpDest, False, transferOpt)
                transferResult.Check()
                While Not transferResult.IsSuccess
@@ -140,18 +162,42 @@ Public Class UploadFile
                End While
                'Possible error MoveFile
                ses.MoveFile(tmpDest, dest)
-               status = New STAT_INFO() With {
-                  .isErr = False,
-                  .errMsg = "Uploaded",
-                  .isRunning = False,
-                  .isUploaded = True,
-                  .isDoneRunning = True
-               }
+               '
+               Dim uploadedPath As String = IO.Path.Combine(IO.Path.GetDirectoryName(originalFilePath), "Uploaded")
+               If Not IO.Directory.Exists(uploadedPath) Then MkDir(uploadedPath)
+               Try
+                  If setup.fileType = SetupProp.FileType_.FILE Then
+                     Dim newDest As String = IO.Path.Combine(uploadedPath, IO.Path.GetFileName(originalFilePath))
+                     IO.File.Move(originalFilePath, newDest)
+                     If setup.toZip Then
+                        'Dim DestzipFile As String = IO.Path.Combine(uploadedPath, IO.Path.GetFileName(filePath))
+                        'Dim file As String = IO.Path.Combine(IO.Path.GetDirectoryName(originalFilePath), IO.Path.GetFileName(filePath))
+                        'IO.File.Move(file, DestzipFile)
+                        IO.File.Delete(filePath)
+                     End If
+                  Else setup.fileType = SetupProp.FileType_.FOLDER
+                     Dim newDest As String = IO.Path.Combine(uploadedPath, IO.Path.GetFileName(originalFilePath))
+                     IO.Directory.Move(originalFilePath, newDest)
+                     If setup.toZip Then
+                        IO.File.Delete(filePath)
+                        'Dim DestzipFile As String = IO.Path.Combine(uploadedPath, IO.Path.GetFileName(filePath))
+                        'Dim file As String = IO.Path.Combine(IO.Path.GetDirectoryName(originalFilePath), IO.Path.GetFileName(filePath))
+                        'IO.File.Move(file, DestzipFile)
+                     End If
+                  End If
+               Catch ex As Exception
+                  ex = ex
+               End Try
+               '
+               status.message = "Uploaded"
+               status.isRunning = False
+               status.isUploaded = True
+               status.isDoneRunning = True
             End If
          Catch ex As Exception
             status = New STAT_INFO() With {
-               .isErr = True,
-               .errMsg = "Uploading error => " & ex.Message,
+               .[error] = ex,
+               .message = "Uploading error => " & ex.Message,
                .isRunning = False,
                .isUploaded = False,
                .isDoneRunning = True
@@ -159,8 +205,8 @@ Public Class UploadFile
          End Try
       Catch ex As Exception
          status = New STAT_INFO() With {
-            .isErr = True,
-            .errMsg = "Open session error => " & ex.Message,
+            .[error] = ex,
+            .message = "Open session error => " & ex.Message,
             .isRunning = False,
             .isUploaded = False,
             .isDoneRunning = True
@@ -172,8 +218,8 @@ Public Class UploadFile
 #Region "Utensils"
    Class STAT_INFO
       Public compressingStatus As CompresStatus
-      Public isErr As Boolean = False
-      Public errMsg As String = ""
+      Public [error] As Exception = Nothing
+      Public message As String = ""
       Public isRunning As Boolean = False
       Public isUploaded As Boolean = False
       Public isDoneRunning As Boolean = False
