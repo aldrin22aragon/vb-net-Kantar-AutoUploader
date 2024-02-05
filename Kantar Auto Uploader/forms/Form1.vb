@@ -7,7 +7,7 @@ Public Class Form1
    '  Brandbank
    '  Product Library
    '  Request Nutrition
-   ' as is
+   ' as is 
    '  Irish
    '  Tns SS
 
@@ -47,6 +47,7 @@ Public Class Form1
          End If
          fscProcessSettings.SetSettings(p.returnValueProcessSettings)
       End While
+      ChkClearUploaded.Checked = fscProcessSettings.GetSettings.clearUploaded
       Timer.StartTimer()
    End Sub
 
@@ -276,6 +277,8 @@ Public Class Form1
    End Sub
 
    Private Sub TimerUploadStatus_Tick(sender As Object, e As EventArgs) Handles TimerUploadStatus.Tick
+      LblRunningStats.Text = "...."
+      Dim uploadingCount As Integer = 0
       For Each i As DataGridViewRow In Dgv.Rows
          Dim u As UploadFile = i.Tag
          If u.setup.toZip Then
@@ -299,7 +302,7 @@ Public Class Form1
                   If u.status.error IsNot Nothing Then
                      i.Cells(3).Value = u.status.error.Message
                   Else
-                     i.Cells(3).Value = "Uploaded"
+                     i.Cells(3).Value = "Done!"
                   End If
                Else
                   i.Cells(3).Value = u.status.message
@@ -309,7 +312,8 @@ Public Class Form1
                   If u.status.compressingStatus = UploadFile.STAT_INFO.CompresStatus.Compressing Then
                      i.Cells(3).Value = "..."
                   Else
-                     i.Cells(3).Value = "Uploading " & u.status.uploadPercentage
+                     i.Cells(3).Value = "....Uploading " & u.status.uploadPercentage
+                     uploadingCount += 1
                   End If
                Else
                   i.Cells(3).Value = "QUE"
@@ -317,6 +321,15 @@ Public Class Form1
             End If
          End If
       Next
+      Dim p As ProcessSettings = fscProcessSettings.GetSettings
+      If p IsNot Nothing AndAlso p.clearUploaded Then
+         For Each i As DataGridViewRow In Dgv.Rows
+            Dim up As UploadFile = i.Tag
+            If up.status.isUploaded Then
+               Dgv.Rows.Remove(i)
+            End If
+         Next
+      End If
    End Sub
 
    Function GetCountProcessing() As Integer
@@ -462,12 +475,20 @@ Public Class Form1
       End If
    End Sub
 
-   Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-      For Each i As DataGridViewRow In Dgv.Rows
-         Dim up As UploadFile = i.Tag
-         If up.status.isUploaded Then
-            Dgv.Rows.Remove(i)
-         End If
-      Next
+   Private Sub ChkClearUploaded_CheckedChanged(sender As Object, e As EventArgs) Handles ChkClearUploaded.CheckedChanged
+      Dim aa As ProcessSettings = fscProcessSettings.GetSettings
+      aa.clearUploaded = ChkClearUploaded.Checked
+      fscProcessSettings.SetSettings(aa)
+   End Sub
+
+   Private Sub BtnRetry_Click(sender As Object, e As EventArgs) Handles BtnRetry.Click
+      If Dgv.SelectedRows IsNot Nothing Then
+         For Each i As DataGridViewRow In Dgv.SelectedRows
+            Dim upload As UploadFile = i.Tag
+            If upload.status.error IsNot Nothing Then
+               upload.StartUpload()
+            End If
+         Next
+      End If
    End Sub
 End Class

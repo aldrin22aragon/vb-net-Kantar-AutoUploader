@@ -8,5 +8,5 @@ Module Gloabals
    Public fscSessionOptions As New FileSettingsCreator2(Of SessionOptions)(fscSessionOptionsFilePath, New SessionOptions)
    Public fscProcessSettings As New FileSettingsCreator2(Of ProcessSettings)(fscProcessSettingsFilePath, New ProcessSettings)
 
-   Public programmersMode As Boolean = True
+   Public programmersMode As Boolean = False
 End Module
