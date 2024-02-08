@@ -83,6 +83,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Costum Textbox.Designer.vb">
+      <DependentUpon>Costum Textbox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Costum Textbox.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="forms\Email Settings.Designer.vb">
       <DependentUpon>Email Settings.vb</DependentUpon>
     </Compile>
@@ -134,8 +140,15 @@
     <Compile Include="libraries\UploadFile.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Components\Costum Textbox.resx">
+      <DependentUpon>Costum Textbox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\Email Settings.resx">
+      <DependentUpon>Email Settings.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\Form Main.resx">
       <DependentUpon>Form Main.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\FtpBrowser.resx">
       <DependentUpon>FtpBrowser.vb</DependentUpon>
@@ -166,5 +179,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

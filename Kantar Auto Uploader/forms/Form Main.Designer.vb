@@ -27,6 +27,8 @@ Partial Class Form1
       Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
       Me.TbFtpSettings = New System.Windows.Forms.ToolStripButton()
       Me.TbUploadSettins = New System.Windows.Forms.ToolStripButton()
+      Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+      Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
       Me.BtnRetry = New System.Windows.Forms.Button()
       Me.Dgv = New System.Windows.Forms.DataGridView()
       Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -43,12 +45,10 @@ Partial Class Form1
       Me.ChkClearUploaded = New System.Windows.Forms.CheckBox()
       Me.LblRunningStats = New System.Windows.Forms.Label()
       Me.RichTextBox2 = New System.Windows.Forms.RichTextBox()
-      Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
       Me.DataGridView1 = New System.Windows.Forms.DataGridView()
       Me.Button1 = New System.Windows.Forms.Button()
       Me.Button3 = New System.Windows.Forms.Button()
       Me.Panel1 = New System.Windows.Forms.Panel()
-      Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
       Me.ToolStrip1.SuspendLayout()
       CType(Me.Dgv, System.ComponentModel.ISupportInitialize).BeginInit()
       CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -79,6 +79,22 @@ Partial Class Form1
       Me.TbUploadSettins.Name = "TbUploadSettins"
       Me.TbUploadSettins.Size = New System.Drawing.Size(110, 22)
       Me.TbUploadSettins.Text = "Upload Settings"
+      '
+      'ToolStripButton2
+      '
+      Me.ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), System.Drawing.Image)
+      Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
+      Me.ToolStripButton2.Name = "ToolStripButton2"
+      Me.ToolStripButton2.Size = New System.Drawing.Size(101, 22)
+      Me.ToolStripButton2.Text = "Email Settings"
+      '
+      'ToolStripButton1
+      '
+      Me.ToolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+      Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+      Me.ToolStripButton1.Name = "ToolStripButton1"
+      Me.ToolStripButton1.Size = New System.Drawing.Size(67, 22)
+      Me.ToolStripButton1.Text = "Browse ftp"
       '
       'BtnRetry
       '
@@ -149,7 +165,7 @@ Partial Class Form1
       '
       Me.DtCurrentDate.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
       Me.DtCurrentDate.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-      Me.DtCurrentDate.Location = New System.Drawing.Point(438, 28)
+      Me.DtCurrentDate.Location = New System.Drawing.Point(438, 29)
       Me.DtCurrentDate.Name = "DtCurrentDate"
       Me.DtCurrentDate.Size = New System.Drawing.Size(268, 29)
       Me.DtCurrentDate.TabIndex = 7
@@ -228,14 +244,6 @@ Partial Class Form1
       Me.RichTextBox2.Text = ""
       Me.RichTextBox2.WordWrap = False
       '
-      'ToolStripButton1
-      '
-      Me.ToolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-      Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-      Me.ToolStripButton1.Name = "ToolStripButton1"
-      Me.ToolStripButton1.Size = New System.Drawing.Size(67, 22)
-      Me.ToolStripButton1.Text = "Browse ftp"
-      '
       'DataGridView1
       '
       Me.DataGridView1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
@@ -249,19 +257,19 @@ Partial Class Form1
       'Button1
       '
       Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-      Me.Button1.Location = New System.Drawing.Point(631, 564)
+      Me.Button1.Location = New System.Drawing.Point(598, 564)
       Me.Button1.Name = "Button1"
-      Me.Button1.Size = New System.Drawing.Size(75, 23)
+      Me.Button1.Size = New System.Drawing.Size(108, 23)
       Me.Button1.TabIndex = 15
-      Me.Button1.Text = "Retry"
+      Me.Button1.Text = "Re Send"
       Me.Button1.UseVisualStyleBackColor = True
       '
       'Button3
       '
       Me.Button3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-      Me.Button3.Location = New System.Drawing.Point(550, 564)
+      Me.Button3.Location = New System.Drawing.Point(467, 565)
       Me.Button3.Name = "Button3"
-      Me.Button3.Size = New System.Drawing.Size(75, 23)
+      Me.Button3.Size = New System.Drawing.Size(125, 23)
       Me.Button3.TabIndex = 16
       Me.Button3.Text = "Retry"
       Me.Button3.UseVisualStyleBackColor = True
@@ -276,18 +284,9 @@ Partial Class Form1
       Me.Panel1.Size = New System.Drawing.Size(769, 5)
       Me.Panel1.TabIndex = 17
       '
-      'ToolStripButton2
-      '
-      Me.ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), System.Drawing.Image)
-      Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
-      Me.ToolStripButton2.Name = "ToolStripButton2"
-      Me.ToolStripButton2.Size = New System.Drawing.Size(101, 22)
-      Me.ToolStripButton2.Text = "Email Settings"
-      '
       'Form1
       '
-      Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-      Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+      Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
       Me.ClientSize = New System.Drawing.Size(718, 595)
       Me.Controls.Add(Me.Panel1)
       Me.Controls.Add(Me.Button3)
