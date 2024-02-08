@@ -83,11 +83,17 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="forms\Form1.vb">
+    <Compile Include="forms\Email Settings.Designer.vb">
+      <DependentUpon>Email Settings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Email Settings.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="forms\Form1.Designer.vb">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <Compile Include="forms\Form Main.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\Form Main.Designer.vb">
+      <DependentUpon>Form Main.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="forms\FtpBrowser.designer.vb">
@@ -106,6 +112,7 @@
     </Compile>
     <Compile Include="Gloabals.vb" />
     <Compile Include="libraries\AOA_Timer.vb" />
+    <Compile Include="libraries\Class Email Settings.vb" />
     <Compile Include="libraries\FileSettingsCreator2.vb" />
     <Compile Include="libraries\ICSharpCode_Zip.vb" />
     <Compile Include="libraries\ProcessSettings.vb" />
@@ -127,8 +134,8 @@
     <Compile Include="libraries\UploadFile.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="forms\Form1.resx">
-      <DependentUpon>Form1.vb</DependentUpon>
+    <EmbeddedResource Include="forms\Form Main.resx">
+      <DependentUpon>Form Main.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\FtpBrowser.resx">
       <DependentUpon>FtpBrowser.vb</DependentUpon>

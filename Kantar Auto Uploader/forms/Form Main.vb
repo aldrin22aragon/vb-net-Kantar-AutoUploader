@@ -510,4 +510,8 @@ Public Class Form1
       Dim b As New FtpBrowser(ses, FtpBrowser.Mode_.file, pro.destinationDirectory)
       b.ShowDialog()
    End Sub
+
+   Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+      Email_Settings_Class.ShowDialog()
+   End Sub
 End Class
