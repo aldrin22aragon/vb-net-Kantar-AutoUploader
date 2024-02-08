@@ -6,14 +6,14 @@ Public Class FtpBrowser
    Dim lastPath As String = ""
 
    Property DefPath As String = ""
-   Property mode As Mode_ = Mode_.none
-   Property multiSelect As Boolean = False
+   Property Mode As Mode_ = Mode_.none
+   Property MultiSelect As Boolean = False
    'Property hasSelected As Boolean = False
 
-   Private directoryWord As String = "Directory"
-   Private fileWord As String = "File"
+   Private Const directoryWord As String = "Directory"
+   Private Const fileWord As String = "File"
 
-   Dim history As history_
+   ReadOnly history As history_
    Public ReturnString As String = ""
    Public ReturnArray As String() = {}
    Public ReturnFileInfoCollection As New Dictionary(Of String, WinSCP.RemoteFileInfo)
@@ -32,12 +32,12 @@ Public Class FtpBrowser
       ' Add any initialization after the InitializeComponent() call.
       Me.DefPath = defPath
       Me.sessionOptions = sessionOptions_
-      mode = md
+      Mode = md
       lastPath = ""
       ReturnString = ""
       ReturnArray = {}
       history = New history_
-      Me.multiSelect = multipleSelection
+      Me.MultiSelect = multipleSelection
       Me.DialogResult = Windows.Forms.DialogResult.Cancel
       Bg = New System.ComponentModel.BackgroundWorker
       Bg.WorkerReportsProgress = True
@@ -50,11 +50,11 @@ Public Class FtpBrowser
       End If
    End Sub
    Private Sub FtpBrowser_Load(sender As Object, e As EventArgs) Handles Me.Load
-      Lv.MultiSelect = multiSelect
-      If mode = Mode_.folder Then
+      Lv.MultiSelect = MultiSelect
+      If Mode = Mode_.folder Then
          Me.Text = "Please select " & directoryWord
          btnSelect.Text = String.Concat("Select ", directoryWord)
-      ElseIf mode = Mode_.file Then
+      ElseIf Mode = Mode_.file Then
          Me.Text = "Please select " & fileWord
          btnSelect.Text = String.Concat("Select ", fileWord)
       End If
@@ -105,26 +105,26 @@ Public Class FtpBrowser
    End Sub
    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnSelect.Click
       If Lv.SelectedItems.Count > 0 Then
-         If multiSelect Then
-            ReturnArray = GetStrings(mode)
+         If MultiSelect Then
+            ReturnArray = GetStrings(Mode)
          Else
-            ReturnString = GetStrings(mode)(0)
+            ReturnString = GetStrings(Mode)(0)
          End If
          For Each i As ListViewItem In Lv.SelectedItems
             Dim type As String = i.SubItems(1).Text.ToString.ToUpper
-            If (mode = Mode_.folder And type = directoryWord.ToUpper) Or (mode = Mode_.file And type = fileWord.ToUpper) Then
+            If (Mode = Mode_.folder And type = directoryWord.ToUpper) Or (Mode = Mode_.file And type = fileWord.ToUpper) Then
                Dim pth As String = lastPath.TrimEnd("/") & "/" & i.Text.ToString
                ReturnFileInfoCollection.Add(pth, i.Tag)
             End If
          Next
          Me.DialogResult = Windows.Forms.DialogResult.OK
          Me.Close()
-      ElseIf mode = Mode_.folder Then
+      ElseIf Mode = Mode_.folder Then
          ReturnString = lastPath
          Me.DialogResult = Windows.Forms.DialogResult.OK
          Me.Close()
       Else
-         MsgBox("Please select item" & IIf(Me.multiSelect, "s", ""), MsgBoxStyle.Critical)
+         MsgBox("Please select item" & IIf(Me.MultiSelect, "s", ""), MsgBoxStyle.Critical)
       End If
    End Sub
    Function GetStrings(md As Mode_) As String()
@@ -236,7 +236,10 @@ Public Class FtpBrowser
             Catch ex As Exception
                MsgBox(("Please try again.§§" & ex.Message).Replace("§", vbNewLine), MsgBoxStyle.Critical, "Error on listing directory.")
             End Try
+            ses.Close()
             ses.Dispose()
+            GC.Collect()
+            GC.WaitForPendingFinalizers()
             ses = Nothing
          Catch ex As Exception
             MsgBox(("Please try again.§§" & ex.Message).Replace("§", vbNewLine), MsgBoxStyle.Critical, "Error on connecting to ftp")
@@ -274,7 +277,7 @@ Public Class FtpBrowser
       Panel1.Controls.Clear()
       For Each fileInfo In fls
          If fileInfo.Name.Trim(".").Trim <> Nothing Then
-            If (mode = Mode_.folder And fileInfo.IsDirectory) Or mode = Mode_.file Then
+            If (Mode = Mode_.folder And fileInfo.IsDirectory) Or Mode = Mode_.file Then
                Dim itm As ListViewItem = Lv.Items.Add(fileInfo.Name)
                If fileInfo.IsDirectory Then
                   itm.SubItems.Add(directoryWord)

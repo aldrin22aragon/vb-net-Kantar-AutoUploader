@@ -41,6 +41,9 @@ Public Class Form_Process_Settings
 
    Private Sub TxSourceLocal_Click(sender As Object, e As EventArgs) Handles TxSourceLocal.Click
       Dim fldrDialgo As New FolderBrowserDialog
+      If TxSourceLocal.Text <> "" Then
+         fldrDialgo.SelectedPath = TxSourceLocal.Text
+      End If
       If fldrDialgo.ShowDialog = DialogResult.OK Then
          TxSourceLocal.Text = fldrDialgo.SelectedPath
       End If

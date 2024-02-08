@@ -42,6 +42,8 @@ Partial Class Form1
       Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
       Me.ChkClearUploaded = New System.Windows.Forms.CheckBox()
       Me.LblRunningStats = New System.Windows.Forms.Label()
+      Me.RichTextBox2 = New System.Windows.Forms.RichTextBox()
+      Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
       Me.ToolStrip1.SuspendLayout()
       CType(Me.Dgv, System.ComponentModel.ISupportInitialize).BeginInit()
       Me.SuspendLayout()
@@ -49,7 +51,7 @@ Partial Class Form1
       'ToolStrip1
       '
       Me.ToolStrip1.BackColor = System.Drawing.SystemColors.ControlLight
-      Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TbFtpSettings, Me.TbUploadSettins})
+      Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TbFtpSettings, Me.TbUploadSettins, Me.ToolStripButton1})
       Me.ToolStrip1.Location = New System.Drawing.Point(0, 0)
       Me.ToolStrip1.Name = "ToolStrip1"
       Me.ToolStrip1.Size = New System.Drawing.Size(916, 25)
@@ -75,7 +77,7 @@ Partial Class Form1
       'BtnRetry
       '
       Me.BtnRetry.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-      Me.BtnRetry.Location = New System.Drawing.Point(829, 305)
+      Me.BtnRetry.Location = New System.Drawing.Point(829, 299)
       Me.BtnRetry.Name = "BtnRetry"
       Me.BtnRetry.Size = New System.Drawing.Size(75, 23)
       Me.BtnRetry.TabIndex = 3
@@ -97,7 +99,7 @@ Partial Class Form1
       Me.Dgv.Name = "Dgv"
       Me.Dgv.ReadOnly = True
       Me.Dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-      Me.Dgv.Size = New System.Drawing.Size(892, 239)
+      Me.Dgv.Size = New System.Drawing.Size(892, 191)
       Me.Dgv.TabIndex = 4
       '
       'Column1
@@ -131,7 +133,7 @@ Partial Class Form1
       '
       Me.LblStatus.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
       Me.LblStatus.AutoSize = True
-      Me.LblStatus.Location = New System.Drawing.Point(12, 310)
+      Me.LblStatus.Location = New System.Drawing.Point(12, 304)
       Me.LblStatus.Name = "LblStatus"
       Me.LblStatus.Size = New System.Drawing.Size(38, 13)
       Me.LblStatus.TabIndex = 5
@@ -166,7 +168,7 @@ Partial Class Form1
       'Button2
       '
       Me.Button2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-      Me.Button2.Location = New System.Drawing.Point(451, 303)
+      Me.Button2.Location = New System.Drawing.Point(451, 297)
       Me.Button2.Name = "Button2"
       Me.Button2.Size = New System.Drawing.Size(196, 23)
       Me.Button2.TabIndex = 9
@@ -177,10 +179,10 @@ Partial Class Form1
       '
       Me.RichTextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-      Me.RichTextBox1.Location = New System.Drawing.Point(15, 336)
+      Me.RichTextBox1.Location = New System.Drawing.Point(12, 252)
       Me.RichTextBox1.Name = "RichTextBox1"
       Me.RichTextBox1.ReadOnly = True
-      Me.RichTextBox1.Size = New System.Drawing.Size(889, 46)
+      Me.RichTextBox1.Size = New System.Drawing.Size(892, 40)
       Me.RichTextBox1.TabIndex = 10
       Me.RichTextBox1.Text = ""
       '
@@ -188,7 +190,7 @@ Partial Class Form1
       '
       Me.ChkClearUploaded.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
       Me.ChkClearUploaded.AutoSize = True
-      Me.ChkClearUploaded.Location = New System.Drawing.Point(665, 309)
+      Me.ChkClearUploaded.Location = New System.Drawing.Point(665, 303)
       Me.ChkClearUploaded.Name = "ChkClearUploaded"
       Me.ChkClearUploaded.Size = New System.Drawing.Size(158, 17)
       Me.ChkClearUploaded.TabIndex = 11
@@ -204,11 +206,34 @@ Partial Class Form1
       Me.LblRunningStats.TabIndex = 12
       Me.LblRunningStats.Text = "Status"
       '
+      'RichTextBox2
+      '
+      Me.RichTextBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+      Me.RichTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+      Me.RichTextBox2.Font = New System.Drawing.Font("Courier Prime", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+      Me.RichTextBox2.Location = New System.Drawing.Point(12, 328)
+      Me.RichTextBox2.Name = "RichTextBox2"
+      Me.RichTextBox2.ReadOnly = True
+      Me.RichTextBox2.Size = New System.Drawing.Size(892, 147)
+      Me.RichTextBox2.TabIndex = 13
+      Me.RichTextBox2.Text = ""
+      Me.RichTextBox2.WordWrap = False
+      '
+      'ToolStripButton1
+      '
+      Me.ToolStripButton1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+      Me.ToolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta
+      Me.ToolStripButton1.Name = "ToolStripButton1"
+      Me.ToolStripButton1.Size = New System.Drawing.Size(67, 22)
+      Me.ToolStripButton1.Text = "Browse ftp"
+      '
       'Form1
       '
       Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
       Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-      Me.ClientSize = New System.Drawing.Size(916, 394)
+      Me.ClientSize = New System.Drawing.Size(916, 487)
+      Me.Controls.Add(Me.RichTextBox2)
       Me.Controls.Add(Me.LblRunningStats)
       Me.Controls.Add(Me.ChkClearUploaded)
       Me.Controls.Add(Me.RichTextBox1)
@@ -249,4 +274,6 @@ Partial Class Form1
    Friend WithEvents RichTextBox1 As RichTextBox
    Friend WithEvents ChkClearUploaded As CheckBox
    Friend WithEvents LblRunningStats As Label
+   Friend WithEvents RichTextBox2 As RichTextBox
+   Friend WithEvents ToolStripButton1 As ToolStripButton
 End Class

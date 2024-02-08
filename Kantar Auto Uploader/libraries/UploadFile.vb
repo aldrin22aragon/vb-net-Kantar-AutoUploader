@@ -81,6 +81,30 @@ Public Class UploadFile
                   .compressingStatus = STAT_INFO.CompresStatus.CompressDone
                }
             Else
+               ' Create Folder for destination
+               If Not ses.FileExists(Me.ftpDestinationFolder) Then
+                  Dim slice As String() = ftpDestinationFolder.Split("/")
+                  Dim p As String = ""
+                  For Each i As String In slice
+                     If i = "" Then
+                        p = ""
+                     Else
+                        p = p & "/" & i
+                        If Not ses.FileExists(p) Then
+                           Try
+                              ses.CreateDirectory(p)
+                           Catch ex As Exception
+                              If ses.FileExists(p) Then
+                                 Continue For
+                              Else
+                                 Throw New Exception("Error on creating FTP directory :" & p)
+                              End If
+                           End Try
+                        End If
+                     End If
+                  Next
+               End If
+               '
                If setup.toZip Then
                   status.compressingStatus = STAT_INFO.CompresStatus.Compressing
                   If setup.fileType = SetupProp.FileType_.FOLDER Then
@@ -124,27 +148,6 @@ Public Class UploadFile
                Dim extWithDot As String = IO.Path.GetExtension(Me.filePath)
                Dim tmpDest As String = RemotePath.Combine(Me.ftpDestinationFolder, String.Concat(flNameWOext, extWithDot, ".uploading"))
                Dim dest As String = RemotePath.Combine(Me.ftpDestinationFolder, String.Concat(flNameWOext, extWithDot))
-               '
-               If Not ses.FileExists(Me.ftpDestinationFolder) Then
-                  Dim slice As String() = ftpDestinationFolder.Split("/")
-                  Dim p As String = ""
-                  For Each i As String In slice
-                     If i = "" Then
-                        p = ""
-                     Else
-                        p = p & "/" & i
-                        If Not ses.FileExists(p) Then
-                           Try
-                              ses.CreateDirectory(p)
-                           Catch ex As Exception
-                              If ses.FileExists(p) Then
-                                 Continue For
-                              End If
-                           End Try
-                        End If
-                     End If
-                  Next
-               End If
                'Possible error FileExists
                If ses.FileExists(tmpDest) Then
                   'Possible error RemoveFile
@@ -167,23 +170,18 @@ Public Class UploadFile
                If Not IO.Directory.Exists(uploadedPath) Then MkDir(uploadedPath)
                Try
                   If setup.fileType = SetupProp.FileType_.FILE Then
-                     Dim newDest As String = IO.Path.Combine(uploadedPath, IO.Path.GetFileName(originalFilePath))
-                     IO.File.Move(originalFilePath, newDest)
                      If setup.toZip Then
-                        'Dim DestzipFile As String = IO.Path.Combine(uploadedPath, IO.Path.GetFileName(filePath))
-                        'Dim file As String = IO.Path.Combine(IO.Path.GetDirectoryName(originalFilePath), IO.Path.GetFileName(filePath))
-                        'IO.File.Move(file, DestzipFile)
-                        IO.File.Delete(filePath)
+                        Dim newDestZip As String = IO.Path.Combine(uploadedPath, IO.Path.GetFileName(filePath))
+                        IO.File.Move(filePath, newDestZip)
+                        IO.File.Delete(originalFilePath)
+                     Else
+                        Dim newDest As String = IO.Path.Combine(uploadedPath, IO.Path.GetFileName(originalFilePath))
+                        IO.File.Move(originalFilePath, newDest)
                      End If
                   Else setup.fileType = SetupProp.FileType_.FOLDER
-                     Dim newDest As String = IO.Path.Combine(uploadedPath, IO.Path.GetFileName(originalFilePath))
-                     IO.Directory.Move(originalFilePath, newDest)
-                     If setup.toZip Then
-                        IO.File.Delete(filePath)
-                        'Dim DestzipFile As String = IO.Path.Combine(uploadedPath, IO.Path.GetFileName(filePath))
-                        'Dim file As String = IO.Path.Combine(IO.Path.GetDirectoryName(originalFilePath), IO.Path.GetFileName(filePath))
-                        'IO.File.Move(file, DestzipFile)
-                     End If
+                     Dim newDestZip As String = IO.Path.Combine(uploadedPath, IO.Path.GetFileName(filePath))
+                     IO.File.Move(filePath, newDestZip)
+                     IO.Directory.Delete(originalFilePath, True)
                   End If
                Catch ex As Exception
                   ex = ex
@@ -203,6 +201,10 @@ Public Class UploadFile
                .isDoneRunning = True
             }
          End Try
+         ses.Close()
+         ses.Dispose()
+         GC.Collect()
+         GC.WaitForPendingFinalizers()
       Catch ex As Exception
          status = New STAT_INFO() With {
             .[error] = ex,

@@ -11,7 +11,7 @@ Public Class Form1
    '  Irish
    '  Tns SS
 
-   Friend WithEvents Timer As New AOA_Timer(3)
+   Friend WithEvents Timer As New AOA_Timer(8)
 
    Enum FileTypeEnum As Integer
       NONE = 0
@@ -127,18 +127,20 @@ Public Class Form1
                FileTypeEnum.TnsSs
             }
 
-            Dim func = Function(folder As String) As String
-                          Return String.Concat(p.destinationDirectory, "/", folder, "/Output/", dateFolder)
-                       End Function
-
+            'Dim func = Function(folder As String) As String
+            '              Return String.Concat(p.destinationDirectory, "/", folder, "/Output/", dateFolder)
+            '           End Function
+            RichTextBox2.Text = "Scan files from:"
             For Each type As FileTypeEnum In types
                Dim dest As String = String.Concat(p.destinationDirectory, "/", dateFolder)
                Select Case type
                   Case FileTypeEnum.BabyFood
                      Dim path As String = IO.Path.Combine(p.sourceDirectory, "Baby Food", "Output", dateFolder)
+                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & path
+                     Dim a = p.destinationDirectory & "/receipts/BABYFOODS/ddc output"
                      For Each i As String In MyGetFiles(path).ToList
                         If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, func("Baby food"), c)
+                           Dim upload As New UploadFile(i, a, c)
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BabyFood
                            upload.setup.toZip = True
@@ -148,7 +150,7 @@ Public Class Form1
                      Next
                      For Each i As String In MyGetDirectories(path).ToList
                         If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, func("Baby food"), c)
+                           Dim upload As New UploadFile(i, a, c)
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BabyFood
                            upload.setup.toZip = True
@@ -159,9 +161,11 @@ Public Class Form1
                      Next
                   Case FileTypeEnum.BrandBank
                      Dim path As String = IO.Path.Combine(p.sourceDirectory, "Brandbank", "Output", dateFolder)
+                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & path
+                     Dim a = p.destinationDirectory & "/receipts/INGREDIENTS/Brandbank"
                      For Each i As String In MyGetFiles(path).ToList
                         If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, func("Brandbank"), c)
+                           Dim upload As New UploadFile(i, a, c)
                            upload.setup.toZip = True
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BrandBank
@@ -171,7 +175,7 @@ Public Class Form1
                      Next
                      For Each i As String In MyGetDirectories(path).ToList
                         If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, func("Brandbank"), c)
+                           Dim upload As New UploadFile(i, a, c)
                            upload.setup.toZip = True
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BrandBank
@@ -181,9 +185,11 @@ Public Class Form1
                      Next
                   Case FileTypeEnum.ProductLibrary
                      Dim path As String = IO.Path.Combine(p.sourceDirectory, "Product Library", "Output", dateFolder)
+                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & path
+                     Dim a = p.destinationDirectory & "/receipts/NUTRITION_IMAGES/Request_Output"
                      For Each i As String In MyGetFiles(path).ToList
                         If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, func("Product Library"), c)
+                           Dim upload As New UploadFile(i, a, c)
                            upload.setup.toZip = True
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.ProductLibrary
@@ -193,7 +199,7 @@ Public Class Form1
                      Next
                      For Each i As String In MyGetDirectories(path).ToList
                         If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, func("Product Library"), c)
+                           Dim upload As New UploadFile(i, a, c)
                            upload.setup.toZip = True
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.ProductLibrary
@@ -203,9 +209,11 @@ Public Class Form1
                      Next
                   Case FileTypeEnum.RequestNutrition
                      Dim path As String = IO.Path.Combine(p.sourceDirectory, "Request Nutrition", "Output", dateFolder)
+                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & path
+                     Dim a = p.destinationDirectory & "/receipts/NUTRITION_IMAGES/Request_Output"
                      For Each i As String In MyGetFiles(path).ToList
                         If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, func("Request Nutrition"), c)
+                           Dim upload As New UploadFile(i, a, c)
                            upload.setup.toZip = True
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.RequestNutrition
@@ -215,7 +223,7 @@ Public Class Form1
                      Next
                      For Each i As String In MyGetDirectories(path).ToList
                         If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, func("Request Nutrition"), c)
+                           Dim upload As New UploadFile(i, a, c)
                            upload.setup.toZip = True
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.RequestNutrition
@@ -225,9 +233,11 @@ Public Class Form1
                      Next
                   Case FileTypeEnum.Irish
                      Dim path As String = IO.Path.Combine(p.sourceDirectory, "Irish", "Output", dateFolder)
+                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & path
+                     Dim a = p.destinationDirectory & "/receipts/receiptsIE"
                      For Each i As String In MyGetFiles(path).ToList
                         If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, func("Irish"), c)
+                           Dim upload As New UploadFile(i, a, c)
                            upload.setup.toZip = False
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.Irish
@@ -237,9 +247,11 @@ Public Class Form1
                      Next
                   Case FileTypeEnum.TnsSs
                      Dim path As String = IO.Path.Combine(p.sourceDirectory, "Tns SS", "Output", dateFolder)
+                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & path
+                     Dim a = p.destinationDirectory & "/receipts"
                      For Each i As String In MyGetFiles(path).ToList
                         If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, func("Tns SS"), c)
+                           Dim upload As New UploadFile(i, a, c)
                            upload.setup.toZip = False
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.TnsSs
@@ -490,5 +502,12 @@ Public Class Form1
             End If
          Next
       End If
+   End Sub
+
+   Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+      Dim ses = fscSessionOptions.GetSettings
+      Dim pro = fscProcessSettings.GetSettings
+      Dim b As New FtpBrowser(ses, FtpBrowser.Mode_.file, pro.destinationDirectory)
+      b.ShowDialog()
    End Sub
 End Class
