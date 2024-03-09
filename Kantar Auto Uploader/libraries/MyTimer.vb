@@ -1,29 +1,20 @@
-'aldrin
-Public Class AOA_Timer
+﻿Public Class MyTimer
    Friend WithEvents Timer As New Timer
    Event Tick(e As TickEventInfo)
-   Public maximumSeconds As Integer
    Dim SW As New Stopwatch
-   'ReadOnly mode As Mode_enum
-   'Enum Mode_enum As Integer
-   '   RunOnce = 1
-   '   PabalikBalik = 2
-   'End Enum
-   Sub New(seconds As Integer)
-      maximumSeconds = seconds
-   End Sub
 
    Public Property Enabled As Boolean = False
    Public Property IntervalSeconds As Integer = 30
 
+
    Sub StartTimer(Optional overWriteSeconds As Integer = 0)
-      If overWriteSeconds > 0 Then maximumSeconds = overWriteSeconds
+      If overWriteSeconds > 0 Then IntervalSeconds = overWriteSeconds
       SW = New Stopwatch
       SW.Start()
       Timer.Start()
    End Sub
    Sub RestartTimer(Optional overWriteSeconds As Integer = 0)
-      If overWriteSeconds > 0 Then maximumSeconds = overWriteSeconds
+      If overWriteSeconds > 0 Then IntervalSeconds = overWriteSeconds
       SW = New Stopwatch
       SW.Start()
       Timer.Start()
@@ -47,15 +38,15 @@ Public Class AOA_Timer
    End Sub
 
    Public Function IsTimeReached() As Boolean
-      Return SW.Elapsed.TotalSeconds >= maximumSeconds
+      Return SW.Elapsed.TotalSeconds >= IntervalSeconds
    End Function
    Function RemainingTime() As TimeSpan
-      Dim res As Integer = maximumSeconds - SW.Elapsed.TotalSeconds
+      Dim res As Integer = IntervalSeconds - SW.Elapsed.TotalSeconds
       Dim span As TimeSpan = TimeSpan.FromSeconds(res)
       Return span
    End Function
    Function RemainingSeconds() As Integer
-      Return maximumSeconds - SW.Elapsed.TotalSeconds
+      Return IntervalSeconds - SW.Elapsed.TotalSeconds
    End Function
 
    Class TickEventInfo

@@ -12,7 +12,11 @@ Module Gloabals
    Public fscEmailSettings As New FileSettingsCreator2(Of Class_Email_Settings)(fscEmailSettingsFilePath, New Class_Email_Settings)
 
    Public programmersMode As Boolean = False
-
+   '
+   Public Const EmailColumnIndex As Integer = 0 ' dito ilalagay ysa cell yung sender
+   Public Const IndexZipStatus As Integer = 2
+   Public Const IndexUploadStatus As Integer = 3
+   Public Const IndexEmailStatus As Integer = 4
    '
 
    Sub ErrMsg(msg As String)

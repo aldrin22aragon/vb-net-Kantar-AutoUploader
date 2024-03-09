@@ -88,4 +88,8 @@ Public Class Costum_Textbox
    Private Sub TxMain_KeyDown(sender As Object, e As KeyEventArgs) Handles TxMain.KeyDown
       RaiseEvent _KeyKeyDown(sender, e)
    End Sub
+   Public Event _TextChanged(sender As Object, e As KeyEventArgs)
+   Private Sub TxMain_TextChanged(sender As Object, e As EventArgs) Handles TxMain.TextChanged
+      RaiseEvent _TextChanged(sender, e)
+   End Sub
 End Class

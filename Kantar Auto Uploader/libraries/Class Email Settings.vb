@@ -1,13 +1,19 @@
 ﻿Public Class Class_Email_Settings
-   Public AllSettings As Email_Settings() = {
-            New Email_Settings(Email_Settings.Types.BABY_FOOD),
-            New Email_Settings(Email_Settings.Types.BRANDBANK),
-            New Email_Settings(Email_Settings.Types.IRISH),
-            New Email_Settings(Email_Settings.Types.PRODUCT_LIBRARY),
-            New Email_Settings(Email_Settings.Types.REQUEST_NUTRITION),
-            New Email_Settings(Email_Settings.Types.TNS_SS)
-         }
+   'Public AllSettings As Email_Settings() = {
+   '         New Email_Settings(Email_Settings.Types.BABY_FOOD),
+   '         New Email_Settings(Email_Settings.Types.BRANDBANK),
+   '         New Email_Settings(Email_Settings.Types.IRISH),
+   '         New Email_Settings(Email_Settings.Types.PRODUCT_LIBRARY),
+   '         New Email_Settings(Email_Settings.Types.REQUEST_NUTRITION),
+   '         New Email_Settings(Email_Settings.Types.TNS_SS)
+   '      }
 
+   Public BABY_FOOD As New Email_Settings(Email_Settings.Types.BABY_FOOD)
+   Public BRANDBANK As New Email_Settings(Email_Settings.Types.BRANDBANK)
+   Public IRISH As New Email_Settings(Email_Settings.Types.IRISH)
+   Public PRODUCT_LIBRARY As New Email_Settings(Email_Settings.Types.PRODUCT_LIBRARY)
+   Public REQUEST_NUTRITION As New Email_Settings(Email_Settings.Types.REQUEST_NUTRITION)
+   Public TNS_SS As New Email_Settings(Email_Settings.Types.TNS_SS)
 
    Public Class Email_Settings
       Public Name As String = ""
@@ -45,7 +51,7 @@
          End Select
       End Sub
 
-      Public Enum Types As Integer
+      Enum Types As Integer
          NONE = 0
          BABY_FOOD = 1
          BRANDBANK = 2

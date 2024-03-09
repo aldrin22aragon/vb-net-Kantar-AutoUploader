@@ -1,4 +1,4 @@
-﻿Public Class Email_Settings_Class
+﻿Public Class Form_Email_Settings
    Private Sub Email_Settings_Class_Load(sender As Object, e As EventArgs) Handles MyBase.Load
       Dim aa = fscEmailSettings.GetSettings
       If aa IsNot Nothing Then
@@ -13,12 +13,23 @@
       Get
          If CmbType.Items.Count > 0 Then
             Dim res As New Class_Email_Settings
-            Dim tmp As New List(Of Class_Email_Settings.Email_Settings)
             For Each i As Object In CmbType.Items
                Dim c As Class_Email_Settings.Email_Settings = i
-               tmp.Add(c)
+               Select Case c.Email_Type
+                  Case Class_Email_Settings.Email_Settings.Types.BABY_FOOD
+                     res.BABY_FOOD = c
+                  Case Class_Email_Settings.Email_Settings.Types.BRANDBANK
+                     res.BRANDBANK = c
+                  Case Class_Email_Settings.Email_Settings.Types.IRISH
+                     res.IRISH = c
+                  Case Class_Email_Settings.Email_Settings.Types.PRODUCT_LIBRARY
+                     res.PRODUCT_LIBRARY = c
+                  Case Class_Email_Settings.Email_Settings.Types.REQUEST_NUTRITION
+                     res.REQUEST_NUTRITION = c
+                  Case Class_Email_Settings.Email_Settings.Types.TNS_SS
+                     res.TNS_SS = c
+               End Select
             Next
-            res.AllSettings = tmp.ToArray
             Return res
          Else
             Return Nothing
@@ -28,10 +39,25 @@
          If value IsNot Nothing Then
             'clear
             CmbType.Items.Clear()
+            CbCopyFrom.Items.Clear()
+            CbCopyFrom.Items.Add("Copy From")
             '
-            For Each i As Class_Email_Settings.Email_Settings In value.AllSettings
-               CmbType.Items.Add(i)
-            Next
+            CmbType.Items.Add(value.BABY_FOOD)
+            CmbType.Items.Add(value.BRANDBANK)
+            CmbType.Items.Add(value.IRISH)
+            CmbType.Items.Add(value.PRODUCT_LIBRARY)
+            CmbType.Items.Add(value.REQUEST_NUTRITION)
+            CmbType.Items.Add(value.TNS_SS)
+            '
+            CbCopyFrom.Items.Add(value.BABY_FOOD)
+            CbCopyFrom.Items.Add(value.BRANDBANK)
+            CbCopyFrom.Items.Add(value.IRISH)
+            CbCopyFrom.Items.Add(value.PRODUCT_LIBRARY)
+            CbCopyFrom.Items.Add(value.REQUEST_NUTRITION)
+            CbCopyFrom.Items.Add(value.TNS_SS)
+            '
+            CbCopyFrom.SelectedIndex = 0
+            CmbType.SelectedIndex = 0
          End If
       End Set
    End Property
@@ -57,6 +83,7 @@
          lb.Items.Add(email.Text.Trim)
       End If
       email.Text = ""
+      BtnSave.Enabled = True
       Return res
    End Function
 
@@ -103,12 +130,14 @@
          Dim sel As String = lb.SelectedItem.ToString
          lb.Items.Remove(sel)
       End If
+      BtnSave.Enabled = True
    End Sub
 
    Private Sub CmbType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CmbType.SelectedIndexChanged
       If CmbType.SelectedItem IsNot Nothing Then
          Dim aa As Class_Email_Settings.Email_Settings = CmbType.SelectedItem
          FormSettings = aa
+         BtnSave.Enabled = False
       End If
    End Sub
 
@@ -167,8 +196,40 @@
          CmbType.SelectedItem = FormSettings
          fscEmailSettings.SetSettings(ComboboxTypes)
          SuccessMsg("Saved")
+         BtnSave.Enabled = False
       Else
          ErrMsg("No Selected Types")
+      End If
+   End Sub
+
+   Private Sub CtHost__KeyPress(sender As Object, e As KeyPressEventArgs) Handles CtUsername._KeyPress, CtSubject._KeyPress, CtPort._KeyPress, CtPassword._KeyPress, CtHost._KeyPress
+      BtnSave.Enabled = True
+   End Sub
+
+   Private Sub CbCopyFrom_SelectedValueChanged(sender As Object, e As EventArgs) Handles CbCopyFrom.SelectedValueChanged
+      If CbCopyFrom.SelectedItem IsNot Nothing Then
+         Dim a As Class_Email_Settings.Email_Settings = Nothing
+         Try
+            a = CbCopyFrom.SelectedItem
+         Catch ex As Exception
+         End Try
+         If a IsNot Nothing Then
+            CtHost._TextBoxValue = a.Host
+            CtPort._TextBoxValue = a.Port
+            CtUsername._TextBoxValue = a.Username
+            CtPassword._TextBoxValue = a.Password
+            BtnSave.Enabled = True
+         End If
+      End If
+   End Sub
+
+   Private Sub BtnSave_EnabledChanged(sender As Object, e As EventArgs) Handles BtnSave.EnabledChanged
+      If BtnSave.Enabled Then
+         BtnSave.BackColor = Color.LightCoral
+         BtnSave.Text = "Save ...."
+      Else
+         BtnSave.BackColor = Color.LightGreen
+         BtnSave.Text = "Saved"
       End If
    End Sub
 End Class

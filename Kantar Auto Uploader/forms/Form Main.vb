@@ -51,13 +51,6 @@ Public Class Form1
       Timer.StartTimer()
    End Sub
 
-   Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-      If programmersMode Then
-         Button2.Visible = True
-      Else
-         Button2.Visible = False
-      End If
-   End Sub
 
    Private Sub TbFtpSettings_Click(sender As Object, e As EventArgs) Handles TbFtpSettings.Click
       Dim ftpSetting As New FtpSettings(fscSessionOptions.GetSettings)
@@ -111,6 +104,30 @@ Public Class Form1
       End If
       Return res
    End Function
+
+   Property DgvSendEmailProp(rowIndex As Integer) As SendEmail
+      Get
+         Dim tag = Nothing
+         Try
+            tag = Dgv.Rows(rowIndex).Cells(EmailColumnIndex).Tag '
+         Catch ex As Exception
+            Throw New Exception("Row index is not found in DGV. [GET]")
+         End Try
+         If tag IsNot Nothing Then
+            Return DirectCast(tag, SendEmail)
+         Else
+            Return Nothing
+         End If
+      End Get
+      Set(value As SendEmail)
+         Try
+            Dgv.Rows(rowIndex).Cells(EmailColumnIndex).Tag = value
+         Catch ex As Exception
+            Throw New Exception("Row index is not found in DGV. [SET]")
+         End Try
+      End Set
+   End Property
+
    Private Sub Timer_Tick(e As AOA_Timer.TickEventInfo) Handles Timer.Tick
       If e.IsTimeReached Then
          Dim p = fscProcessSettings.GetSettings
@@ -126,7 +143,6 @@ Public Class Form1
                FileTypeEnum.RequestNutrition,
                FileTypeEnum.TnsSs
             }
-
             'Dim func = Function(folder As String) As String
             '              Return String.Concat(p.destinationDirectory, "/", folder, "/Output/", dateFolder)
             '           End Function
@@ -264,7 +280,7 @@ Public Class Form1
          Else
             LblStatus.Text = "Please setup Upload Settings"
          End If
-         Timer.maximumSeconds = (p.checkIntervalMins * 60)
+         Timer.IntervalSeconds = (p.checkIntervalMins * 60)
          Timer.RestartTimer()
          TimerUploaderStarter.Enabled = True
          TimerUploadStatus.Enabled = True
@@ -296,39 +312,39 @@ Public Class Form1
          If u.setup.toZip Then
             Select Case u.status.compressingStatus
                Case UploadFile.STAT_INFO.CompresStatus.ToCompress
-                  i.Cells(2).Value = "To be compressed"
+                  i.Cells(IndexZipStatus).Value = "To be compressed"
                Case UploadFile.STAT_INFO.CompresStatus.Compressing
-                  i.Cells(2).Value = "Compressing..."
+                  i.Cells(IndexZipStatus).Value = "Compressing..."
                Case UploadFile.STAT_INFO.CompresStatus.CompressDone
-                  i.Cells(2).Value = ".ZIP"
+                  i.Cells(IndexZipStatus).Value = ".ZIP"
             End Select
          Else
-            i.Cells(2).Value = IO.Path.GetExtension(u.filePath)
+            i.Cells(IndexZipStatus).Value = IO.Path.GetExtension(u.filePath)
          End If
 
          If u.status.error IsNot Nothing Then
-            i.Cells(3).Value = u.status.error.Message
+            i.Cells(IndexUploadStatus).Value = u.status.error.Message
          Else
             If u.status.isDoneRunning Then
                If u.status.isUploaded Then
                   If u.status.error IsNot Nothing Then
-                     i.Cells(3).Value = u.status.error.Message
+                     i.Cells(IndexUploadStatus).Value = u.status.error.Message
                   Else
-                     i.Cells(3).Value = "Done!"
+                     i.Cells(IndexUploadStatus).Value = "Done!"
                   End If
                Else
-                  i.Cells(3).Value = u.status.message
+                  i.Cells(IndexUploadStatus).Value = u.status.message
                End If
             ElseIf Not u.status.isDoneRunning Then
                If u.status.isRunning Then
                   If u.status.compressingStatus = UploadFile.STAT_INFO.CompresStatus.Compressing Then
-                     i.Cells(3).Value = "..."
+                     i.Cells(IndexUploadStatus).Value = "..."
                   Else
-                     i.Cells(3).Value = "....Uploading " & u.status.uploadPercentage
+                     i.Cells(IndexUploadStatus).Value = "....Uploading " & u.status.uploadPercentage
                      uploadingCount += 1
                   End If
                Else
-                  i.Cells(3).Value = "QUE"
+                  i.Cells(IndexUploadStatus).Value = "QUE"
                End If
             End If
          End If
@@ -354,127 +370,6 @@ Public Class Form1
       Next
       Return res
    End Function
-
-   Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-      Dim p = fscProcessSettings.GetSettings
-      Dim types As New List(Of FileTypeEnum) From {
-         FileTypeEnum.BabyFood,
-         FileTypeEnum.BrandBank,
-         FileTypeEnum.Irish,
-         FileTypeEnum.ProductLibrary,
-         FileTypeEnum.RequestNutrition,
-         FileTypeEnum.TnsSs
-      }
-      For Each i As FileTypeEnum In types
-         Dim pathUploaded As String = ""
-         Select Case i
-            Case FileTypeEnum.BabyFood
-               pathUploaded = IO.Path.Combine(p.sourceDirectory, "Baby Food", "output", GetDateFolder, "Uploaded")
-            Case FileTypeEnum.BrandBank
-               pathUploaded = IO.Path.Combine(p.sourceDirectory, "Brandbank", "output", GetDateFolder, "Uploaded")
-            Case FileTypeEnum.Irish
-               pathUploaded = IO.Path.Combine(p.sourceDirectory, "Irish", "output", GetDateFolder, "Uploaded")
-            Case FileTypeEnum.ProductLibrary
-               pathUploaded = IO.Path.Combine(p.sourceDirectory, "Product Library", "output", GetDateFolder, "Uploaded")
-            Case FileTypeEnum.RequestNutrition
-               pathUploaded = IO.Path.Combine(p.sourceDirectory, "Request Nutrition", "output", GetDateFolder, "Uploaded")
-            Case FileTypeEnum.TnsSs
-               pathUploaded = IO.Path.Combine(p.sourceDirectory, "TNS SS", "output", GetDateFolder, "Uploaded")
-         End Select
-         If pathUploaded <> "" Then
-            Dim a As String = IO.Path.GetDirectoryName(pathUploaded)
-            MoveAll(pathUploaded, a)
-         End If
-      Next
-   End Sub
-
-   Sub MoveAll(sourse As String, destination As String)
-
-      Try
-         ' Check if the source folder exists
-         If Directory.Exists(sourse) Then
-            ' Check if the destination folder exists
-            If Not Directory.Exists(destination) Then
-               ' If it doesn't, create the destination folder
-               Directory.CreateDirectory(destination)
-            End If
-
-            ' Move files
-            For Each filePath As String In Directory.GetFiles(sourse)
-               Dim fileName As String = Path.GetFileName(filePath)
-               Dim destinationPath As String = Path.Combine(destination, fileName)
-
-               ' If the file already exists in the destination, you might want to handle it accordingly (e.g., overwrite, skip)
-               If File.Exists(destinationPath) Then
-                  ' Handle the situation (e.g., overwrite, skip)
-                  ' For now, let's just print a message
-                  Console.WriteLine($"File '{fileName}' already exists in the destination.")
-               Else
-                  ' Move the file
-                  File.Move(filePath, destinationPath)
-                  Console.WriteLine($"File '{fileName}' moved successfully.")
-               End If
-            Next
-
-            ' Move sub-folders
-            For Each subFolder As String In Directory.GetDirectories(sourse)
-               Dim folderName As String = Path.GetFileName(subFolder)
-               Dim destinationPath As String = Path.Combine(destination, folderName)
-
-               ' If the folder already exists in the destination, you might want to handle it accordingly (e.g., overwrite, skip)
-               If Directory.Exists(destinationPath) Then
-                  ' Handle the situation (e.g., overwrite, skip)
-                  ' For now, let's just print a message
-                  Console.WriteLine($"Folder '{folderName}' already exists in the destination.")
-               Else
-                  ' Move the folder
-                  Directory.Move(subFolder, destinationPath)
-                  Console.WriteLine($"Folder '{folderName}' moved successfully.")
-               End If
-            Next
-
-            Console.WriteLine("All files and folders moved successfully.")
-         Else
-            Console.WriteLine("Source folder does not exist.")
-         End If
-      Catch ex As Exception
-         Console.WriteLine($"Error: {ex.Message}")
-      End Try
-   End Sub
-
-   Sub CompressFolder(folderPath As String, relativePath As String, zipOutput As ZipOutputStream)
-      Dim files As String() = Directory.GetFiles(folderPath)
-      Dim subFolders As String() = Directory.GetDirectories(folderPath)
-
-      ' Compress files
-      For Each filePath As String In files
-         Dim entryName As String = Path.Combine(relativePath, Path.GetFileName(filePath))
-         Dim newEntry As ZipEntry = New ZipEntry(entryName)
-         newEntry.DateTime = DateTime.Now
-         newEntry.Size = New FileInfo(filePath).Length
-
-         zipOutput.PutNextEntry(newEntry)
-
-         Using fileStream As FileStream = New FileStream(filePath, FileMode.Open, FileAccess.Read)
-            Dim buffer As Byte() = New Byte(4096) {}
-            Dim bytesRead As Integer
-
-            Do
-               bytesRead = fileStream.Read(buffer, 0, buffer.Length)
-               zipOutput.Write(buffer, 0, bytesRead)
-            Loop While bytesRead > 0
-         End Using
-
-         zipOutput.CloseEntry()
-      Next
-
-      ' Recursively compress sub-folders
-      For Each subFolder As String In subFolders
-         Dim entryName As String = Path.Combine(relativePath, Path.GetFileName(subFolder) + Path.DirectorySeparatorChar)
-         zipOutput.PutNextEntry(New ZipEntry(entryName))
-         CompressFolder(subFolder, entryName, zipOutput)
-      Next
-   End Sub
 
    Private Sub Dgv_CurrentCellChanged(sender As Object, e As EventArgs) Handles Dgv.CurrentCellChanged
       If Dgv.CurrentCell IsNot Nothing Then
@@ -512,6 +407,6 @@ Public Class Form1
    End Sub
 
    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
-      Email_Settings_Class.ShowDialog()
+      Form_Email_Settings.ShowDialog()
    End Sub
 End Class

@@ -82,6 +82,8 @@ Public Class UploadFile
                }
             Else
                ' Create Folder for destination
+               Dim uploadedPath As String = IO.Path.Combine(IO.Path.GetDirectoryName(originalFilePath), "Uploaded")
+
                If Not ses.FileExists(Me.ftpDestinationFolder) Then
                   Dim slice As String() = ftpDestinationFolder.Split("/")
                   Dim p As String = ""
@@ -141,6 +143,8 @@ Public Class UploadFile
                      Throw New Exception("Path is not defined of what type")
                      Exit Sub
                   End If
+               Else
+
                End If
                '
                Dim transferResult As TransferOperationResult
@@ -166,7 +170,6 @@ Public Class UploadFile
                'Possible error MoveFile
                ses.MoveFile(tmpDest, dest)
                '
-               Dim uploadedPath As String = IO.Path.Combine(IO.Path.GetDirectoryName(originalFilePath), "Uploaded")
                If Not IO.Directory.Exists(uploadedPath) Then MkDir(uploadedPath)
                Try
                   If setup.fileType = SetupProp.FileType_.FILE Then

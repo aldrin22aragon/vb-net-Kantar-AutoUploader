@@ -121,7 +121,15 @@
     <Compile Include="libraries\Class Email Settings.vb" />
     <Compile Include="libraries\FileSettingsCreator2.vb" />
     <Compile Include="libraries\ICSharpCode_Zip.vb" />
+    <Compile Include="libraries\MyTimer.Designer.vb">
+      <DependentUpon>MyTimer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="libraries\MyTimer.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="libraries\ProcessSettings.vb" />
+    <Compile Include="libraries\SendEmail.vb" />
+    <Compile Include="libraries\UplodedFileForEmail.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -158,6 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Form Process Settings.resx">
       <DependentUpon>Form Process Settings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="libraries\MyTimer.resx">
+      <DependentUpon>MyTimer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
