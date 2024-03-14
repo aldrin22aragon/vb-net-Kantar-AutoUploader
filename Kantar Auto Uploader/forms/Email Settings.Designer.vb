@@ -25,23 +25,25 @@ Partial Class Form_Email_Settings
       Me.CmbType = New System.Windows.Forms.ComboBox()
       Me.Label2 = New System.Windows.Forms.Label()
       Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.CtPassword = New Kantar_Auto_Uploader.Costum_Textbox()
-        Me.CtUsername = New Kantar_Auto_Uploader.Costum_Textbox()
-        Me.CtPort = New Kantar_Auto_Uploader.Costum_Textbox()
-        Me.CtHost = New Kantar_Auto_Uploader.Costum_Textbox()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.LbBCC = New System.Windows.Forms.ListBox()
         Me.LbCC = New System.Windows.Forms.ListBox()
         Me.LbTo = New System.Windows.Forms.ListBox()
-        Me.CtBCC = New Kantar_Auto_Uploader.Costum_Textbox()
-        Me.CtCC = New Kantar_Auto_Uploader.Costum_Textbox()
-        Me.CtTo = New Kantar_Auto_Uploader.Costum_Textbox()
-        Me.CtSubject = New Kantar_Auto_Uploader.Costum_Textbox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.BtnSave = New System.Windows.Forms.Button()
         Me.BtnCancel = New System.Windows.Forms.Button()
         Me.CbCopyFrom = New System.Windows.Forms.ComboBox()
+        Me.BtnTestSendToSelf = New System.Windows.Forms.Button()
+        Me.LabelInformation = New System.Windows.Forms.Label()
+        Me.CtBCC = New Kantar_Auto_Uploader.Costum_Textbox()
+        Me.CtCC = New Kantar_Auto_Uploader.Costum_Textbox()
+        Me.CtTo = New Kantar_Auto_Uploader.Costum_Textbox()
+        Me.CtSubject = New Kantar_Auto_Uploader.Costum_Textbox()
+        Me.CtPassword = New Kantar_Auto_Uploader.Costum_Textbox()
+        Me.CtUsername = New Kantar_Auto_Uploader.Costum_Textbox()
+        Me.CtPort = New Kantar_Auto_Uploader.Costum_Textbox()
+        Me.CtHost = New Kantar_Auto_Uploader.Costum_Textbox()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
@@ -78,54 +80,6 @@ Partial Class Form_Email_Settings
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(203, 164)
         Me.Panel1.TabIndex = 3
-        '
-        'CtPassword
-        '
-        Me.CtPassword._LabelText = "Password"
-        Me.CtPassword._PanelColor = System.Drawing.Color.Transparent
-        Me.CtPassword._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CtPassword._TextBoxValue = ""
-        Me.CtPassword.BackColor = System.Drawing.Color.Transparent
-        Me.CtPassword.Location = New System.Drawing.Point(8, 111)
-        Me.CtPassword.Name = "CtPassword"
-        Me.CtPassword.Size = New System.Drawing.Size(185, 35)
-        Me.CtPassword.TabIndex = 3
-        '
-        'CtUsername
-        '
-        Me.CtUsername._LabelText = "Username"
-        Me.CtUsername._PanelColor = System.Drawing.Color.Transparent
-        Me.CtUsername._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CtUsername._TextBoxValue = ""
-        Me.CtUsername.BackColor = System.Drawing.Color.Transparent
-        Me.CtUsername.Location = New System.Drawing.Point(8, 76)
-        Me.CtUsername.Name = "CtUsername"
-        Me.CtUsername.Size = New System.Drawing.Size(185, 35)
-        Me.CtUsername.TabIndex = 2
-        '
-        'CtPort
-        '
-        Me.CtPort._LabelText = "Port"
-        Me.CtPort._PanelColor = System.Drawing.Color.Transparent
-        Me.CtPort._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CtPort._TextBoxValue = ""
-        Me.CtPort.BackColor = System.Drawing.Color.Transparent
-        Me.CtPort.Location = New System.Drawing.Point(8, 41)
-        Me.CtPort.Name = "CtPort"
-        Me.CtPort.Size = New System.Drawing.Size(185, 35)
-        Me.CtPort.TabIndex = 1
-        '
-        'CtHost
-        '
-        Me.CtHost._LabelText = "Host"
-        Me.CtHost._PanelColor = System.Drawing.Color.Transparent
-        Me.CtHost._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CtHost._TextBoxValue = ""
-        Me.CtHost.BackColor = System.Drawing.Color.Transparent
-        Me.CtHost.Location = New System.Drawing.Point(8, 6)
-        Me.CtHost.Name = "CtHost"
-        Me.CtHost.Size = New System.Drawing.Size(185, 35)
-        Me.CtHost.TabIndex = 0
         '
         'Panel2
         '
@@ -171,6 +125,80 @@ Partial Class Form_Email_Settings
         Me.LbTo.Name = "LbTo"
         Me.LbTo.Size = New System.Drawing.Size(180, 69)
         Me.LbTo.TabIndex = 8
+        '
+        'Label1
+        '
+        Me.Label1.BackColor = System.Drawing.Color.DarkSeaGreen
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI Semibold", 10.25!, System.Drawing.FontStyle.Bold)
+        Me.Label1.Location = New System.Drawing.Point(12, 29)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(82, 26)
+        Me.Label1.TabIndex = 5
+        Me.Label1.Text = "Credentials"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label3
+        '
+        Me.Label3.BackColor = System.Drawing.Color.Thistle
+        Me.Label3.Font = New System.Drawing.Font("Segoe UI Semibold", 10.25!, System.Drawing.FontStyle.Bold)
+        Me.Label3.Location = New System.Drawing.Point(238, 29)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(82, 26)
+        Me.Label3.TabIndex = 6
+        Me.Label3.Text = "Email"
+        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'BtnSave
+        '
+        Me.BtnSave.BackColor = System.Drawing.Color.LightGreen
+        Me.BtnSave.Enabled = False
+        Me.BtnSave.Location = New System.Drawing.Point(559, 225)
+        Me.BtnSave.Name = "BtnSave"
+        Me.BtnSave.Size = New System.Drawing.Size(121, 23)
+        Me.BtnSave.TabIndex = 7
+        Me.BtnSave.Text = "Save"
+        Me.BtnSave.UseVisualStyleBackColor = False
+        '
+        'BtnCancel
+        '
+        Me.BtnCancel.Location = New System.Drawing.Point(687, 225)
+        Me.BtnCancel.Name = "BtnCancel"
+        Me.BtnCancel.Size = New System.Drawing.Size(121, 23)
+        Me.BtnCancel.TabIndex = 8
+        Me.BtnCancel.Text = "Cancel"
+        Me.BtnCancel.UseVisualStyleBackColor = True
+        '
+        'CbCopyFrom
+        '
+        Me.CbCopyFrom.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.CbCopyFrom.FormattingEnabled = True
+        Me.CbCopyFrom.Location = New System.Drawing.Point(100, 29)
+        Me.CbCopyFrom.Name = "CbCopyFrom"
+        Me.CbCopyFrom.Size = New System.Drawing.Size(115, 21)
+        Me.CbCopyFrom.TabIndex = 9
+        '
+        'BtnTestSendToSelf
+        '
+        Me.BtnTestSendToSelf.Location = New System.Drawing.Point(41, 225)
+        Me.BtnTestSendToSelf.Name = "BtnTestSendToSelf"
+        Me.BtnTestSendToSelf.Size = New System.Drawing.Size(174, 23)
+        Me.BtnTestSendToSelf.TabIndex = 10
+        Me.BtnTestSendToSelf.Text = "Test send email to self"
+        Me.BtnTestSendToSelf.UseVisualStyleBackColor = True
+        '
+        'LabelInformation
+        '
+        Me.LabelInformation.BackColor = System.Drawing.SystemColors.Info
+        Me.LabelInformation.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LabelInformation.Font = New System.Drawing.Font("Segoe UI Semibold", 10.25!, System.Drawing.FontStyle.Bold)
+        Me.LabelInformation.ForeColor = System.Drawing.Color.Black
+        Me.LabelInformation.Location = New System.Drawing.Point(235, 222)
+        Me.LabelInformation.Name = "LabelInformation"
+        Me.LabelInformation.Padding = New System.Windows.Forms.Padding(3)
+        Me.LabelInformation.Size = New System.Drawing.Size(318, 27)
+        Me.LabelInformation.TabIndex = 11
+        Me.LabelInformation.Text = "Info"
+        Me.LabelInformation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'CtBCC
         '
@@ -220,56 +248,53 @@ Partial Class Form_Email_Settings
         Me.CtSubject.Size = New System.Drawing.Size(553, 35)
         Me.CtSubject.TabIndex = 4
         '
-        'Label1
+        'CtPassword
         '
-        Me.Label1.BackColor = System.Drawing.Color.DarkSeaGreen
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI Semibold", 10.25!, System.Drawing.FontStyle.Bold)
-        Me.Label1.Location = New System.Drawing.Point(12, 29)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(82, 26)
-        Me.Label1.TabIndex = 5
-        Me.Label1.Text = "Credentials"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.CtPassword._LabelText = "Password"
+        Me.CtPassword._PanelColor = System.Drawing.Color.Transparent
+        Me.CtPassword._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CtPassword._TextBoxValue = ""
+        Me.CtPassword.BackColor = System.Drawing.Color.Transparent
+        Me.CtPassword.Location = New System.Drawing.Point(8, 111)
+        Me.CtPassword.Name = "CtPassword"
+        Me.CtPassword.Size = New System.Drawing.Size(185, 35)
+        Me.CtPassword.TabIndex = 3
         '
-        'Label3
+        'CtUsername
         '
-        Me.Label3.BackColor = System.Drawing.Color.Thistle
-        Me.Label3.Font = New System.Drawing.Font("Segoe UI Semibold", 10.25!, System.Drawing.FontStyle.Bold)
-        Me.Label3.Location = New System.Drawing.Point(238, 29)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(82, 26)
-        Me.Label3.TabIndex = 6
-        Me.Label3.Text = "Email"
-        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.CtUsername._LabelText = "Username"
+        Me.CtUsername._PanelColor = System.Drawing.Color.Transparent
+        Me.CtUsername._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CtUsername._TextBoxValue = ""
+        Me.CtUsername.BackColor = System.Drawing.Color.Transparent
+        Me.CtUsername.Location = New System.Drawing.Point(8, 76)
+        Me.CtUsername.Name = "CtUsername"
+        Me.CtUsername.Size = New System.Drawing.Size(185, 35)
+        Me.CtUsername.TabIndex = 2
         '
-        'BtnSave
+        'CtPort
         '
-        Me.BtnSave.BackColor = System.Drawing.Color.LightGreen
-        Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(559, 225)
-        Me.BtnSave.Name = "BtnSave"
-        Me.BtnSave.Size = New System.Drawing.Size(121, 23)
-        Me.BtnSave.TabIndex = 7
-        Me.BtnSave.Text = "Save"
-        Me.BtnSave.UseVisualStyleBackColor = False
+        Me.CtPort._LabelText = "Port"
+        Me.CtPort._PanelColor = System.Drawing.Color.Transparent
+        Me.CtPort._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CtPort._TextBoxValue = ""
+        Me.CtPort.BackColor = System.Drawing.Color.Transparent
+        Me.CtPort.Location = New System.Drawing.Point(8, 41)
+        Me.CtPort.Name = "CtPort"
+        Me.CtPort.Size = New System.Drawing.Size(185, 35)
+        Me.CtPort.TabIndex = 1
         '
-        'BtnCancel
+        'CtHost
         '
-        Me.BtnCancel.Location = New System.Drawing.Point(687, 225)
-        Me.BtnCancel.Name = "BtnCancel"
-        Me.BtnCancel.Size = New System.Drawing.Size(121, 23)
-        Me.BtnCancel.TabIndex = 8
-        Me.BtnCancel.Text = "Cancel"
-        Me.BtnCancel.UseVisualStyleBackColor = True
-        '
-        'CbCopyFrom
-        '
-        Me.CbCopyFrom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.CbCopyFrom.FormattingEnabled = True
-        Me.CbCopyFrom.Location = New System.Drawing.Point(100, 29)
-        Me.CbCopyFrom.Name = "CbCopyFrom"
-        Me.CbCopyFrom.Size = New System.Drawing.Size(115, 21)
-        Me.CbCopyFrom.TabIndex = 9
+        Me.CtHost._LabelText = "Host"
+        Me.CtHost._PanelColor = System.Drawing.Color.Transparent
+        Me.CtHost._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CtHost._TextBoxValue = ""
+        Me.CtHost.BackColor = System.Drawing.Color.Transparent
+        Me.CtHost.Location = New System.Drawing.Point(8, 6)
+        Me.CtHost.Name = "CtHost"
+        Me.CtHost.Size = New System.Drawing.Size(185, 35)
+        Me.CtHost.TabIndex = 0
         '
         'Form_Email_Settings
         '
@@ -277,6 +302,8 @@ Partial Class Form_Email_Settings
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Info
         Me.ClientSize = New System.Drawing.Size(820, 256)
+        Me.Controls.Add(Me.LabelInformation)
+        Me.Controls.Add(Me.BtnTestSendToSelf)
         Me.Controls.Add(Me.CbCopyFrom)
         Me.Controls.Add(Me.BtnCancel)
         Me.Controls.Add(Me.BtnSave)
@@ -320,4 +347,6 @@ Partial Class Form_Email_Settings
    Friend WithEvents BtnSave As Button
    Friend WithEvents BtnCancel As Button
    Friend WithEvents CbCopyFrom As ComboBox
+    Friend WithEvents BtnTestSendToSelf As Button
+    Friend WithEvents LabelInformation As Label
 End Class

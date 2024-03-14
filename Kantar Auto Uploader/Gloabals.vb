@@ -18,6 +18,24 @@ Module Gloabals
    Public Const IndexUploadStatus As Integer = 3
    Public Const IndexEmailStatus As Integer = 4
    '
+   Public Types As New List(Of FileTypeEnum) From {
+               FileTypeEnum.BabyFood,
+               FileTypeEnum.BrandBank,
+               FileTypeEnum.Irish,
+               FileTypeEnum.ProductLibrary,
+               FileTypeEnum.RequestNutrition,
+               FileTypeEnum.TnsSs
+            }
+   '
+   Enum FileTypeEnum As Integer
+      NONE = 0
+      BabyFood = 1
+      BrandBank = 2
+      Irish = 3
+      ProductLibrary = 4
+      RequestNutrition = 5
+      TnsSs = 6
+   End Enum
 
    Sub ErrMsg(msg As String)
       MessageBox.Show(msg, "Oops!", MessageBoxButtons.OK, MessageBoxIcon.Error)

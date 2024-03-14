@@ -1,4 +1,7 @@
-﻿Public Class Form_Email_Settings
+﻿Imports System.Net.Mail
+
+Public Class Form_Email_Settings
+
    Private Sub Email_Settings_Class_Load(sender As Object, e As EventArgs) Handles MyBase.Load
       Dim aa = fscEmailSettings.GetSettings
       If aa IsNot Nothing Then
@@ -232,4 +235,40 @@
          BtnSave.Text = "Saved"
       End If
    End Sub
+
+   Private Sub BtnTestSendToSelf_Click(sender As Object, e As EventArgs) Handles BtnTestSendToSelf.Click
+      Me.Enabled = False
+      LabelInformation.Text = "Sending...."
+      Dim aa = FormSettings
+      Dim props As New SendEmail.Props With {
+         .Host = aa.Host,
+         .Port = aa.Port,
+         ._Password = aa.Password,
+         ._UserName = aa.Username
+      }
+      Dim message As New MailMessage() With {
+         .From = New MailAddress(aa.Username),
+         .Subject = "Test send email to self",
+         .IsBodyHtml = True,
+         .Body = "Test Email."
+      }
+      message.To.Add(aa.Username)
+      Dim email As New SendEmail(props, message)
+      email.StartSend()
+      While (email.Status <> SendEmail.EStatus.Error) And (email.Status <> SendEmail.EStatus.EmailSent)
+         Threading.Thread.Sleep(200)
+         Application.DoEvents()
+      End While
+      Me.Enabled = True
+      LabelInformation.Text = "Info"
+      If email.Status = SendEmail.EStatus.EmailSent Then
+         SuccessMsg("Test success.")
+      ElseIf email.Status = SendEmail.EStatus.Error Then
+         ErrMsg(email.Exception.Message)
+      Else
+         ErrMsg("Unknown error. Please try again.")
+      End If
+   End Sub
+
+
 End Class

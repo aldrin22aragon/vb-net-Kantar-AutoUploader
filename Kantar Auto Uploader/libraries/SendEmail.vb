@@ -3,44 +3,55 @@ Public Class SendEmail
    Dim th As Threading.Thread
    ReadOnly EmailProperty As Props = Nothing
    ReadOnly MailMessageProperty As MailMessage = Nothing
-   Public Status As SendInfo
+   Property Status As EStatus = EStatus.NONE
+   Property Exception As Exception = Nothing
+   ''' <summary>
+   ''' This automatically disposes all attachment tha have been used.
+   ''' </summary>
+   ''' <param name="EmailProp"></param>
+   ''' <param name="Mail"></param>
    Sub New(EmailProp As Props, Mail As MailMessage)
       Me.EmailProperty = EmailProp
       Me.MailMessageProperty = Mail
-      Status = New SendInfo() With {
-         .running = False,
-         .success = False,
-         ._error = False
-      }
    End Sub
 
-   Sub StartUpload()
+   Sub StartSend()
       th = New System.Threading.Thread(AddressOf RunThread)
       th.Start()
+      Status = EStatus.Running
    End Sub
    Private Sub RunThread()
-      Dim client As New SmtpClient() With {
-         .Host = EmailProperty.Host,
-         .Port = EmailProperty.Port,
-         .DeliveryFormat = EmailProperty.DeliveryFormat, ' default SmtpDeliveryFormat.International
-         .EnableSsl = EmailProperty.EnableSsl ' default  false
-      }
-      client.Credentials = New Net.NetworkCredential() With {
-         .UserName = EmailProperty._UserName, 'email
-         .Password = EmailProperty._Password,
-         .Domain = EmailProperty._Domain 'default blank
-      }
       Try
-         client.Send(MailMessageProperty)
+         Status = EStatus.SettingUpCredentials
+         Dim client As New SmtpClient() With {
+            .Host = EmailProperty.Host,
+            .Port = EmailProperty.Port,
+            .DeliveryFormat = EmailProperty.DeliveryFormat, ' default SmtpDeliveryFormat.International
+            .EnableSsl = EmailProperty.EnableSsl ' default  false
+         }
+         client.Credentials = New Net.NetworkCredential() With {
+            .UserName = EmailProperty._UserName, 'email
+            .Password = EmailProperty._Password,
+            .Domain = EmailProperty._Domain 'default blank
+         }
+         Try
+            Status = EStatus.Sending
+            client.Send(MailMessageProperty)
+            Status = EStatus.EmailSent
+         Catch ex As Exception
+            Exception = ex
+            Status = EStatus.Error
+         Finally
+            MailMessageProperty.Attachments.Dispose()
+            If MailMessageProperty.Attachments.Count > 0 Then MailMessageProperty.Attachments.Clear()
+            MailMessageProperty.Dispose()
+            client.Dispose()
+            GC.Collect()
+            GC.WaitForPendingFinalizers()
+         End Try
       Catch ex As Exception
-
-      Finally
-         MailMessageProperty.Attachments.Dispose()
-         MailMessageProperty.Attachments.Clear()
-         MailMessageProperty.Dispose()
-         client.Dispose()
-         GC.Collect()
-         GC.WaitForPendingFinalizers()
+         Exception = ex
+         Status = EStatus.Error
       End Try
 
    End Sub
@@ -48,19 +59,29 @@ Public Class SendEmail
    Class Props
       Public Host As String = ""
       Public Port As String = ""
+      ''' <summary>
+      ''' default is SevenBit
+      ''' </summary>
       Public DeliveryFormat As SmtpDeliveryFormat = SmtpDeliveryFormat.SevenBit
-      Public EnableSsl As Boolean = False
+      ''' <summary>
+      ''' default is false
+      ''' </summary>
+      Public EnableSsl As Boolean = False '
       Public _UserName As String = ""
       Public _Password As String = ""
+      ''' <summary>
+      ''' Defaul Blank
+      ''' </summary>
       Public _Domain As String = ""
    End Class
-   Class SendInfo
-      Public running As Boolean = False
-      Public success As Boolean = False
-      Public message As String = ""
-      Public _error As Boolean = False
-      Public RetryCount As Integer = 0
-      Public innextException As String = ""
-      Public stackTrace As String = ""
-   End Class
+
+   Enum EStatus As Integer
+      NONE = 0
+      Running = 1
+      Sending = 2
+      EmailSent = 3
+      [Error] = 4
+      SettingUpCredentials = 5
+   End Enum
+
 End Class

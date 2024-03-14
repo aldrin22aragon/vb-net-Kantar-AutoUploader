@@ -23,7 +23,6 @@ Public Class UploadFile
       Me.filePath = filePath
       Me.sesOptions = sesOption
       Me.ftpDestinationFolder = ftpDestinationFolder
-
    End Sub
 
    Class SetupProp
@@ -57,6 +56,36 @@ Public Class UploadFile
       th = New System.Threading.Thread(AddressOf RunThread)
       th.Start()
    End Sub
+
+   Sub CreateFtpDirectoryRecursive(ses As Session, ftpDirectory As String)
+      If ses.Opened Then
+         If Not ses.FileExists(ftpDirectory) Then
+            Dim slice As String() = ftpDirectory.Split("/")
+            Dim p As String = ""
+            For Each i As String In slice
+               If i = "" Then
+                  p = ""
+               Else
+                  p = p & "/" & i
+                  If Not ses.FileExists(p) Then
+                     Try
+                        ses.CreateDirectory(p)
+                     Catch ex As Exception
+                        If ses.FileExists(p) Then
+                           Continue For
+                        Else
+                           Throw New Exception("Error on creating FTP directory :" & p)
+                        End If
+                     End Try
+                  End If
+               End If
+            Next
+         End If
+      Else
+         Throw New Exception("Session must be open  in Sub CreateDirectoryRecursive.")
+      End If
+   End Sub
+
    Private Sub RunThread()
       Try
          Dim ses As New Session
@@ -84,28 +113,7 @@ Public Class UploadFile
                ' Create Folder for destination
                Dim uploadedPath As String = IO.Path.Combine(IO.Path.GetDirectoryName(originalFilePath), "Uploaded")
 
-               If Not ses.FileExists(Me.ftpDestinationFolder) Then
-                  Dim slice As String() = ftpDestinationFolder.Split("/")
-                  Dim p As String = ""
-                  For Each i As String In slice
-                     If i = "" Then
-                        p = ""
-                     Else
-                        p = p & "/" & i
-                        If Not ses.FileExists(p) Then
-                           Try
-                              ses.CreateDirectory(p)
-                           Catch ex As Exception
-                              If ses.FileExists(p) Then
-                                 Continue For
-                              Else
-                                 Throw New Exception("Error on creating FTP directory :" & p)
-                              End If
-                           End Try
-                        End If
-                     End If
-                  Next
-               End If
+               CreateFtpDirectoryRecursive(ses, Me.ftpDestinationFolder)
                '
                If setup.toZip Then
                   status.compressingStatus = STAT_INFO.CompresStatus.Compressing

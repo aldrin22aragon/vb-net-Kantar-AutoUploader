@@ -13,15 +13,6 @@ Public Class Form1
 
    Friend WithEvents Timer As New AOA_Timer(8)
 
-   Enum FileTypeEnum As Integer
-      NONE = 0
-      BabyFood = 1
-      BrandBank = 2
-      Irish = 3
-      ProductLibrary = 4
-      RequestNutrition = 5
-      TnsSs = 6
-   End Enum
 
 
 
@@ -135,143 +126,134 @@ Public Class Form1
          If p IsNot Nothing AndAlso p.checkIntervalMins > 0 Then
             Dim dateFolder As String = GetDateFolder()
 
-            Dim types As New List(Of FileTypeEnum) From {
-               FileTypeEnum.BabyFood,
-               FileTypeEnum.BrandBank,
-               FileTypeEnum.Irish,
-               FileTypeEnum.ProductLibrary,
-               FileTypeEnum.RequestNutrition,
-               FileTypeEnum.TnsSs
-            }
             'Dim func = Function(folder As String) As String
             '              Return String.Concat(p.destinationDirectory, "/", folder, "/Output/", dateFolder)
             '           End Function
-            RichTextBox2.Text = "Scan files from:"
-            For Each type As FileTypeEnum In types
-               Dim dest As String = String.Concat(p.destinationDirectory, "/", dateFolder)
+            RichTextBox2.Text = "Scan files from: " & p.sourceDirectory
+            For Each type As FileTypeEnum In Types
+               Dim dest As String = String.Concat(p.FtpDestinationDirectory, "/", dateFolder)
                Select Case type
                   Case FileTypeEnum.BabyFood
                      Dim path As String = IO.Path.Combine(p.sourceDirectory, "Baby Food", "Output", dateFolder)
-                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & path
-                     Dim a = p.destinationDirectory & "/receipts/BABYFOODS/ddc output"
-                     For Each i As String In MyGetFiles(path).ToList
-                        If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, a, c)
+                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & vbTab & IO.Path.Combine("Baby Food", "Output", dateFolder)
+                     Dim FtpDestinationDirectory = p.FtpDestinationDirectory & "/receipts/BABYFOODS/ddc output"
+                     For Each File_ As String In MyGetFiles(path).ToList
+                        If IsAddable(File_) Then
+                           Dim upload As New UploadFile(File_, FtpDestinationDirectory, c)
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BabyFood
                            upload.setup.toZip = True
-                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(i), "Baby Food", "to zip", "For Upload")
+                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "Baby Food", "to zip", "For Upload")
                            Dgv.Rows(indx).Tag = upload
                         End If
                      Next
-                     For Each i As String In MyGetDirectories(path).ToList
-                        If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, a, c)
+                     For Each Directory_ As String In MyGetDirectories(path).ToList
+                        If IsAddable(Directory_) Then
+                           Dim upload As New UploadFile(Directory_, FtpDestinationDirectory, c)
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BabyFood
                            upload.setup.toZip = True
-                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(i), "Baby Food", "to zip", "For Upload")
+                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(Directory_), "Baby Food", "to zip", "For Upload")
                            Dgv.Rows(indx).Tag = upload
-
                         End If
                      Next
                   Case FileTypeEnum.BrandBank
                      Dim path As String = IO.Path.Combine(p.sourceDirectory, "Brandbank", "Output", dateFolder)
-                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & path
-                     Dim a = p.destinationDirectory & "/receipts/INGREDIENTS/Brandbank"
-                     For Each i As String In MyGetFiles(path).ToList
-                        If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, a, c)
+                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & vbTab & IO.Path.Combine("Brandbank", "Output", dateFolder)
+                     Dim FtpDestinationDirectory = p.FtpDestinationDirectory & "/receipts/INGREDIENTS/Brandbank"
+                     For Each File_ As String In MyGetFiles(path).ToList
+                        If IsAddable(File_) Then
+                           Dim upload As New UploadFile(File_, FtpDestinationDirectory, c)
                            upload.setup.toZip = True
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BrandBank
-                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(i), "BrandBank", "to zip", "For Upload")
+                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "BrandBank", "to zip", "For Upload")
                            Dgv.Rows(indx).Tag = upload
                         End If
                      Next
-                     For Each i As String In MyGetDirectories(path).ToList
-                        If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, a, c)
+                     For Each Directory_ As String In MyGetDirectories(path).ToList
+                        If IsAddable(Directory_) Then
+                           Dim upload As New UploadFile(Directory_, FtpDestinationDirectory, c)
                            upload.setup.toZip = True
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BrandBank
-                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(i), "BrandBank", "to zip", "For Upload")
+                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(Directory_), "BrandBank", "to zip", "For Upload")
                            Dgv.Rows(indx).Tag = upload
                         End If
                      Next
                   Case FileTypeEnum.ProductLibrary
                      Dim path As String = IO.Path.Combine(p.sourceDirectory, "Product Library", "Output", dateFolder)
-                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & path
-                     Dim a = p.destinationDirectory & "/receipts/NUTRITION_IMAGES/Request_Output"
-                     For Each i As String In MyGetFiles(path).ToList
-                        If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, a, c)
+                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & vbTab & IO.Path.Combine("Product Library", "Output", dateFolder)
+                     Dim FtpDestinationDirectory = p.FtpDestinationDirectory & "/receipts/NUTRITION_IMAGES/Request_Output"
+                     For Each File_ As String In MyGetFiles(path).ToList
+                        If IsAddable(File_) Then
+                           Dim upload As New UploadFile(File_, FtpDestinationDirectory, c)
                            upload.setup.toZip = True
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.ProductLibrary
-                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(i), "Product Library", "to zip", "For Upload")
+                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "Product Library", "to zip", "For Upload")
                            Dgv.Rows(indx).Tag = upload
                         End If
                      Next
-                     For Each i As String In MyGetDirectories(path).ToList
-                        If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, a, c)
+                     For Each Directory_ As String In MyGetDirectories(path).ToList
+                        If IsAddable(Directory_) Then
+                           Dim upload As New UploadFile(Directory_, FtpDestinationDirectory, c)
                            upload.setup.toZip = True
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.ProductLibrary
-                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(i), "Product Library", "to zip", "For Upload")
+                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(Directory_), "Product Library", "to zip", "For Upload")
                            Dgv.Rows(indx).Tag = upload
                         End If
                      Next
                   Case FileTypeEnum.RequestNutrition
                      Dim path As String = IO.Path.Combine(p.sourceDirectory, "Request Nutrition", "Output", dateFolder)
-                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & path
-                     Dim a = p.destinationDirectory & "/receipts/NUTRITION_IMAGES/Request_Output"
-                     For Each i As String In MyGetFiles(path).ToList
-                        If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, a, c)
+                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & vbTab & IO.Path.Combine("Request Nutrition", "Output", dateFolder)
+                     Dim FtpDestinationDirectory = p.FtpDestinationDirectory & "/receipts/NUTRITION_IMAGES/Request_Output"
+                     For Each File_ As String In MyGetFiles(path).ToList
+                        If IsAddable(File_) Then
+                           Dim upload As New UploadFile(File_, FtpDestinationDirectory, c)
                            upload.setup.toZip = True
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.RequestNutrition
-                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(i), "Request Nutrition", "to zip", "For Upload")
+                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "Request Nutrition", "to zip", "For Upload")
                            Dgv.Rows(indx).Tag = upload
                         End If
                      Next
-                     For Each i As String In MyGetDirectories(path).ToList
-                        If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, a, c)
+                     For Each Directory_ As String In MyGetDirectories(path).ToList
+                        If IsAddable(Directory_) Then
+                           Dim upload As New UploadFile(Directory_, FtpDestinationDirectory, c)
                            upload.setup.toZip = True
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.RequestNutrition
-                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(i), "Request Nutrition", "to zip", "For Upload")
+                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(Directory_), "Request Nutrition", "to zip", "For Upload")
                            Dgv.Rows(indx).Tag = upload
                         End If
                      Next
                   Case FileTypeEnum.Irish
                      Dim path As String = IO.Path.Combine(p.sourceDirectory, "Irish", "Output", dateFolder)
-                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & path
-                     Dim a = p.destinationDirectory & "/receipts/receiptsIE"
-                     For Each i As String In MyGetFiles(path).ToList
-                        If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, a, c)
+                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & vbTab & IO.Path.Combine("Irish", "Output", dateFolder)
+                     Dim FtpDestinationDirectory = p.FtpDestinationDirectory & "/receipts/receiptsIE"
+                     For Each File_ As String In MyGetFiles(path).ToList
+                        If IsAddable(File_) Then
+                           Dim upload As New UploadFile(File_, FtpDestinationDirectory, c)
                            upload.setup.toZip = False
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.Irish
-                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(i), "Irish", "---", "For Upload")
+                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "Irish", "---", "For Upload")
                            Dgv.Rows(indx).Tag = upload
                         End If
                      Next
                   Case FileTypeEnum.TnsSs
                      Dim path As String = IO.Path.Combine(p.sourceDirectory, "Tns SS", "Output", dateFolder)
-                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & path
-                     Dim a = p.destinationDirectory & "/receipts"
-                     For Each i As String In MyGetFiles(path).ToList
-                        If IsAddable(i) Then
-                           Dim upload As New UploadFile(i, a, c)
+                     RichTextBox2.Text = RichTextBox2.Text & vbNewLine & vbTab & IO.Path.Combine("Tns SS", "Output", dateFolder)
+                     Dim FtpDestinationDirectory = p.FtpDestinationDirectory & "/receipts"
+                     For Each File_ As String In MyGetFiles(path).ToList
+                        If IsAddable(File_) Then
+                           Dim upload As New UploadFile(File_, FtpDestinationDirectory, c)
                            upload.setup.toZip = False
                            upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
                            upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.TnsSs
-                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(i), "TNS SS", "---", "For Upload")
+                           Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "TNS SS", "---", "For Upload")
                            Dgv.Rows(indx).Tag = upload
                         End If
                      Next
@@ -282,8 +264,10 @@ Public Class Form1
          End If
          Timer.IntervalSeconds = (p.checkIntervalMins * 60)
          Timer.RestartTimer()
-         TimerUploaderStarter.Enabled = True
-         TimerUploadStatus.Enabled = True
+         If Not TimerUploaderStarter.Enabled Then TimerUploaderStarter.Enabled = True
+         If Not TimerUploadStatus.Enabled Then TimerUploadStatus.Enabled = True
+         If Not TimerEmailStarter.Enabled Then TimerEmailStarter.Enabled = True
+         If Not TimerEmailStatus.Enabled Then TimerEmailStatus.Enabled = True
       Else
          LblStatus.Text = "Scan files in (" & e.secondsRemaining & ") seconds"
       End If
@@ -305,7 +289,6 @@ Public Class Form1
    End Sub
 
    Private Sub TimerUploadStatus_Tick(sender As Object, e As EventArgs) Handles TimerUploadStatus.Tick
-      LblRunningStats.Text = "...."
       Dim uploadingCount As Integer = 0
       For Each i As DataGridViewRow In Dgv.Rows
          Dim u As UploadFile = i.Tag
@@ -402,11 +385,23 @@ Public Class Form1
    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
       Dim ses = fscSessionOptions.GetSettings
       Dim pro = fscProcessSettings.GetSettings
-      Dim b As New FtpBrowser(ses, FtpBrowser.Mode_.file, pro.destinationDirectory)
+      Dim b As New FtpBrowser(ses, FtpBrowser.Mode_.file, pro.FtpDestinationDirectory)
       b.ShowDialog()
    End Sub
 
    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
       Form_Email_Settings.ShowDialog()
+   End Sub
+
+   Private Sub TimerEmailStarter_Tick(sender As Object, e As EventArgs) Handles TimerEmailStarter.Tick
+
+   End Sub
+
+   Private Sub TimerEmailStatus_Tick(sender As Object, e As EventArgs) Handles TimerEmailStatus.Tick
+
+   End Sub
+
+   Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
    End Sub
 End Class
