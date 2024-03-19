@@ -1,5 +1,14 @@
 ﻿
 Public Class Costum_Textbox
+   Property _PasswordCharacter As String
+      Get
+         Return TxMain.PasswordChar
+      End Get
+      Set(value As String)
+         TxMain.PasswordChar = value
+      End Set
+   End Property
+
    ReadOnly Property _Label As Label
       Get
          Return Label1

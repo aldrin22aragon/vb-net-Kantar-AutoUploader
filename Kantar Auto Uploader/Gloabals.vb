@@ -11,7 +11,7 @@ Module Gloabals
    Public fscProcessSettings As New FileSettingsCreator2(Of ProcessSettings)(fscProcessSettingsFilePath, New ProcessSettings)
    Public fscEmailSettings As New FileSettingsCreator2(Of Class_Email_Settings)(fscEmailSettingsFilePath, New Class_Email_Settings)
 
-   Public programmersMode As Boolean = False
+   Public programmersMode As Boolean = IO.Directory.Exists("C:\Users\soft10\source\repos\Kantar Auto Uploader\Kantar Auto Uploader\bin\Debug\Files\Test Files\4FTP\Baby Food\Output")
    '
    Public Const EmailColumnIndex As Integer = 0 ' dito ilalagay ysa cell yung sender
    Public Const IndexZipStatus As Integer = 2
@@ -27,6 +27,10 @@ Module Gloabals
                FileTypeEnum.TnsSs
             }
    '
+   Public Const AttachmentValue As String = "{Attachement}"
+   Public Const UplodedFolder As String = "Uploaded"
+   Public Const EmailedStr As String = "Emailed"
+   '
    Enum FileTypeEnum As Integer
       NONE = 0
       BabyFood = 1
@@ -36,7 +40,30 @@ Module Gloabals
       RequestNutrition = 5
       TnsSs = 6
    End Enum
-
+   '
+   Public Function GetOutputFolder(type_ As FileTypeEnum, dateFolder As String) As String
+      Dim res As String
+      Select Case type_
+         Case FileTypeEnum.BabyFood
+            res = IO.Path.Combine("Baby Food", "Output", dateFolder)
+         Case FileTypeEnum.BrandBank
+            res = IO.Path.Combine("Brandbank", "Output", dateFolder)
+         Case FileTypeEnum.Irish
+            res = IO.Path.Combine("Irish", "Output", dateFolder)
+         Case FileTypeEnum.NONE
+            Throw New Exception("Invalid type parameter of none.")
+         Case FileTypeEnum.ProductLibrary
+            res = IO.Path.Combine("Product Library", "Output", dateFolder)
+         Case FileTypeEnum.RequestNutrition
+            res = IO.Path.Combine("Request Nutrition", "Output", dateFolder)
+         Case FileTypeEnum.TnsSs
+            res = IO.Path.Combine("Tns SS", "Output", dateFolder)
+         Case Else
+            Throw New Exception("Invalid type parameter")
+      End Select
+      Return res
+   End Function
+   '
    Sub ErrMsg(msg As String)
       MessageBox.Show(msg, "Oops!", MessageBoxButtons.OK, MessageBoxIcon.Error)
    End Sub

@@ -13,9 +13,6 @@ Public Class AOA_Timer
       maximumSeconds = seconds
    End Sub
 
-   Public Property Enabled As Boolean = False
-   Public Property IntervalSeconds As Integer = 30
-
    Sub StartTimer(Optional overWriteSeconds As Integer = 0)
       If overWriteSeconds > 0 Then maximumSeconds = overWriteSeconds
       SW = New Stopwatch

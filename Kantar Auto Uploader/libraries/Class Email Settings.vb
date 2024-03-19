@@ -15,6 +15,7 @@
    Public REQUEST_NUTRITION As New Email_Settings(Email_Settings.Types.REQUEST_NUTRITION)
    Public TNS_SS As New Email_Settings(Email_Settings.Types.TNS_SS)
 
+   '
    Public Class Email_Settings
       Public Name As String = ""
       Public Email_Type As Types = Types.NONE
@@ -28,7 +29,11 @@
       Public To_ As String() = {}
       Public CC As String() = {}
       Public BCC As String() = {}
-
+      Public Body As String = ""
+      '
+      Public IsTestIndicator As Boolean = False
+      Public TestIndicatorEmailReceiver As String = ""
+      '
       Public Overrides Function ToString() As String
          Return Name
       End Function

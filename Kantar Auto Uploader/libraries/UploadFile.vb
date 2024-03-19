@@ -17,7 +17,7 @@ Public Class UploadFile
    Public status As New STAT_INFO()
    Public th As System.Threading.Thread
    Public setup As New SetupProp
-
+   '
    Sub New(filePath As String, ftpDestinationFolder As String, sesOption As WinSCP.SessionOptions)
       Me.originalFilePath = filePath
       Me.filePath = filePath
@@ -94,11 +94,11 @@ Public Class UploadFile
                                               End Sub
          ses.Open(Me.sesOptions)
          Try
-            Dim flNameWOext1 As String = IO.Path.GetFileNameWithoutExtension(Me.filePath)
+            Dim flNameWOext As String = IO.Path.GetFileNameWithoutExtension(Me.filePath)
             Dim extWithDot1 As String = IO.Path.GetExtension(Me.filePath)
-            Dim dest1 As String = RemotePath.Combine(Me.ftpDestinationFolder, String.Concat(flNameWOext1, extWithDot1))
+            Dim dest1 As String = RemotePath.Combine(Me.ftpDestinationFolder, String.Concat(flNameWOext, extWithDot1))
             If setup.toZip Then
-               dest1 = RemotePath.Combine(Me.ftpDestinationFolder, String.Concat(flNameWOext1, ".zip"))
+               dest1 = RemotePath.Combine(Me.ftpDestinationFolder, String.Concat(flNameWOext, ".zip"))
             End If
             'Possible error FileExists
             If ses.FileExists(dest1) Then
@@ -111,17 +111,21 @@ Public Class UploadFile
                }
             Else
                ' Create Folder for destination
-               Dim uploadedPath As String = IO.Path.Combine(IO.Path.GetDirectoryName(originalFilePath), "Uploaded")
+               Dim uploadedPath As String = IO.Path.Combine(IO.Path.GetDirectoryName(originalFilePath), UplodedFolder)
 
                CreateFtpDirectoryRecursive(ses, Me.ftpDestinationFolder)
+
+               Dim forEmail As New ForEmail
                '
                If setup.toZip Then
                   status.compressingStatus = STAT_INFO.CompresStatus.Compressing
                   If setup.fileType = SetupProp.FileType_.FOLDER Then
+                     forEmail.ZipFile_FilesCount = IO.Directory.GetFiles(Me.filePath).Length
                      Dim compress = ICSharpCode_Zip.CompressFolder(Me.filePath)
                      If compress.Succes Then
                         filePath = compress.CompressedPath
                         status.compressingStatus = STAT_INFO.CompresStatus.CompressDone
+
                      Else
                         status = New STAT_INFO() With {
                                     .[error] = compress.ErrorInfo,
@@ -133,6 +137,7 @@ Public Class UploadFile
                         Exit Sub
                      End If
                   ElseIf setup.fileType = SetupProp.FileType_.FILE Then
+                     forEmail.FileRecordCount = IO.File.ReadAllLines(Me.filePath).Length
                      Dim compress = ICSharpCode_Zip.CompressFile(Me.filePath)
                      If compress.Succes Then
                         filePath = compress.CompressedPath
@@ -152,11 +157,17 @@ Public Class UploadFile
                      Exit Sub
                   End If
                Else
-
+                  forEmail.FileRecordCount = IO.File.ReadAllLines(Me.filePath).Length
                End If
+
+               With forEmail
+                  .FileName = IO.Path.GetFileName(Me.filePath)
+                  .FileNameWOE = IO.Path.GetFileNameWithoutExtension(Me.filePath)
+                  .FileSize = New FileInfo(Me.filePath).Length
+               End With
+
                '
                Dim transferResult As TransferOperationResult
-               Dim flNameWOext As String = IO.Path.GetFileNameWithoutExtension(Me.filePath)
                Dim extWithDot As String = IO.Path.GetExtension(Me.filePath)
                Dim tmpDest As String = RemotePath.Combine(Me.ftpDestinationFolder, String.Concat(flNameWOext, extWithDot, ".uploading"))
                Dim dest As String = RemotePath.Combine(Me.ftpDestinationFolder, String.Concat(flNameWOext, extWithDot))
@@ -198,6 +209,13 @@ Public Class UploadFile
                   ex = ex
                End Try
                '
+               If forEmail.FileName <> "" Then
+                  Dim aa = IO.Path.Combine(uploadedPath, flNameWOext & ".foremail")
+                  Dim fsc As New FileSettingsCreator2(Of ForEmail)(aa, New ForEmail)
+                  fsc.SetEnCrypted = False
+                  fsc.SetSettings(forEmail)
+               End If
+               '
                status.message = "Uploaded"
                status.isRunning = False
                status.isUploaded = True
@@ -227,6 +245,13 @@ Public Class UploadFile
       End Try
    End Sub
 
+   Class ForEmail
+      Public FileName As String = ""
+      Public FileNameWOE As String = ""
+      Public ZipFile_FilesCount As Integer = 0
+      Public FileRecordCount As Integer = 0
+      Public FileSize As String = ""
+   End Class
 
 #Region "Utensils"
    Class STAT_INFO

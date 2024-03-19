@@ -156,6 +156,7 @@ Public Class Form_Email_Settings
          If CmbType.SelectedItem IsNot Nothing Then
             Dim res As Class_Email_Settings.Email_Settings = CmbType.SelectedItem
             res.BCC = getEmails(LbBCC)
+            res.Body = RichTextBox1.Text
             res.CC = getEmails(LbCC)
             res.Email_Type = res.Email_Type
             res.Host = CtHost._TextBoxValue
@@ -165,6 +166,8 @@ Public Class Form_Email_Settings
             res.Subject = CtSubject._TextBoxValue
             res.To_ = getEmails(LbTo)
             res.Username = CtUsername._TextBoxValue
+            res.IsTestIndicator = CheckBox1.Checked
+            res.TestIndicatorEmailReceiver = Costum_Textbox1._TextBoxValue
             Return res
          Else
             Throw New Exception("NO selected type in Combobox")
@@ -180,6 +183,7 @@ Public Class Form_Email_Settings
                             End Sub
             setEmails(LbBCC, value.BCC)
             setEmails(LbCC, value.CC)
+            RichTextBox1.Text = value.Body
             value.Email_Type = value.Email_Type ' no changes
             CtHost._TextBoxValue = value.Host
             value.Name = value.Name ' no changes
@@ -188,6 +192,8 @@ Public Class Form_Email_Settings
             CtSubject._TextBoxValue = value.Subject
             setEmails(LbTo, value.To_)
             CtUsername._TextBoxValue = value.Username
+            CheckBox1.Checked = value.IsTestIndicator
+            Costum_Textbox1._TextBoxValue = value.TestIndicatorEmailReceiver
          Else
             Throw New Exception("NO selected type in Combobox")
          End If
@@ -205,7 +211,7 @@ Public Class Form_Email_Settings
       End If
    End Sub
 
-   Private Sub CtHost__KeyPress(sender As Object, e As KeyPressEventArgs) Handles CtUsername._KeyPress, CtSubject._KeyPress, CtPort._KeyPress, CtPassword._KeyPress, CtHost._KeyPress
+   Private Sub CtHost__KeyPress(sender As Object, e As KeyPressEventArgs) Handles CtUsername._KeyPress, CtSubject._KeyPress, CtPort._KeyPress, CtPassword._KeyPress, CtHost._KeyPress, RichTextBox1.KeyPress, Costum_Textbox1._KeyPress
       BtnSave.Enabled = True
    End Sub
 
@@ -240,7 +246,7 @@ Public Class Form_Email_Settings
       Me.Enabled = False
       LabelInformation.Text = "Sending...."
       Dim aa = FormSettings
-      Dim props As New SendEmail.Props With {
+      Dim props As New SendEmail.Credentials With {
          .Host = aa.Host,
          .Port = aa.Port,
          ._Password = aa.Password,
@@ -253,7 +259,11 @@ Public Class Form_Email_Settings
          .Body = "Test Email."
       }
       message.To.Add(aa.Username)
-      Dim email As New SendEmail(props, message)
+      Dim email As New SendEmail With {
+         .EmailCredentials = props,
+         .MailMessageProperty = message,
+         .TYPE = FileTypeEnum.NONE
+      }
       email.StartSend()
       While (email.Status <> SendEmail.EStatus.Error) And (email.Status <> SendEmail.EStatus.EmailSent)
          Threading.Thread.Sleep(200)
@@ -270,5 +280,21 @@ Public Class Form_Email_Settings
       End If
    End Sub
 
+   Private Sub RichTextBox1_KeyUp(sender As Object, e As KeyEventArgs) Handles RichTextBox1.KeyUp
+      If e.KeyCode = Keys.K And e.Control Then
+         Dim prev As String = Clipboard.GetText
+         Clipboard.SetText(AttachmentValue)
+         RichTextBox1.Paste()
+         Clipboard.SetText(prev)
+      End If
+   End Sub
 
+   Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckStateChanged
+      If CheckBox1.Checked Then
+         Costum_Textbox1.Visible = True
+      Else
+         Costum_Textbox1.Visible = False
+      End If
+      BtnSave.Enabled = True
+   End Sub
 End Class
