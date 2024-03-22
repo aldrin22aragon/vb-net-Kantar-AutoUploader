@@ -30,6 +30,7 @@ Module Gloabals
    Public Const AttachmentValue As String = "{Attachement}"
    Public Const UplodedFolder As String = "Uploaded"
    Public Const EmailedStr As String = "Emailed"
+   Public Const DateAttachment As String = "{Date}"
    '
    Enum FileTypeEnum As Integer
       NONE = 0

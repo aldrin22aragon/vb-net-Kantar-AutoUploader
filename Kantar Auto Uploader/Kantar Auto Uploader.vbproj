@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{78D0503F-DF1C-4BCB-8C81-38D333292CF2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>Kantar_Auto_Uploader.My.MyApplication</StartupObject>
-    <RootNamespace>Kantar_Auto_Uploader</RootNamespace>
-    <AssemblyName>Kantar Auto Uploader</AssemblyName>
+    <StartupObject>Kantar_Auto_Uploader_And_Auto_Email.My.MyApplication</StartupObject>
+    <RootNamespace>Kantar_Auto_Uploader_And_Auto_Email</RootNamespace>
+    <AssemblyName>Kantar Auto Uploader - Auto Email</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Kantar Auto Uploader.xml</DocumentationFile>
+    <DocumentationFile>Kantar Auto Uploader - Auto Email.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Kantar Auto Uploader.xml</DocumentationFile>
+    <DocumentationFile>Kantar Auto Uploader - Auto Email.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -46,6 +46,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>upload %281%29.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -136,6 +139,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -189,6 +193,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="upload %281%29.ico" />
+    <Content Include="upload.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

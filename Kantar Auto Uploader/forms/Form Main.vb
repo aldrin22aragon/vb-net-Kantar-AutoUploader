@@ -426,7 +426,11 @@ Public Class Form1
          Dim se As SendEmail = i.Tag
          If se.Status = SendEmail.EStatus.NONE Then
             se.RefreshFiles()
-            i.Cells(2).Value = "Ready for email. File count: " & se.Files.Length
+            If se.Files.Length > 0 Then
+               i.Cells(2).Value = "Ready to email. File count: " & se.Files.Length
+            Else
+               i.Cells(2).Value = "No files found."
+            End If
          Else
             i.Cells(2).Value = se.Status.ToString
          End If
@@ -438,10 +442,23 @@ Public Class Form1
       If DataGridView1.SelectedRows IsNot Nothing Then
          For Each row As DataGridViewRow In DataGridView1.SelectedRows
             Dim send As SendEmail = row.Tag
-            If send.Status = SendEmail.EStatus.NONE Or send.Status = SendEmail.EStatus.Error Or programmersMode Then
+            If (send.Status = SendEmail.EStatus.NONE Or send.Status = SendEmail.EStatus.Error Or programmersMode) And send.Files.Length > 0 Then
                send.StartSend()
             End If
          Next
       End If
+   End Sub
+
+   Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+      For Each row As DataGridViewRow In DataGridView1.Rows
+         Dim send As SendEmail = row.Tag
+         If (send.Status = SendEmail.EStatus.NONE Or send.Status = SendEmail.EStatus.Error Or programmersMode) And send.Files.Length > 0 Then
+            send.StartSend()
+         End If
+      Next
+   End Sub
+
+   Private Sub RichTextBox2_TextChanged(sender As Object, e As EventArgs) Handles RichTextBox2.TextChanged
+
    End Sub
 End Class

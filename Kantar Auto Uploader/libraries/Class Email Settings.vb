@@ -31,7 +31,7 @@
       Public BCC As String() = {}
       Public Body As String = ""
       '
-      Public IsTestIndicator As Boolean = False
+      Public IsTestIndicator As Boolean = True
       Public TestIndicatorEmailReceiver As String = ""
       '
       Public Overrides Function ToString() As String

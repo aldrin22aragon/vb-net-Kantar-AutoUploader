@@ -297,4 +297,17 @@ Public Class Form_Email_Settings
       End If
       BtnSave.Enabled = True
    End Sub
+
+   Private Sub CtSubject__KeyKeyUp(sender As Object, e As KeyEventArgs) Handles CtSubject._KeyKeyUp
+      If e.KeyCode = Keys.D And e.Control Then
+         Dim prev As String = Clipboard.GetText
+         Clipboard.SetText(DateAttachment)
+         CtSubject._TextBox.Paste()
+         Clipboard.SetText(prev)
+      End If
+   End Sub
+
+   Private Sub BtnCancel_Click(sender As Object, e As EventArgs) Handles BtnCancel.Click
+      Me.Close()
+   End Sub
 End Class

@@ -23,6 +23,7 @@ Public Class FileSettingsCreator2(Of T)
    'Example
    Class SettingsInfo
       ' Pwede sa array pero hindi pwede sa List
+      Public names As String() = {}
       Public name As String = ""
    End Class
    Sub example()

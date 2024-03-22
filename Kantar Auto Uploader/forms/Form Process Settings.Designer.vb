@@ -22,6 +22,7 @@ Partial Class Form_Process_Settings
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_Process_Settings))
         Me.TxSourceLocal = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.BtnSave = New System.Windows.Forms.Button()
@@ -126,11 +127,12 @@ Partial Class Form_Process_Settings
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TxSourceLocal)
         Me.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Form_Process_Settings"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Process_Settings"
+        Me.Text = "Upload Settings"
         CType(Me.NCheckInterval, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.NumSimultaneousUpload, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

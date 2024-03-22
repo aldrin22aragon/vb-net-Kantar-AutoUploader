@@ -22,16 +22,13 @@ Partial Class Form_Email_Settings
    'Do not modify it using the code editor.
    <System.Diagnostics.DebuggerStepThrough()>
    Private Sub InitializeComponent()
+      Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form_Email_Settings))
       Me.CmbType = New System.Windows.Forms.ComboBox()
       Me.Label2 = New System.Windows.Forms.Label()
       Me.Panel1 = New System.Windows.Forms.Panel()
       Me.LabelInformation = New System.Windows.Forms.Label()
-      Me.CtPassword = New Kantar_Auto_Uploader.Costum_Textbox()
       Me.BtnTestSendToSelf = New System.Windows.Forms.Button()
-      Me.CtUsername = New Kantar_Auto_Uploader.Costum_Textbox()
       Me.CbCopyFrom = New System.Windows.Forms.ComboBox()
-      Me.CtPort = New Kantar_Auto_Uploader.Costum_Textbox()
-      Me.CtHost = New Kantar_Auto_Uploader.Costum_Textbox()
       Me.Panel2 = New System.Windows.Forms.Panel()
       Me.Label5 = New System.Windows.Forms.Label()
       Me.Label4 = New System.Windows.Forms.Label()
@@ -39,16 +36,20 @@ Partial Class Form_Email_Settings
       Me.LbBCC = New System.Windows.Forms.ListBox()
       Me.LbCC = New System.Windows.Forms.ListBox()
       Me.LbTo = New System.Windows.Forms.ListBox()
-      Me.CtBCC = New Kantar_Auto_Uploader.Costum_Textbox()
-      Me.CtCC = New Kantar_Auto_Uploader.Costum_Textbox()
-      Me.CtTo = New Kantar_Auto_Uploader.Costum_Textbox()
-      Me.CtSubject = New Kantar_Auto_Uploader.Costum_Textbox()
       Me.Label1 = New System.Windows.Forms.Label()
       Me.Label3 = New System.Windows.Forms.Label()
       Me.BtnSave = New System.Windows.Forms.Button()
       Me.BtnCancel = New System.Windows.Forms.Button()
       Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-      Me.Costum_Textbox1 = New Kantar_Auto_Uploader.Costum_Textbox()
+      Me.Costum_Textbox1 = New Kantar_Auto_Uploader_And_Auto_Email.Costum_Textbox()
+      Me.CtBCC = New Kantar_Auto_Uploader_And_Auto_Email.Costum_Textbox()
+      Me.CtCC = New Kantar_Auto_Uploader_And_Auto_Email.Costum_Textbox()
+      Me.CtTo = New Kantar_Auto_Uploader_And_Auto_Email.Costum_Textbox()
+      Me.CtSubject = New Kantar_Auto_Uploader_And_Auto_Email.Costum_Textbox()
+      Me.CtPassword = New Kantar_Auto_Uploader_And_Auto_Email.Costum_Textbox()
+      Me.CtUsername = New Kantar_Auto_Uploader_And_Auto_Email.Costum_Textbox()
+      Me.CtPort = New Kantar_Auto_Uploader_And_Auto_Email.Costum_Textbox()
+      Me.CtHost = New Kantar_Auto_Uploader_And_Auto_Email.Costum_Textbox()
       Me.Panel1.SuspendLayout()
       Me.Panel2.SuspendLayout()
       Me.SuspendLayout()
@@ -103,19 +104,6 @@ Partial Class Form_Email_Settings
       Me.LabelInformation.Text = "Info"
       Me.LabelInformation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
       '
-      'CtPassword
-      '
-      Me.CtPassword._LabelText = "Password"
-      Me.CtPassword._PanelColor = System.Drawing.Color.Transparent
-      Me.CtPassword._PasswordCharacter = "*"
-      Me.CtPassword._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-      Me.CtPassword._TextBoxValue = ""
-      Me.CtPassword.BackColor = System.Drawing.Color.Transparent
-      Me.CtPassword.Location = New System.Drawing.Point(8, 142)
-      Me.CtPassword.Name = "CtPassword"
-      Me.CtPassword.Size = New System.Drawing.Size(185, 35)
-      Me.CtPassword.TabIndex = 3
-      '
       'BtnTestSendToSelf
       '
       Me.BtnTestSendToSelf.Location = New System.Drawing.Point(48, 239)
@@ -125,19 +113,6 @@ Partial Class Form_Email_Settings
       Me.BtnTestSendToSelf.Text = "Test send email to self"
       Me.BtnTestSendToSelf.UseVisualStyleBackColor = True
       '
-      'CtUsername
-      '
-      Me.CtUsername._LabelText = "Username"
-      Me.CtUsername._PanelColor = System.Drawing.Color.Transparent
-      Me.CtUsername._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
-      Me.CtUsername._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-      Me.CtUsername._TextBoxValue = ""
-      Me.CtUsername.BackColor = System.Drawing.Color.Transparent
-      Me.CtUsername.Location = New System.Drawing.Point(8, 107)
-      Me.CtUsername.Name = "CtUsername"
-      Me.CtUsername.Size = New System.Drawing.Size(185, 35)
-      Me.CtUsername.TabIndex = 2
-      '
       'CbCopyFrom
       '
       Me.CbCopyFrom.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -146,32 +121,6 @@ Partial Class Form_Email_Settings
       Me.CbCopyFrom.Name = "CbCopyFrom"
       Me.CbCopyFrom.Size = New System.Drawing.Size(115, 21)
       Me.CbCopyFrom.TabIndex = 9
-      '
-      'CtPort
-      '
-      Me.CtPort._LabelText = "Port"
-      Me.CtPort._PanelColor = System.Drawing.Color.Transparent
-      Me.CtPort._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
-      Me.CtPort._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-      Me.CtPort._TextBoxValue = ""
-      Me.CtPort.BackColor = System.Drawing.Color.Transparent
-      Me.CtPort.Location = New System.Drawing.Point(8, 72)
-      Me.CtPort.Name = "CtPort"
-      Me.CtPort.Size = New System.Drawing.Size(185, 35)
-      Me.CtPort.TabIndex = 1
-      '
-      'CtHost
-      '
-      Me.CtHost._LabelText = "Host"
-      Me.CtHost._PanelColor = System.Drawing.Color.Transparent
-      Me.CtHost._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
-      Me.CtHost._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-      Me.CtHost._TextBoxValue = ""
-      Me.CtHost.BackColor = System.Drawing.Color.Transparent
-      Me.CtHost.Location = New System.Drawing.Point(8, 37)
-      Me.CtHost.Name = "CtHost"
-      Me.CtHost.Size = New System.Drawing.Size(185, 35)
-      Me.CtHost.TabIndex = 0
       '
       'Panel2
       '
@@ -249,58 +198,6 @@ Partial Class Form_Email_Settings
       Me.LbTo.Size = New System.Drawing.Size(180, 43)
       Me.LbTo.TabIndex = 8
       '
-      'CtBCC
-      '
-      Me.CtBCC._LabelText = "BCC"
-      Me.CtBCC._PanelColor = System.Drawing.Color.Transparent
-      Me.CtBCC._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
-      Me.CtBCC._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-      Me.CtBCC._TextBoxValue = ""
-      Me.CtBCC.BackColor = System.Drawing.Color.Transparent
-      Me.CtBCC.Location = New System.Drawing.Point(381, 45)
-      Me.CtBCC.Name = "CtBCC"
-      Me.CtBCC.Size = New System.Drawing.Size(180, 35)
-      Me.CtBCC.TabIndex = 7
-      '
-      'CtCC
-      '
-      Me.CtCC._LabelText = "CC"
-      Me.CtCC._PanelColor = System.Drawing.Color.Transparent
-      Me.CtCC._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
-      Me.CtCC._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-      Me.CtCC._TextBoxValue = ""
-      Me.CtCC.BackColor = System.Drawing.Color.Transparent
-      Me.CtCC.Location = New System.Drawing.Point(195, 45)
-      Me.CtCC.Name = "CtCC"
-      Me.CtCC.Size = New System.Drawing.Size(180, 35)
-      Me.CtCC.TabIndex = 6
-      '
-      'CtTo
-      '
-      Me.CtTo._LabelText = "To"
-      Me.CtTo._PanelColor = System.Drawing.Color.Transparent
-      Me.CtTo._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
-      Me.CtTo._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-      Me.CtTo._TextBoxValue = ""
-      Me.CtTo.BackColor = System.Drawing.Color.Transparent
-      Me.CtTo.Location = New System.Drawing.Point(8, 45)
-      Me.CtTo.Name = "CtTo"
-      Me.CtTo.Size = New System.Drawing.Size(180, 35)
-      Me.CtTo.TabIndex = 5
-      '
-      'CtSubject
-      '
-      Me.CtSubject._LabelText = "Subject"
-      Me.CtSubject._PanelColor = System.Drawing.Color.Transparent
-      Me.CtSubject._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
-      Me.CtSubject._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-      Me.CtSubject._TextBoxValue = ""
-      Me.CtSubject.BackColor = System.Drawing.Color.Transparent
-      Me.CtSubject.Location = New System.Drawing.Point(8, 4)
-      Me.CtSubject.Name = "CtSubject"
-      Me.CtSubject.Size = New System.Drawing.Size(553, 35)
-      Me.CtSubject.TabIndex = 4
-      '
       'Label1
       '
       Me.Label1.BackColor = System.Drawing.Color.DarkSeaGreen
@@ -367,6 +264,110 @@ Partial Class Form_Email_Settings
       Me.Costum_Textbox1.TabIndex = 10
       Me.Costum_Textbox1.Visible = False
       '
+      'CtBCC
+      '
+      Me.CtBCC._LabelText = "BCC"
+      Me.CtBCC._PanelColor = System.Drawing.Color.Transparent
+      Me.CtBCC._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
+      Me.CtBCC._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+      Me.CtBCC._TextBoxValue = ""
+      Me.CtBCC.BackColor = System.Drawing.Color.Transparent
+      Me.CtBCC.Location = New System.Drawing.Point(381, 45)
+      Me.CtBCC.Name = "CtBCC"
+      Me.CtBCC.Size = New System.Drawing.Size(180, 35)
+      Me.CtBCC.TabIndex = 7
+      '
+      'CtCC
+      '
+      Me.CtCC._LabelText = "CC"
+      Me.CtCC._PanelColor = System.Drawing.Color.Transparent
+      Me.CtCC._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
+      Me.CtCC._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+      Me.CtCC._TextBoxValue = ""
+      Me.CtCC.BackColor = System.Drawing.Color.Transparent
+      Me.CtCC.Location = New System.Drawing.Point(195, 45)
+      Me.CtCC.Name = "CtCC"
+      Me.CtCC.Size = New System.Drawing.Size(180, 35)
+      Me.CtCC.TabIndex = 6
+      '
+      'CtTo
+      '
+      Me.CtTo._LabelText = "To"
+      Me.CtTo._PanelColor = System.Drawing.Color.Transparent
+      Me.CtTo._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
+      Me.CtTo._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+      Me.CtTo._TextBoxValue = ""
+      Me.CtTo.BackColor = System.Drawing.Color.Transparent
+      Me.CtTo.Location = New System.Drawing.Point(8, 45)
+      Me.CtTo.Name = "CtTo"
+      Me.CtTo.Size = New System.Drawing.Size(180, 35)
+      Me.CtTo.TabIndex = 5
+      '
+      'CtSubject
+      '
+      Me.CtSubject._LabelText = "Subject / Ctrl + D [to place date attachment]"
+      Me.CtSubject._PanelColor = System.Drawing.Color.Transparent
+      Me.CtSubject._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
+      Me.CtSubject._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+      Me.CtSubject._TextBoxValue = ""
+      Me.CtSubject.BackColor = System.Drawing.Color.Transparent
+      Me.CtSubject.Location = New System.Drawing.Point(8, 4)
+      Me.CtSubject.Name = "CtSubject"
+      Me.CtSubject.Size = New System.Drawing.Size(553, 35)
+      Me.CtSubject.TabIndex = 4
+      '
+      'CtPassword
+      '
+      Me.CtPassword._LabelText = "Password"
+      Me.CtPassword._PanelColor = System.Drawing.Color.Transparent
+      Me.CtPassword._PasswordCharacter = "*"
+      Me.CtPassword._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+      Me.CtPassword._TextBoxValue = ""
+      Me.CtPassword.BackColor = System.Drawing.Color.Transparent
+      Me.CtPassword.Location = New System.Drawing.Point(8, 142)
+      Me.CtPassword.Name = "CtPassword"
+      Me.CtPassword.Size = New System.Drawing.Size(185, 35)
+      Me.CtPassword.TabIndex = 3
+      '
+      'CtUsername
+      '
+      Me.CtUsername._LabelText = "Username"
+      Me.CtUsername._PanelColor = System.Drawing.Color.Transparent
+      Me.CtUsername._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
+      Me.CtUsername._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+      Me.CtUsername._TextBoxValue = ""
+      Me.CtUsername.BackColor = System.Drawing.Color.Transparent
+      Me.CtUsername.Location = New System.Drawing.Point(8, 107)
+      Me.CtUsername.Name = "CtUsername"
+      Me.CtUsername.Size = New System.Drawing.Size(185, 35)
+      Me.CtUsername.TabIndex = 2
+      '
+      'CtPort
+      '
+      Me.CtPort._LabelText = "Port"
+      Me.CtPort._PanelColor = System.Drawing.Color.Transparent
+      Me.CtPort._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
+      Me.CtPort._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+      Me.CtPort._TextBoxValue = ""
+      Me.CtPort.BackColor = System.Drawing.Color.Transparent
+      Me.CtPort.Location = New System.Drawing.Point(8, 72)
+      Me.CtPort.Name = "CtPort"
+      Me.CtPort.Size = New System.Drawing.Size(185, 35)
+      Me.CtPort.TabIndex = 1
+      '
+      'CtHost
+      '
+      Me.CtHost._LabelText = "Host"
+      Me.CtHost._PanelColor = System.Drawing.Color.Transparent
+      Me.CtHost._PasswordCharacter = "" & Global.Microsoft.VisualBasic.ChrW(0)
+      Me.CtHost._TextboxFont = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+      Me.CtHost._TextBoxValue = ""
+      Me.CtHost.BackColor = System.Drawing.Color.Transparent
+      Me.CtHost.Location = New System.Drawing.Point(8, 37)
+      Me.CtHost.Name = "CtHost"
+      Me.CtHost.Size = New System.Drawing.Size(185, 35)
+      Me.CtHost.TabIndex = 0
+      '
       'Form_Email_Settings
       '
       Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -384,6 +385,7 @@ Partial Class Form_Email_Settings
       Me.Controls.Add(Me.CmbType)
       Me.Controls.Add(Me.Label1)
       Me.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+      Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
       Me.MaximizeBox = False
       Me.MinimizeBox = False
       Me.Name = "Form_Email_Settings"

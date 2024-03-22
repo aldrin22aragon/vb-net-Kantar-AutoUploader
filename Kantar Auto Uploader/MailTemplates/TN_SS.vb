@@ -7,6 +7,9 @@ Public Class TN_SS
           .Subject = em.Subject,
           .Body = em.Body
       }
+      If res.Subject.Contains(DateAttachment) Then
+         res.Subject = res.Subject.Replace(DateAttachment, dt)
+      End If
       res.IsBodyHtml = True
       Dim Tmp_body As String = em.Body
       Tmp_body = Tmp_body.Replace(vbLf, "</br>")
