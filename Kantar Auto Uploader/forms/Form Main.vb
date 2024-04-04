@@ -12,7 +12,7 @@ Public Class Form1
    '  Tns SS
 
    Friend WithEvents TimerUploderFileChecker As New AOA_Timer(8)
-   Friend WithEvents TimerEmailFileChecker As New AOA_Timer(180)
+   Friend WithEvents TimerEmailFileChecker As New AOA_Timer(50)
 
    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
       If Not IO.Directory.Exists(settingFolder) Then MkDir(settingFolder)
@@ -414,10 +414,10 @@ Public Class Form1
 
 
    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-      If programmersMode Then
-         DtCurrentDate.Value = "#1/26/2024 03:37:09 AM#"
-         TimerEmailFileChecker.maximumSeconds = 10
-      End If
+      'If programmersMode Then
+      '   DtCurrentDate.Value = "#1/26/2024 03:37:09 AM#"
+      '   TimerEmailFileChecker.maximumSeconds = 10
+      'End If
    End Sub
 
    Private Sub TimerEmailStarter_Tick(sender As Object, e As EventArgs) Handles TimerEmailStarter_And_Status.Tick
@@ -458,7 +458,4 @@ Public Class Form1
       Next
    End Sub
 
-   Private Sub RichTextBox2_TextChanged(sender As Object, e As EventArgs) Handles RichTextBox2.TextChanged
-
-   End Sub
 End Class

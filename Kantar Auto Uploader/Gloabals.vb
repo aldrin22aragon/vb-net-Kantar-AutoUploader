@@ -2,6 +2,7 @@
 Imports WinSCP
 Module Gloabals
    Public settingFolder As String = IO.Path.Combine(Application.StartupPath, "Settings")
+   Public logFolder As String = IO.Path.Combine(Application.StartupPath, "Log Files")
    '
    ReadOnly fscSessionOptionsFilePath As String = IO.Path.Combine(settingFolder, "session-options.drihnz")
    ReadOnly fscProcessSettingsFilePath As String = IO.Path.Combine(settingFolder, "process-settings.drihnz")

@@ -252,11 +252,12 @@ Public Class Form_Email_Settings
          ._Password = aa.Password,
          ._UserName = aa.Username
       }
+      Dim exeName As String = System.Reflection.Assembly.GetExecutingAssembly.GetName.Name
       Dim message As New MailMessage() With {
          .From = New MailAddress(aa.Username),
          .Subject = "Test send email to self",
          .IsBodyHtml = True,
-         .Body = "Test Email."
+         .Body = "Test Email. " & exeName
       }
       message.To.Add(aa.Username)
       Dim email As New SendEmail With {
@@ -274,7 +275,10 @@ Public Class Form_Email_Settings
       If email.Status = SendEmail.EStatus.EmailSent Then
          SuccessMsg("Test success.")
       ElseIf email.Status = SendEmail.EStatus.Error Then
-         ErrMsg(email.Exception.Message)
+         ErrorLogsCreator.CreateLog(ErrorLogsCreator.LogFor.SendTestToSelf, email.Exception, "Send test to self")
+         Dim innerMessage As String = ""
+         If email.Exception.InnerException IsNot Nothing Then innerMessage = email.Exception.InnerException.Message
+         ErrMsg(email.Exception.Message & vbNewLine & innerMessage)
       Else
          ErrMsg("Unknown error. Please try again.")
       End If
