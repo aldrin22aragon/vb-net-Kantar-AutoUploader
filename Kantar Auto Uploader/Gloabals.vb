@@ -64,6 +64,15 @@ Module Gloabals
       Return res
    End Function
    '
-
+   Enum ImageInddex As Integer
+      Loading = 0
+      warning = 1
+      success = 2
+      upload = 3
+      email = 4
+      time = 5
+      fullMoon = 6
+      Dot = 7
+   End Enum
 
 End Module

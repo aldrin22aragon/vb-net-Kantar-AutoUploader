@@ -24,38 +24,39 @@ Partial Class Form1
    Private Sub InitializeComponent()
       Me.components = New System.ComponentModel.Container()
       Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
-      Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
-      Me.TbFtpSettings = New System.Windows.Forms.ToolStripButton()
-      Me.TbUploadSettins = New System.Windows.Forms.ToolStripButton()
-      Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
-      Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
-      Me.BtnRetry = New System.Windows.Forms.Button()
-      Me.Dgv = New System.Windows.Forms.DataGridView()
-      Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-      Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-      Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-      Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-      Me.LblStatus = New System.Windows.Forms.Label()
-      Me.DtCurrentDate = New System.Windows.Forms.DateTimePicker()
-      Me.Label1 = New System.Windows.Forms.Label()
-      Me.TimerUploaderStarter = New System.Windows.Forms.Timer(Me.components)
-      Me.TimerUploadStatus = New System.Windows.Forms.Timer(Me.components)
-      Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
-      Me.ChkClearUploaded = New System.Windows.Forms.CheckBox()
-      Me.RichTextBox2 = New System.Windows.Forms.RichTextBox()
-      Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.TbFtpSettings = New System.Windows.Forms.ToolStripButton()
+        Me.TbUploadSettins = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.BtnRetry = New System.Windows.Forms.Button()
+        Me.Dgv = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LblStatus = New System.Windows.Forms.Label()
+        Me.DtCurrentDate = New System.Windows.Forms.DateTimePicker()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.TimerUploaderStarter = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerUploadStatus = New System.Windows.Forms.Timer(Me.components)
+        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.ChkClearUploaded = New System.Windows.Forms.CheckBox()
+        Me.RichTextBox2 = New System.Windows.Forms.RichTextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.TimerEmailStarter_And_Status = New System.Windows.Forms.Timer(Me.components)
         Me.RichTextBox3 = New System.Windows.Forms.RichTextBox()
         Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ListView1 = New System.Windows.Forms.ListView()
+        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.ToolStrip1.SuspendLayout()
         CType(Me.Dgv, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ToolStrip1
@@ -242,35 +243,13 @@ Partial Class Form1
         Me.RichTextBox2.Text = ""
         Me.RichTextBox2.WordWrap = False
         '
-        'DataGridView1
-        '
-        Me.DataGridView1.AllowUserToAddRows = False
-        Me.DataGridView1.AllowUserToDeleteRows = False
-        Me.DataGridView1.AllowUserToResizeColumns = False
-        Me.DataGridView1.AllowUserToResizeRows = False
-        Me.DataGridView1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.DataGridView1.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.DataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.DataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
-        Me.DataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column5, Me.Column7, Me.Column6})
-        Me.DataGridView1.Location = New System.Drawing.Point(12, 416)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.ReadOnly = True
-        Me.DataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        Me.DataGridView1.RowHeadersVisible = False
-        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(811, 170)
-        Me.DataGridView1.TabIndex = 14
-        '
         'Panel1
         '
         Me.Panel1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Panel1.BackColor = System.Drawing.Color.LightGray
+        Me.Panel1.BackColor = System.Drawing.SystemColors.Control
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.ListView1)
         Me.Panel1.Location = New System.Drawing.Point(-13, 408)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1035, 250)
@@ -308,13 +287,13 @@ Partial Class Form1
         '
         Me.RichTextBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.RichTextBox3.BackColor = System.Drawing.Color.LightGray
+        Me.RichTextBox3.BackColor = System.Drawing.SystemColors.Control
         Me.RichTextBox3.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.RichTextBox3.ForeColor = System.Drawing.Color.Black
         Me.RichTextBox3.Location = New System.Drawing.Point(12, 592)
         Me.RichTextBox3.Name = "RichTextBox3"
         Me.RichTextBox3.ReadOnly = True
-        Me.RichTextBox3.Size = New System.Drawing.Size(554, 37)
+        Me.RichTextBox3.Size = New System.Drawing.Size(617, 37)
         Me.RichTextBox3.TabIndex = 19
         Me.RichTextBox3.Text = "Error Info:"
         '
@@ -330,33 +309,53 @@ Partial Class Form1
         Me.Panel2.Size = New System.Drawing.Size(1035, 382)
         Me.Panel2.TabIndex = 16
         '
-        'Column5
+        'ListView1
         '
-        Me.Column5.HeaderText = "Email"
-        Me.Column5.Name = "Column5"
-        Me.Column5.ReadOnly = True
-        Me.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Column5.Width = 200
+        Me.ListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3})
+        Me.ListView1.Font = New System.Drawing.Font("Segoe UI Semibold", 8.5!, System.Drawing.FontStyle.Bold)
+        Me.ListView1.FullRowSelect = True
+        Me.ListView1.GridLines = True
+        Me.ListView1.HideSelection = False
+        Me.ListView1.Location = New System.Drawing.Point(24, 5)
+        Me.ListView1.Name = "ListView1"
+        Me.ListView1.Size = New System.Drawing.Size(811, 174)
+        Me.ListView1.SmallImageList = Me.ImageList1
+        Me.ListView1.TabIndex = 20
+        Me.ListView1.UseCompatibleStateImageBehavior = False
+        Me.ListView1.View = System.Windows.Forms.View.Details
         '
-        'Column7
+        'ColumnHeader1
         '
-        Me.Column7.HeaderText = "Date"
-        Me.Column7.Name = "Column7"
-        Me.Column7.ReadOnly = True
-        Me.Column7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.ColumnHeader1.Text = "Email"
+        Me.ColumnHeader1.Width = 150
         '
-        'Column6
+        'ColumnHeader2
         '
-        Me.Column6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.Column6.HeaderText = "Status"
-        Me.Column6.Name = "Column6"
-        Me.Column6.ReadOnly = True
-        Me.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.ColumnHeader2.Text = "Date"
+        Me.ColumnHeader2.Width = 100
+        '
+        'ColumnHeader3
+        '
+        Me.ColumnHeader3.Text = "Status"
+        Me.ColumnHeader3.Width = 537
+        '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "hourglass.png")
+        Me.ImageList1.Images.SetKeyName(1, "warning.png")
+        Me.ImageList1.Images.SetKeyName(2, "success-icon-7.png")
+        Me.ImageList1.Images.SetKeyName(3, "icons8-upload-64.png")
+        Me.ImageList1.Images.SetKeyName(4, "gmail.png")
+        Me.ImageList1.Images.SetKeyName(5, "more.png")
+        Me.ImageList1.Images.SetKeyName(6, "full-moon.png")
+        Me.ImageList1.Images.SetKeyName(7, "dot.png")
         '
         'Form1
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-        Me.BackColor = System.Drawing.Color.Aquamarine
+        Me.BackColor = System.Drawing.SystemColors.ButtonShadow
         Me.ClientSize = New System.Drawing.Size(835, 633)
         Me.Controls.Add(Me.RichTextBox2)
         Me.Controls.Add(Me.RichTextBox1)
@@ -365,7 +364,6 @@ Partial Class Form1
         Me.Controls.Add(Me.RichTextBox3)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.ChkClearUploaded)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.DtCurrentDate)
@@ -383,7 +381,7 @@ Partial Class Form1
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
         CType(Me.Dgv, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -404,18 +402,19 @@ Partial Class Form1
    Friend WithEvents RichTextBox2 As RichTextBox
    Friend WithEvents ToolStripButton1 As ToolStripButton
    Friend WithEvents ToolStripButton2 As ToolStripButton
-   Friend WithEvents DataGridView1 As DataGridView
-   Friend WithEvents Column1 As DataGridViewTextBoxColumn
-   Friend WithEvents Column4 As DataGridViewTextBoxColumn
-   Friend WithEvents Column2 As DataGridViewTextBoxColumn
-   Friend WithEvents Column3 As DataGridViewTextBoxColumn
-   Friend WithEvents Panel1 As Panel
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As DataGridViewTextBoxColumn
+    Friend WithEvents Column3 As DataGridViewTextBoxColumn
+    Friend WithEvents Panel1 As Panel
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents TimerEmailStarter_And_Status As Timer
     Friend WithEvents RichTextBox3 As RichTextBox
     Friend WithEvents Panel2 As Panel
-    Friend WithEvents Column5 As DataGridViewTextBoxColumn
-    Friend WithEvents Column7 As DataGridViewTextBoxColumn
-    Friend WithEvents Column6 As DataGridViewTextBoxColumn
+    Friend WithEvents ListView1 As ListView
+    Friend WithEvents ColumnHeader1 As ColumnHeader
+    Friend WithEvents ColumnHeader2 As ColumnHeader
+    Friend WithEvents ColumnHeader3 As ColumnHeader
+    Friend WithEvents ImageList1 As ImageList
 End Class

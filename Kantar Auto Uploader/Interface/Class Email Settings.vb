@@ -31,12 +31,18 @@
       Public BCC As String() = {}
       Public Body As String = ""
       '
+      Public SendSchedule As DateTime = New Date(2024, 4, 1, 21, 31, 0)
+      Public SendScheduleExtensionMinutes As Integer = 0
+      '
       Public IsTestIndicator As Boolean = True
       Public TestIndicatorEmailReceiver As String = ""
       '
       Public Overrides Function ToString() As String
          Return Name
       End Function
+
+      <Newtonsoft.Json.JsonIgnore>
+      Public Shared ReadOnly defaultDate As Date = New Date(2024, 4, 1, 20, 31, 0)
 
       Sub New(type As Types)
          Email_Type = type

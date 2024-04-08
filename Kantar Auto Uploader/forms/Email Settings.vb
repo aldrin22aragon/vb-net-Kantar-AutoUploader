@@ -139,12 +139,12 @@ Public Class Form_Email_Settings
    Private Sub CmbType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CmbType.SelectedIndexChanged
       If CmbType.SelectedItem IsNot Nothing Then
          Dim aa As Class_Email_Settings.Email_Settings = CmbType.SelectedItem
-         FormSettings = aa
+         FormSetingValues = aa
          BtnSave.Enabled = False
       End If
    End Sub
 
-   Property FormSettings As Class_Email_Settings.Email_Settings
+   Property FormSetingValues As Class_Email_Settings.Email_Settings
       Get
          Dim getEmails = Function(lb As ListBox) As String()
                             Dim res As New List(Of String)
@@ -168,6 +168,8 @@ Public Class Form_Email_Settings
             res.Username = CtUsername._TextBoxValue
             res.IsTestIndicator = CheckBox1.Checked
             res.TestIndicatorEmailReceiver = Costum_Textbox1._TextBoxValue
+            res.SendSchedule = DateTimePicker1.Value
+            res.SendScheduleExtensionMinutes = Val(TextBox1.Text)
             Return res
          Else
             Throw New Exception("NO selected type in Combobox")
@@ -194,6 +196,12 @@ Public Class Form_Email_Settings
             CtUsername._TextBoxValue = value.Username
             CheckBox1.Checked = value.IsTestIndicator
             Costum_Textbox1._TextBoxValue = value.TestIndicatorEmailReceiver
+            Try
+               DateTimePicker1.Value = value.SendSchedule
+            Catch ex As Exception
+               DateTimePicker1.Value = Class_Email_Settings.Email_Settings.defaultDate
+            End Try
+            TextBox1.Text = value.SendScheduleExtensionMinutes
          Else
             Throw New Exception("NO selected type in Combobox")
          End If
@@ -202,7 +210,7 @@ Public Class Form_Email_Settings
 
    Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
       If CmbType.SelectedItem IsNot Nothing Then
-         CmbType.SelectedItem = FormSettings
+         CmbType.SelectedItem = FormSetingValues
          fscEmailSettings.SetSettings(ComboboxTypes)
          MyMessageBox.SuccessMsg("Saved")
          BtnSave.Enabled = False
@@ -245,7 +253,7 @@ Public Class Form_Email_Settings
    Private Sub BtnTestSendToSelf_Click(sender As Object, e As EventArgs) Handles BtnTestSendToSelf.Click
       Me.Enabled = False
       LabelInformation.Text = "Sending...."
-      Dim aa = FormSettings
+      Dim aa = FormSetingValues
       Dim props As New SendEmail.Credentials With {
          .Host = aa.Host,
          .Port = aa.Port,
@@ -313,5 +321,27 @@ Public Class Form_Email_Settings
 
    Private Sub BtnCancel_Click(sender As Object, e As EventArgs) Handles BtnCancel.Click
       Me.Close()
+   End Sub
+
+   Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePicker1.ValueChanged, TextBox1.TextChanged
+      BtnSave.Enabled = True
+   End Sub
+
+   Private Sub TextBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox1.KeyPress
+      Dim chr As String = e.KeyChar.ToString
+      If Not ("1234567890" & vbBack).Contains(chr) Then
+         e.Handled = True
+      End If
+   End Sub
+
+   Private Sub TextBox1_KeyUp(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyUp
+      Select Case e.KeyCode
+         Case Keys.Up
+            TextBox1.Text = Val(TextBox1.Text) + 1
+         Case Keys.Down
+            If Val(TextBox1.Text) > 0 Then
+               TextBox1.Text = Val(TextBox1.Text) - 1
+            End If
+      End Select
    End Sub
 End Class

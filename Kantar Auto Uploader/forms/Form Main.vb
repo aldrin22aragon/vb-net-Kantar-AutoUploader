@@ -11,8 +11,8 @@ Public Class Form1
    '  Irish
    '  Tns SS
 
-   Friend WithEvents TimerUploderFileChecker As New AOA_Timer(8)
-   Friend WithEvents TimerEmailFileChecker As New AOA_Timer(180)
+   Friend WithEvents _TimerUploderFileChecker As New AOA_Timer(8)
+   Friend WithEvents _TimerEmailFileChecker As New AOA_Timer(180)
 
    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
       If Not IO.Directory.Exists(settingFolder) Then MkDir(settingFolder)
@@ -37,8 +37,8 @@ Public Class Form1
          fscProcessSettings.SetSettings(p.returnValueProcessSettings)
       End While
       'ChkClearUploaded.Checked = fscProcessSettings.GetSettings.clearUploaded
-      TimerUploderFileChecker.StartRunning()
-      TimerEmailFileChecker.StartRunning()
+      _TimerUploderFileChecker.StartRunning()
+      _TimerEmailFileChecker.StartRunning()
    End Sub
 
 
@@ -115,7 +115,7 @@ Public Class Form1
       End Set
    End Property
 
-   Private Sub Timer_Tick(e As AOA_Timer.TickEventInfo) Handles TimerUploderFileChecker.Tick
+   Private Sub Timer_Tick(e As AOA_Timer.TickEventInfo) Handles _TimerUploderFileChecker.Tick
       If e.IsTimeReached Then
          Dim p = fscProcessSettings.GetSettings
          Dim c = fscSessionOptions.GetSettings
@@ -248,8 +248,8 @@ Public Class Form1
          Else
             LblStatus.Text = "Please setup Upload Settings"
          End If
-         TimerUploderFileChecker.maximumSeconds = (p.checkIntervalMins * 60)
-         TimerUploderFileChecker.RestartTimer()
+         _TimerUploderFileChecker.maximumSeconds = (p.checkIntervalMins * 60)
+         _TimerUploderFileChecker.RestartTimer()
          If Not TimerUploaderStarter.Enabled Then TimerUploaderStarter.Enabled = True
          If Not TimerUploadStatus.Enabled Then TimerUploadStatus.Enabled = True
          If Not TimerEmailStarter_And_Status.Enabled Then TimerEmailStarter_And_Status.Enabled = True
@@ -375,37 +375,19 @@ Public Class Form1
    End Sub
 
    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
-      Form_Email_Settings.ShowDialog()
+      Dim em As New Form_Email_Settings
+      em.ShowDialog()
    End Sub
 
-   Private Sub TimerEmailFileChecker_Tick(e As AOA_Timer.TickEventInfo) Handles TimerEmailFileChecker.Tick
-      If e.IsTimeReached Then
-         Dim aa As ProcessSettings = fscProcessSettings.GetSettings
-         Dim bb As Class_Email_Settings = fscEmailSettings.GetSettings
-         For Each type As FileTypeEnum In Types
-            Dim dt As String = GetDateFolder()
-            Dim folderOutputWithDate As String = GetOutputFolder(type, dt)
-            Dim folderOutputWithDate_uploaded As String = IO.Path.Combine(aa.sourceDirectory, folderOutputWithDate, UplodedFolder)
-            If Not IsExistInEmaiTbl(folderOutputWithDate_uploaded) Then
-               If Not IO.Directory.Exists(folderOutputWithDate_uploaded) Then IO.Directory.CreateDirectory(folderOutputWithDate_uploaded)
-               Dim FE As New SendEmail() With {
-                     .uploadedFolderPath = folderOutputWithDate_uploaded,
-                     .TYPE = type,
-                     .SelectedDate = DtCurrentDate.Value
-                  }
-               Dim n = DataGridView1.Rows.Add(type.ToString, dt, "")
-               DataGridView1.Rows(n).Tag = FE
-            End If
-         Next
-         TimerEmailFileChecker.RestartTimer()
-      Else
-         RichTextBox3.Text = GetDateFolder() & ".  Check for emails in (" & e.secondsRemaining & ") seconds. "
-      End If
-   End Sub
 
    Function IsExistInEmaiTbl(path As String) As Boolean
       Dim list As New List(Of String)
-      For Each i As DataGridViewRow In DataGridView1.Rows
+      'For Each i As DataGridViewRow In DataGridView1.Rows
+      '   Dim forE As SendEmail = i.Tag
+      '   list.Add(forE.uploadedFolderPath)
+      'Next
+
+      For Each i As ListViewItem In ListView1.Items
          Dim forE As SendEmail = i.Tag
          list.Add(forE.uploadedFolderPath)
       Next
@@ -416,24 +398,81 @@ Public Class Form1
    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
       If programmersMode Then
          DtCurrentDate.Value = "#1/26/2024 03:37:09 AM#"
-         TimerEmailFileChecker.maximumSeconds = 10
+         _TimerEmailFileChecker.maximumSeconds = 10
+      End If
+   End Sub
+
+   Private Sub TimerEmailFileChecker_Tick(e As AOA_Timer.TickEventInfo) Handles _TimerEmailFileChecker.Tick
+      If e.IsTimeReached Then
+         Dim aa As ProcessSettings = fscProcessSettings.GetSettings
+         Dim bb As Class_Email_Settings = fscEmailSettings.GetSettings
+         For Each type As FileTypeEnum In Types
+            Dim dt As String = GetDateFolder()
+            Dim folderOutputWithDate As String = GetOutputFolder(type, dt)
+            Dim folderOutputWithDate_uploaded As String = IO.Path.Combine(aa.sourceDirectory, folderOutputWithDate, UplodedFolder)
+            If Not IsExistInEmaiTbl(folderOutputWithDate_uploaded) AndAlso IO.Directory.Exists(folderOutputWithDate_uploaded) Then
+               Dim FE As New SendEmail() With {
+                     .uploadedFolderPath = folderOutputWithDate_uploaded,
+                     .TYPE = type,
+                     .SelectedDate = DtCurrentDate.Value
+                  }
+               FE.RefreshFiles()
+               If FE.Files.Length > 0 Then
+                  Dim lv As ListViewItem = ListView1.Items.Add(type.ToString)
+                  lv.Tag = FE
+                  lv.SubItems.Add(dt)
+                  lv.SubItems.Add("")
+                  lv.EnsureVisible()
+               End If
+            End If
+         Next
+         _TimerEmailFileChecker.RestartTimer()
+      Else
+         RichTextBox3.Text = GetDateFolder() & ".  Check for emails in (" & e.secondsRemaining & ") seconds. "
       End If
    End Sub
 
    Private Sub TimerEmailStarter_Tick(sender As Object, e As EventArgs) Handles TimerEmailStarter_And_Status.Tick
       TimerEmailStarter_And_Status.Enabled = False
-      For Each i As DataGridViewRow In DataGridView1.Rows
-         Dim se As SendEmail = i.Tag
-         If se IsNot Nothing Then
-            If se.Status = SendEmail.EStatus.NONE Then
-               se.RefreshFiles()
-               If se.Files.Length > 0 Then
-                  i.Cells(2).Value = "Ready to email. File count: " & se.Files.Length
+      For Each i As ListViewItem In ListView1.Items
+         Dim send As SendEmail = i.Tag
+         If send IsNot Nothing Then
+            If send.Status = SendEmail.EStatus.NONE Then
+               send.RefreshFiles()
+               If send.Files.Length > 0 Then
+                  Dim emailSettings As Class_Email_Settings.Email_Settings = send.GetEmailSettings
+                  Dim scheduleTime As DateTime = emailSettings.SendSchedule
+                  If emailSettings.SendScheduleExtensionMinutes > 0 Then
+                     scheduleTime = scheduleTime.AddMinutes(emailSettings.SendScheduleExtensionMinutes)
+                  End If
+                  Dim schedule As Date = New Date(Now.Year, Now.Month, Now.Day, scheduleTime.Hour, scheduleTime.Minute, scheduleTime.Second)
+                  If Now > schedule Then
+                     send.StartSend()
+                  Else
+                     i.SubItems(2).Text = String.Concat("Ready to email | Files count: ", send.Files.Length, " | ", "Scheduled at: ", schedule)
+                     i.ImageIndex = ImageInddex.Dot
+                  End If
                Else
-                  i.Cells(2).Value = "No email files found in: " & se.uploadedFolderPath
+                  i.SubItems(2).Text = "No email files found in: " & send.uploadedFolderPath
                End If
             Else
-               i.Cells(2).Value = se.Status.ToString
+               If send.Status = SendEmail.EStatus.EmailSent Then
+                  i.SubItems(2).Text = "Sent"
+                  i.ImageIndex = ImageInddex.success
+               ElseIf send.Status = SendEmail.EStatus.Sending Then
+                  i.ImageIndex = ImageInddex.Loading
+               Else
+                  i.ImageIndex = ImageInddex.warning
+                  If send.Exception IsNot Nothing Then
+                     If send.Exception.InnerException IsNot Nothing Then
+                        i.SubItems(2).Text = send.Exception.InnerException.Message
+                     Else
+                        i.SubItems(2).Text = send.Exception.Message
+                     End If
+                  Else
+                     i.SubItems(2).Text = send.Status.ToString
+                  End If
+               End If
             End If
          End If
       Next
@@ -441,18 +480,19 @@ Public Class Form1
    End Sub
 
    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-      If DataGridView1.SelectedRows IsNot Nothing Then
-         For Each row As DataGridViewRow In DataGridView1.SelectedRows
+      If ListView1.SelectedItems IsNot Nothing Then
+         For Each row As ListViewItem In ListView1.SelectedItems
             Dim send As SendEmail = row.Tag
             If (send.Status = SendEmail.EStatus.NONE Or send.Status = SendEmail.EStatus.Error Or programmersMode) And send.Files.Length > 0 Then
                send.StartSend()
             End If
          Next
       End If
+
    End Sub
 
    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-      For Each row As DataGridViewRow In DataGridView1.Rows
+      For Each row As ListViewItem In ListView1.Items
          Dim send As SendEmail = row.Tag
          If (send.Status = SendEmail.EStatus.NONE Or send.Status = SendEmail.EStatus.Error Or programmersMode) And send.Files.Length > 0 Then
             send.StartSend()
@@ -460,4 +500,7 @@ Public Class Form1
       Next
    End Sub
 
+   Private Sub Dgv_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles Dgv.CellContentClick
+
+   End Sub
 End Class

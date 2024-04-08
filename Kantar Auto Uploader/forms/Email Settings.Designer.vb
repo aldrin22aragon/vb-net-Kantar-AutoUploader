@@ -27,22 +27,25 @@ Partial Class Form_Email_Settings
       Me.Label2 = New System.Windows.Forms.Label()
       Me.Panel1 = New System.Windows.Forms.Panel()
       Me.LabelInformation = New System.Windows.Forms.Label()
-      Me.BtnTestSendToSelf = New System.Windows.Forms.Button()
-      Me.CbCopyFrom = New System.Windows.Forms.ComboBox()
-      Me.Panel2 = New System.Windows.Forms.Panel()
-      Me.Label5 = New System.Windows.Forms.Label()
-      Me.Label4 = New System.Windows.Forms.Label()
-      Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
-      Me.LbBCC = New System.Windows.Forms.ListBox()
-      Me.LbCC = New System.Windows.Forms.ListBox()
-      Me.LbTo = New System.Windows.Forms.ListBox()
-      Me.Label1 = New System.Windows.Forms.Label()
-      Me.Label3 = New System.Windows.Forms.Label()
-      Me.BtnSave = New System.Windows.Forms.Button()
-      Me.BtnCancel = New System.Windows.Forms.Button()
-      Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.BtnTestSendToSelf = New System.Windows.Forms.Button()
+        Me.CbCopyFrom = New System.Windows.Forms.ComboBox()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
+        Me.LbBCC = New System.Windows.Forms.ListBox()
+        Me.LbCC = New System.Windows.Forms.ListBox()
+        Me.LbTo = New System.Windows.Forms.ListBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.BtnSave = New System.Windows.Forms.Button()
+        Me.BtnCancel = New System.Windows.Forms.Button()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Costum_Textbox1 = New Kantar_Auto_Uploader_And_Auto_Email.Costum_Textbox()
         Me.CtBCC = New Kantar_Auto_Uploader_And_Auto_Email.Costum_Textbox()
         Me.CtCC = New Kantar_Auto_Uploader_And_Auto_Email.Costum_Textbox()
@@ -127,6 +130,9 @@ Partial Class Form_Email_Settings
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.Thistle
+        Me.Panel2.Controls.Add(Me.Label8)
+        Me.Panel2.Controls.Add(Me.TextBox1)
+        Me.Panel2.Controls.Add(Me.Label7)
         Me.Panel2.Controls.Add(Me.Label6)
         Me.Panel2.Controls.Add(Me.Label5)
         Me.Panel2.Controls.Add(Me.DateTimePicker1)
@@ -141,8 +147,51 @@ Partial Class Form_Email_Settings
         Me.Panel2.Controls.Add(Me.CtSubject)
         Me.Panel2.Location = New System.Drawing.Point(238, 55)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(568, 380)
+        Me.Panel2.Size = New System.Drawing.Size(568, 391)
         Me.Panel2.TabIndex = 4
+        '
+        'Label8
+        '
+        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label8.BackColor = System.Drawing.SystemColors.Window
+        Me.Label8.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.Label8.Location = New System.Drawing.Point(500, 359)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(61, 22)
+        Me.Label8.TabIndex = 16
+        Me.Label8.Text = "Mins."
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TextBox1.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.TextBox1.Location = New System.Drawing.Point(436, 359)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(64, 22)
+        Me.TextBox1.TabIndex = 15
+        Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label7
+        '
+        Me.Label7.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(315, 364)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(113, 13)
+        Me.Label7.TabIndex = 14
+        Me.Label7.Text = "Extend Schedule For:"
+        '
+        'Label6
+        '
+        Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(10, 365)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(55, 13)
+        Me.Label6.TabIndex = 12
+        Me.Label6.Text = "Schedule:"
         '
         'Label5
         '
@@ -153,6 +202,17 @@ Partial Class Form_Email_Settings
         Me.Label5.Size = New System.Drawing.Size(34, 13)
         Me.Label5.TabIndex = 13
         Me.Label5.Text = "Body"
+        '
+        'DateTimePicker1
+        '
+        Me.DateTimePicker1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.DateTimePicker1.Checked = False
+        Me.DateTimePicker1.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Time
+        Me.DateTimePicker1.Location = New System.Drawing.Point(71, 356)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(117, 29)
+        Me.DateTimePicker1.TabIndex = 11
         '
         'Label4
         '
@@ -228,18 +288,18 @@ Partial Class Form_Email_Settings
         '
         Me.BtnSave.BackColor = System.Drawing.Color.LightGreen
         Me.BtnSave.Enabled = False
-        Me.BtnSave.Location = New System.Drawing.Point(559, 441)
+        Me.BtnSave.Location = New System.Drawing.Point(687, 452)
         Me.BtnSave.Name = "BtnSave"
-        Me.BtnSave.Size = New System.Drawing.Size(121, 23)
+        Me.BtnSave.Size = New System.Drawing.Size(121, 31)
         Me.BtnSave.TabIndex = 7
         Me.BtnSave.Text = "Saved"
         Me.BtnSave.UseVisualStyleBackColor = False
         '
         'BtnCancel
         '
-        Me.BtnCancel.Location = New System.Drawing.Point(687, 441)
+        Me.BtnCancel.Location = New System.Drawing.Point(560, 452)
         Me.BtnCancel.Name = "BtnCancel"
-        Me.BtnCancel.Size = New System.Drawing.Size(121, 23)
+        Me.BtnCancel.Size = New System.Drawing.Size(121, 31)
         Me.BtnCancel.TabIndex = 8
         Me.BtnCancel.Text = "Cancel"
         Me.BtnCancel.UseVisualStyleBackColor = True
@@ -253,26 +313,6 @@ Partial Class Form_Email_Settings
         Me.CheckBox1.TabIndex = 9
         Me.CheckBox1.Text = "Test Indicator"
         Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'DateTimePicker1
-        '
-        Me.DateTimePicker1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.DateTimePicker1.Checked = False
-        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Time
-        Me.DateTimePicker1.Location = New System.Drawing.Point(71, 353)
-        Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(117, 22)
-        Me.DateTimePicker1.TabIndex = 11
-        '
-        'Label6
-        '
-        Me.Label6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(10, 357)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(55, 13)
-        Me.Label6.TabIndex = 12
-        Me.Label6.Text = "Schedule:"
         '
         'Costum_Textbox1
         '
@@ -397,7 +437,7 @@ Partial Class Form_Email_Settings
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Info
-        Me.ClientSize = New System.Drawing.Size(820, 476)
+        Me.ClientSize = New System.Drawing.Size(820, 492)
         Me.Controls.Add(Me.Costum_Textbox1)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.BtnCancel)
@@ -453,4 +493,7 @@ Partial Class Form_Email_Settings
    Friend WithEvents Costum_Textbox1 As Costum_Textbox
     Friend WithEvents Label6 As Label
     Friend WithEvents DateTimePicker1 As DateTimePicker
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label8 As Label
 End Class

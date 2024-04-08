@@ -13,7 +13,7 @@ Public Class SendEmail
    Property Status As EStatus = EStatus.NONE
    Property Exception As Exception = Nothing
    '
-   Public currentEmail_Settings As Class_Email_Settings.Email_Settings = Nothing
+   Private currentEmail_Settings As Class_Email_Settings.Email_Settings = Nothing
    '
    Sub StartSend()
       settings = fscEmailSettings.GetSettings
@@ -32,6 +32,26 @@ Public Class SendEmail
          ._Password = em.Password,
          ._UserName = em.Username
       }
+   End Function
+
+   Public Function GetEmailSettings() As Class_Email_Settings.Email_Settings
+      settings = fscEmailSettings.GetSettings
+      Select Case TYPE
+         Case FileTypeEnum.BabyFood
+            Return settings.BABY_FOOD
+         Case FileTypeEnum.BrandBank
+            Return settings.BRANDBANK
+         Case FileTypeEnum.Irish
+            Return settings.IRISH
+         Case FileTypeEnum.ProductLibrary
+            Return settings.PRODUCT_LIBRARY
+         Case FileTypeEnum.RequestNutrition
+            Return settings.REQUEST_NUTRITION
+         Case FileTypeEnum.TnsSs
+            Return settings.TNS_SS
+         Case Else
+            Return Nothing
+      End Select
    End Function
 
    Sub SetupCredetialsAndMailMessage()
@@ -94,6 +114,8 @@ Public Class SendEmail
                End If
             End If
             Status = EStatus.EmailSent
+            Exception = Nothing
+
          Catch ex As Exception
             Exception = ex
             Status = EStatus.Error
