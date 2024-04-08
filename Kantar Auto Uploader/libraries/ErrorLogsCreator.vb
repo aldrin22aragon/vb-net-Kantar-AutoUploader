@@ -1,4 +1,6 @@
 ﻿Public Class ErrorLogsCreator
+   Shared logFolder As String = IO.Path.Combine(Application.StartupPath, "Log Files")
+
    Enum LogFor As Integer
       SendTestToSelf
    End Enum

@@ -12,7 +12,7 @@ Public Class Form1
    '  Tns SS
 
    Friend WithEvents TimerUploderFileChecker As New AOA_Timer(8)
-   Friend WithEvents TimerEmailFileChecker As New AOA_Timer(50)
+   Friend WithEvents TimerEmailFileChecker As New AOA_Timer(180)
 
    Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles Me.Shown
       If Not IO.Directory.Exists(settingFolder) Then MkDir(settingFolder)
@@ -37,7 +37,8 @@ Public Class Form1
          fscProcessSettings.SetSettings(p.returnValueProcessSettings)
       End While
       'ChkClearUploaded.Checked = fscProcessSettings.GetSettings.clearUploaded
-      TimerUploderFileChecker.StartTimer()
+      TimerUploderFileChecker.StartRunning()
+      TimerEmailFileChecker.StartRunning()
    End Sub
 
 
@@ -249,7 +250,6 @@ Public Class Form1
          End If
          TimerUploderFileChecker.maximumSeconds = (p.checkIntervalMins * 60)
          TimerUploderFileChecker.RestartTimer()
-         TimerEmailFileChecker.RestartTimer()
          If Not TimerUploaderStarter.Enabled Then TimerUploaderStarter.Enabled = True
          If Not TimerUploadStatus.Enabled Then TimerUploadStatus.Enabled = True
          If Not TimerEmailStarter_And_Status.Enabled Then TimerEmailStarter_And_Status.Enabled = True
@@ -389,10 +389,10 @@ Public Class Form1
             If Not IsExistInEmaiTbl(folderOutputWithDate_uploaded) Then
                If Not IO.Directory.Exists(folderOutputWithDate_uploaded) Then IO.Directory.CreateDirectory(folderOutputWithDate_uploaded)
                Dim FE As New SendEmail() With {
-                  .uploadedFolderPath = folderOutputWithDate_uploaded,
-                  .TYPE = type,
-                  .SelectedDate = DtCurrentDate.Value
-               }
+                     .uploadedFolderPath = folderOutputWithDate_uploaded,
+                     .TYPE = type,
+                     .SelectedDate = DtCurrentDate.Value
+                  }
                Dim n = DataGridView1.Rows.Add(type.ToString, dt, "")
                DataGridView1.Rows(n).Tag = FE
             End If
@@ -414,25 +414,27 @@ Public Class Form1
 
 
    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-      'If programmersMode Then
-      '   DtCurrentDate.Value = "#1/26/2024 03:37:09 AM#"
-      '   TimerEmailFileChecker.maximumSeconds = 10
-      'End If
+      If programmersMode Then
+         DtCurrentDate.Value = "#1/26/2024 03:37:09 AM#"
+         TimerEmailFileChecker.maximumSeconds = 10
+      End If
    End Sub
 
    Private Sub TimerEmailStarter_Tick(sender As Object, e As EventArgs) Handles TimerEmailStarter_And_Status.Tick
       TimerEmailStarter_And_Status.Enabled = False
       For Each i As DataGridViewRow In DataGridView1.Rows
          Dim se As SendEmail = i.Tag
-         If se.Status = SendEmail.EStatus.NONE Then
-            se.RefreshFiles()
-            If se.Files.Length > 0 Then
-               i.Cells(2).Value = "Ready to email. File count: " & se.Files.Length
+         If se IsNot Nothing Then
+            If se.Status = SendEmail.EStatus.NONE Then
+               se.RefreshFiles()
+               If se.Files.Length > 0 Then
+                  i.Cells(2).Value = "Ready to email. File count: " & se.Files.Length
+               Else
+                  i.Cells(2).Value = "No email files found in: " & se.uploadedFolderPath
+               End If
             Else
-               i.Cells(2).Value = "No files found."
+               i.Cells(2).Value = se.Status.ToString
             End If
-         Else
-            i.Cells(2).Value = se.Status.ToString
          End If
       Next
       TimerEmailStarter_And_Status.Enabled = True

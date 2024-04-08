@@ -82,14 +82,14 @@ Public Class BabyFood
              <style>
                  table {
                      border-collapse: collapse;
-                     font-size: 12px;
+                     font-size: 12px; 
                      border: 1px solid black;
                      table-layout: auto; /* Set table layout to auto */
                      border-spacing: 0; /* Remove empty spaces between cells */
                  }
                  th, td {
                      border: 1px solid black;
-                     padding: 1px;
+                     padding: 3px 10px;
                      text-align: left;
                      white-space: nowrap; /* Prevent wrapping of text */
                  }
@@ -101,7 +101,6 @@ Public Class BabyFood
          </html>
 
       "
-
       If em.IsTestIndicator Then
          res.To.Add(em.TestIndicatorEmailReceiver)
       Else

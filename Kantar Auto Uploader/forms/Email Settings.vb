@@ -71,10 +71,10 @@ Public Class Form_Email_Settings
          If IsValidEmaila(vl) Then
             Dim r = AddEmailToListBox(CtTo._TextBox, LbTo)
             If r <> "" Then
-               ErrMsg(r)
+               MyMessageBox.ErrMsg(r)
             End If
          Else
-            ErrMsg("Please check invalid email.")
+            MyMessageBox.ErrMsg("Please check invalid email.")
          End If
       End If
    End Sub
@@ -105,10 +105,10 @@ Public Class Form_Email_Settings
          If IsValidEmaila(vl) Then
             Dim r = AddEmailToListBox(CtCC._TextBox, LbCC)
             If r <> "" Then
-               ErrMsg(r)
+               MyMessageBox.ErrMsg(r)
             End If
          Else
-            ErrMsg("Please check invalid email.")
+            MyMessageBox.ErrMsg("Please check invalid email.")
          End If
       End If
    End Sub
@@ -119,10 +119,10 @@ Public Class Form_Email_Settings
          If IsValidEmaila(vl) Then
             Dim r = AddEmailToListBox(CtBCC._TextBox, LbBCC)
             If r <> "" Then
-               ErrMsg(r)
+               MyMessageBox.ErrMsg(r)
             End If
          Else
-            ErrMsg("Please check invalid email.")
+            MyMessageBox.ErrMsg("Please check invalid email.")
          End If
       End If
    End Sub
@@ -204,10 +204,10 @@ Public Class Form_Email_Settings
       If CmbType.SelectedItem IsNot Nothing Then
          CmbType.SelectedItem = FormSettings
          fscEmailSettings.SetSettings(ComboboxTypes)
-         SuccessMsg("Saved")
+         MyMessageBox.SuccessMsg("Saved")
          BtnSave.Enabled = False
       Else
-         ErrMsg("No Selected Types")
+         MyMessageBox.ErrMsg("No Selected Types")
       End If
    End Sub
 
@@ -273,14 +273,14 @@ Public Class Form_Email_Settings
       Me.Enabled = True
       LabelInformation.Text = "Info"
       If email.Status = SendEmail.EStatus.EmailSent Then
-         SuccessMsg("Test success.")
+         MyMessageBox.SuccessMsg("Test success.")
       ElseIf email.Status = SendEmail.EStatus.Error Then
          ErrorLogsCreator.CreateLog(ErrorLogsCreator.LogFor.SendTestToSelf, email.Exception, "Send test to self")
          Dim innerMessage As String = ""
          If email.Exception.InnerException IsNot Nothing Then innerMessage = email.Exception.InnerException.Message
-         ErrMsg(email.Exception.Message & vbNewLine & innerMessage)
+         MyMessageBox.ErrMsg(email.Exception.Message & vbNewLine & innerMessage)
       Else
-         ErrMsg("Unknown error. Please try again.")
+         MyMessageBox.ErrMsg("Unknown error. Please try again.")
       End If
    End Sub
 

@@ -129,13 +129,14 @@
     </Compile>
     <Compile Include="Gloabals.vb" />
     <Compile Include="libraries\AOA_Timer.vb" />
-    <Compile Include="libraries\Class Email Settings.vb" />
+    <Compile Include="Interface\Class Email Settings.vb" />
     <Compile Include="libraries\ErrorLogsCreator.vb" />
+    <Compile Include="libraries\FileManager.vb" />
     <Compile Include="libraries\FileSettingsCreator2.vb" />
     <Compile Include="libraries\ICSharpCode_Zip.vb" />
-    <Compile Include="libraries\ProcessSettings.vb" />
+    <Compile Include="Interface\ProcessSettings.vb" />
+    <Compile Include="libraries\MyMessageBox.vb" />
     <Compile Include="libraries\SendEmail.vb" />
-    <Compile Include="libraries\UplodedFileForEmail.vb" />
     <Compile Include="MailTemplates\BabyFood.vb" />
     <Compile Include="MailTemplates\Brandbank.vb" />
     <Compile Include="MailTemplates\Irish.vb" />
@@ -207,5 +208,6 @@
     <Content Include="upload %281%29.ico" />
     <Content Include="upload.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

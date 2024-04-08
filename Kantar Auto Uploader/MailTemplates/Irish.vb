@@ -64,11 +64,6 @@ Public Class Irish
             <th>&nbsp</th>
             <th>&nbsp</th>
          </tr>
-         <tr>
-            <td>Total Records</td>
-            <td>" & total & "</td>
-            <td></td>
-         </tr>
       "
       Tmp_body = Tmp_body.Replace("{filesTobePlaced}", attach)
       res.Body = "
@@ -88,7 +83,7 @@ Public Class Irish
                  }
                  th, td {
                      border: 1px solid black;
-                     padding: 1px;
+                     padding: 3px 10px;
                      text-align: left;
                      white-space: nowrap; /* Prevent wrapping of text */
                  }

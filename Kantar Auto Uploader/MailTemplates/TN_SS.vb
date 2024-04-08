@@ -62,12 +62,7 @@ Public Class TN_SS
          <tr>
             <th>&nbsp</th>
             <th>&nbsp</th>
-            <th>&nbsp</th>
-         </tr>
-         <tr>
-            <td>Total Records</td>
-            <td>" & total & "</td>
-            <td></td>
+            <th>&nbsp</th> 
          </tr>
       "
       Tmp_body = Tmp_body.Replace("{filesTobePlaced}", attach)
@@ -79,7 +74,7 @@ Public Class TN_SS
              <meta name='viewport' content='width=device-width, initial-scale=1.0'>
              <title>Three Column Table</title>
              <style>
-                 table {
+                 table { 
                      border-collapse: collapse;
                      font-size: 12px;
                      border: 1px solid black;
@@ -88,7 +83,7 @@ Public Class TN_SS
                  }
                  th, td {
                      border: 1px solid black;
-                     padding: 1px;
+                     padding: 2px 10px;
                      text-align: left;
                      white-space: nowrap; /* Prevent wrapping of text */
                  }

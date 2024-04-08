@@ -89,7 +89,7 @@ Public Class Brandbank
                  }
                  th, td {
                      border: 1px solid black;
-                     padding: 1px;
+                     padding: 3px 10px;
                      text-align: left;
                      white-space: nowrap; /* Prevent wrapping of text */
                  }
