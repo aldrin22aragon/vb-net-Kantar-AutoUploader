@@ -22,8 +22,8 @@ Partial Class Form1
    'Do not modify it using the code editor.
    <System.Diagnostics.DebuggerStepThrough()>
    Private Sub InitializeComponent()
-      Me.components = New System.ComponentModel.Container()
-      Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.TbFtpSettings = New System.Windows.Forms.ToolStripButton()
         Me.TbUploadSettins = New System.Windows.Forms.ToolStripButton()
@@ -44,16 +44,16 @@ Partial Class Form1
         Me.ChkClearUploaded = New System.Windows.Forms.CheckBox()
         Me.RichTextBox2 = New System.Windows.Forms.RichTextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.TimerEmailStarter_And_Status = New System.Windows.Forms.Timer(Me.components)
-        Me.RichTextBox3 = New System.Windows.Forms.RichTextBox()
-        Me.Panel2 = New System.Windows.Forms.Panel()
         Me.ListView1 = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.TimerEmailStarter_And_Status = New System.Windows.Forms.Timer(Me.components)
+        Me.RichTextBox3 = New System.Windows.Forms.RichTextBox()
+        Me.Panel2 = New System.Windows.Forms.Panel()
         Me.ToolStrip1.SuspendLayout()
         CType(Me.Dgv, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
@@ -74,7 +74,7 @@ Partial Class Form1
         Me.TbFtpSettings.Image = CType(resources.GetObject("TbFtpSettings.Image"), System.Drawing.Image)
         Me.TbFtpSettings.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.TbFtpSettings.Name = "TbFtpSettings"
-        Me.TbFtpSettings.Size = New System.Drawing.Size(92, 22)
+        Me.TbFtpSettings.Size = New System.Drawing.Size(91, 22)
         Me.TbFtpSettings.Text = "FTP Settings"
         '
         'TbUploadSettins
@@ -178,9 +178,9 @@ Partial Class Form1
         '
         Me.DtCurrentDate.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.DtCurrentDate.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DtCurrentDate.Location = New System.Drawing.Point(555, 29)
+        Me.DtCurrentDate.Location = New System.Drawing.Point(502, 29)
         Me.DtCurrentDate.Name = "DtCurrentDate"
-        Me.DtCurrentDate.Size = New System.Drawing.Size(268, 29)
+        Me.DtCurrentDate.Size = New System.Drawing.Size(321, 29)
         Me.DtCurrentDate.TabIndex = 7
         '
         'Label1
@@ -189,7 +189,7 @@ Partial Class Form1
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.SystemColors.Control
         Me.Label1.Font = New System.Drawing.Font("Segoe UI Semibold", 12.0!, System.Drawing.FontStyle.Bold)
-        Me.Label1.Location = New System.Drawing.Point(442, 33)
+        Me.Label1.Location = New System.Drawing.Point(389, 33)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(107, 21)
         Me.Label1.TabIndex = 8
@@ -234,7 +234,7 @@ Partial Class Form1
         Me.RichTextBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.RichTextBox2.BackColor = System.Drawing.SystemColors.Control
-        Me.RichTextBox2.Font = New System.Drawing.Font("Courier Prime", 8.0!)
+        Me.RichTextBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Me.RichTextBox2.Location = New System.Drawing.Point(12, 264)
         Me.RichTextBox2.Name = "RichTextBox2"
         Me.RichTextBox2.ReadOnly = True
@@ -254,6 +254,49 @@ Partial Class Form1
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1035, 250)
         Me.Panel1.TabIndex = 15
+        '
+        'ListView1
+        '
+        Me.ListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3})
+        Me.ListView1.Font = New System.Drawing.Font("Segoe UI Semibold", 8.5!, System.Drawing.FontStyle.Bold)
+        Me.ListView1.FullRowSelect = True
+        Me.ListView1.GridLines = True
+        Me.ListView1.HideSelection = False
+        Me.ListView1.Location = New System.Drawing.Point(24, 5)
+        Me.ListView1.Name = "ListView1"
+        Me.ListView1.Size = New System.Drawing.Size(811, 174)
+        Me.ListView1.SmallImageList = Me.ImageList1
+        Me.ListView1.TabIndex = 20
+        Me.ListView1.UseCompatibleStateImageBehavior = False
+        Me.ListView1.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.Text = "Email"
+        Me.ColumnHeader1.Width = 150
+        '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Text = "Date"
+        Me.ColumnHeader2.Width = 100
+        '
+        'ColumnHeader3
+        '
+        Me.ColumnHeader3.Text = "Status"
+        Me.ColumnHeader3.Width = 537
+        '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "hourglass.png")
+        Me.ImageList1.Images.SetKeyName(1, "warning.png")
+        Me.ImageList1.Images.SetKeyName(2, "success-icon-7.png")
+        Me.ImageList1.Images.SetKeyName(3, "icons8-upload-64.png")
+        Me.ImageList1.Images.SetKeyName(4, "gmail.png")
+        Me.ImageList1.Images.SetKeyName(5, "more.png")
+        Me.ImageList1.Images.SetKeyName(6, "full-moon.png")
+        Me.ImageList1.Images.SetKeyName(7, "dot.png")
         '
         'Button1
         '
@@ -308,49 +351,6 @@ Partial Class Form1
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(1035, 382)
         Me.Panel2.TabIndex = 16
-        '
-        'ListView1
-        '
-        Me.ListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3})
-        Me.ListView1.Font = New System.Drawing.Font("Segoe UI Semibold", 8.5!, System.Drawing.FontStyle.Bold)
-        Me.ListView1.FullRowSelect = True
-        Me.ListView1.GridLines = True
-        Me.ListView1.HideSelection = False
-        Me.ListView1.Location = New System.Drawing.Point(24, 5)
-        Me.ListView1.Name = "ListView1"
-        Me.ListView1.Size = New System.Drawing.Size(811, 174)
-        Me.ListView1.SmallImageList = Me.ImageList1
-        Me.ListView1.TabIndex = 20
-        Me.ListView1.UseCompatibleStateImageBehavior = False
-        Me.ListView1.View = System.Windows.Forms.View.Details
-        '
-        'ColumnHeader1
-        '
-        Me.ColumnHeader1.Text = "Email"
-        Me.ColumnHeader1.Width = 150
-        '
-        'ColumnHeader2
-        '
-        Me.ColumnHeader2.Text = "Date"
-        Me.ColumnHeader2.Width = 100
-        '
-        'ColumnHeader3
-        '
-        Me.ColumnHeader3.Text = "Status"
-        Me.ColumnHeader3.Width = 537
-        '
-        'ImageList1
-        '
-        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
-        Me.ImageList1.Images.SetKeyName(0, "hourglass.png")
-        Me.ImageList1.Images.SetKeyName(1, "warning.png")
-        Me.ImageList1.Images.SetKeyName(2, "success-icon-7.png")
-        Me.ImageList1.Images.SetKeyName(3, "icons8-upload-64.png")
-        Me.ImageList1.Images.SetKeyName(4, "gmail.png")
-        Me.ImageList1.Images.SetKeyName(5, "more.png")
-        Me.ImageList1.Images.SetKeyName(6, "full-moon.png")
-        Me.ImageList1.Images.SetKeyName(7, "dot.png")
         '
         'Form1
         '

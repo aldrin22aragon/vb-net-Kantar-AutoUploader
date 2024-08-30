@@ -13,7 +13,12 @@
       res = MessageBox.Show(msg, header, MessageBoxButtons.YesNoCancel, icon, MessageBoxDefaultButton.Button2)
       Return res
    End Function
-   Public Shared Function okCancel(msg As String) As DialogResult
-      Return MessageBox.Show(msg, "!!!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
-   End Function
+    Public Shared Function okCancel(msg As String) As DialogResult
+        Return MessageBox.Show(msg, "!!!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)
+    End Function
+
+    Public Shared Function Info(msg As String) As DialogResult
+        Return MessageBox.Show(msg, ".....", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    End Function
+
 End Class

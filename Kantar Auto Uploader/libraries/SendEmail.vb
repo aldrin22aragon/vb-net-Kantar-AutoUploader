@@ -1,4 +1,7 @@
-﻿Imports System.Net.Mail
+﻿Imports System.Net
+Imports System.Net.Mail
+Imports System.Net.Security
+Imports System.Security.Cryptography.X509Certificates
 Public Class SendEmail
    Friend Property TYPE As FileTypeEnum = FileTypeEnum.NONE
    Public uploadedFolderPath As String = ""
@@ -25,13 +28,18 @@ Public Class SendEmail
    Function SetupCredentials_and_MailMessage(em As Class_Email_Settings.Email_Settings) As Credentials
       Return New Credentials With {
          .DeliveryFormat = SmtpDeliveryFormat.SevenBit,
-         .EnableSsl = False,
          .Host = em.Host,
          .Port = em.Port,
          ._Domain = "",
          ._Password = em.Password,
-         ._UserName = em.Username
+         ._UserName = em.Username,
+         .EnableSsl = em.EnableSSL
       }
+   End Function
+
+   Private Function ValidateCertificate(sender As Object, certificate As X509Certificate, chain As X509Chain, sslPolicyErrors As SslPolicyErrors) As Boolean
+      ' Always accept the certificate
+      Return True
    End Function
 
    Public Function GetEmailSettings() As Class_Email_Settings.Email_Settings
@@ -86,7 +94,9 @@ Public Class SendEmail
    Private Sub RunThread()
       Try
          SetupCredetialsAndMailMessage()
+         ServicePointManager.ServerCertificateValidationCallback = AddressOf ValidateCertificate
          Status = EStatus.SettingUpCredentials
+
          Dim client As New SmtpClient() With {
             .Host = EmailCredentials.Host,
             .Port = EmailCredentials.Port,
@@ -150,7 +160,7 @@ Public Class SendEmail
       ''' </summary>
       Public DeliveryFormat As SmtpDeliveryFormat = SmtpDeliveryFormat.SevenBit
       ''' <summary>
-      ''' default is false
+      ''' default is true
       ''' </summary>
       Public EnableSsl As Boolean = False '
       Public _UserName As String = ""

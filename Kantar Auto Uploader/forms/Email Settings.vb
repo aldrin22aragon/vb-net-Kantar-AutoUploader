@@ -170,6 +170,7 @@ Public Class Form_Email_Settings
             res.TestIndicatorEmailReceiver = Costum_Textbox1._TextBoxValue
             res.SendSchedule = DateTimePicker1.Value
             res.SendScheduleExtensionMinutes = Val(TextBox1.Text)
+            res.EnableSSL = ChkEnableSSL.Checked
             Return res
          Else
             Throw New Exception("NO selected type in Combobox")
@@ -196,6 +197,7 @@ Public Class Form_Email_Settings
             CtUsername._TextBoxValue = value.Username
             CheckBox1.Checked = value.IsTestIndicator
             Costum_Textbox1._TextBoxValue = value.TestIndicatorEmailReceiver
+            ChkEnableSSL.Checked = value.EnableSSL
             Try
                DateTimePicker1.Value = value.SendSchedule
             Catch ex As Exception
@@ -258,7 +260,8 @@ Public Class Form_Email_Settings
          .Host = aa.Host,
          .Port = aa.Port,
          ._Password = aa.Password,
-         ._UserName = aa.Username
+         ._UserName = aa.Username,
+         .EnableSsl = aa.EnableSSL
       }
       Dim exeName As String = System.Reflection.Assembly.GetExecutingAssembly.GetName.Name
       Dim message As New MailMessage() With {
@@ -343,5 +346,18 @@ Public Class Form_Email_Settings
                TextBox1.Text = Val(TextBox1.Text) - 1
             End If
       End Select
+   End Sub
+   Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles ChkEnableSSL.CheckedChanged
+      BtnSave.Enabled = True
+   End Sub
+
+   Private Sub CtPassword__KeyKeyDown(sender As Object, e As KeyEventArgs) Handles CtPassword._KeyKeyDown
+      If e.Control And e.KeyCode = Keys.P Then
+         If CtPassword._PasswordCharacter = Nothing Then
+            CtPassword._PasswordCharacter = "*"
+         Else
+            CtPassword._PasswordCharacter = Nothing
+         End If
+      End If
    End Sub
 End Class

@@ -54,14 +54,18 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>D:\aldrin Files\Soft012 Files\DRS_AQA_2014_AutoUpload\bin\Debug\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic.Compatibility" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Messaging" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
@@ -116,15 +120,25 @@
     <Compile Include="forms\FtpBrowser.designer.vb">
       <DependentUpon>FtpBrowser.vb</DependentUpon>
     </Compile>
-    <Compile Include="forms\FtpBrowser.vb" />
+    <Compile Include="forms\FtpBrowser.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\FtpSettings.designer.vb">
       <DependentUpon>FtpSettings.vb</DependentUpon>
     </Compile>
-    <Compile Include="forms\FtpSettings.vb" />
+    <Compile Include="forms\FtpSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\Form Process Settings.Designer.vb">
       <DependentUpon>Form Process Settings.vb</DependentUpon>
     </Compile>
     <Compile Include="forms\Form Process Settings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\MyFolderBrowser.Designer.vb">
+      <DependentUpon>MyFolderBrowser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\MyFolderBrowser.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Gloabals.vb" />
@@ -183,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Form Process Settings.resx">
       <DependentUpon>Form Process Settings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\MyFolderBrowser.resx">
+      <DependentUpon>MyFolderBrowser.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

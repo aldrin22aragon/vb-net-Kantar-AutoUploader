@@ -39,21 +39,14 @@ Public Class Form_Process_Settings
       End Set
    End Property
 
-   Private Sub TxSourceLocal_Click(sender As Object, e As EventArgs) Handles TxSourceLocal.Click
-      Dim fldrDialgo As New FolderBrowserDialog
-      If TxSourceLocal.Text <> "" Then
-         If IO.Directory.Exists(TxSourceLocal.Text) Then
-            fldrDialgo.SelectedPath = TxSourceLocal.Text
-         Else
-            fldrDialgo.SelectedPath = Application.StartupPath
-         End If
-      End If
-      If fldrDialgo.ShowDialog = DialogResult.OK Then
-         TxSourceLocal.Text = fldrDialgo.SelectedPath
-      End If
-   End Sub
+    Private Sub TxSourceLocal_Click(sender As Object, e As EventArgs) Handles TxSourceLocal.Click
+        Dim fl As New MyFolderBrowser(TxSourceLocal.Text)
+        If fl.ShowDialog = DialogResult.OK Then
+            TxSourceLocal.Text = fl.SelectedPath
+        End If
+    End Sub
 
-   Private Sub TxDestionationFolderFTP_Click(sender As Object, e As EventArgs) Handles TxDestionationFolderFTP.Click
+    Private Sub TxDestionationFolderFTP_Click(sender As Object, e As EventArgs) Handles TxDestionationFolderFTP.Click
       Dim startPath As String = IIf(TxDestionationFolderFTP.Text <> "", TxDestionationFolderFTP.Text, "/")
       Dim ftpB As New FtpBrowser(sessionOptions, FtpBrowser.Mode_.folder, startPath)
       If ftpB.ShowDialog = DialogResult.OK Then

@@ -24,6 +24,7 @@
       Public Port As String = ""
       Public Username As String = ""
       Public Password As String = ""
+      Public EnableSSL As Boolean = False
       ' email
       Public Subject As String = ""
       Public To_ As String() = {}
