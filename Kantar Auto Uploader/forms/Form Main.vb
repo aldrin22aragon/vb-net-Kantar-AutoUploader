@@ -49,13 +49,16 @@ Public Class Form1
             If ftpSetting.ReturnSessionOptions.SshPrivateKeyPath <> "" Then
                 Dim ppk As String = ftpSetting.ReturnSessionOptions.SshPrivateKeyPath
                 If IO.File.Exists(ppk) Then
-                    IO.File.Copy(ppk, privateKeyPath, True)
+                    IO.File.Copy(ppk, privateKeyPath_TMP, True)
                     ftpSetting.ReturnSessionOptions.SshPrivateKeyPath = privateKeyPath
                 Else
                     MyMessageBox.ErrMsg($"File not found:{ppk}")
                 End If
             End If
             fscSessionOptions.SetSettings(ftpSetting.ReturnSessionOptions)
+            MyMessageBox.SuccessMsg("Upon saving you must restart the program.")
+            Application.Exit()
+            End
         End If
     End Sub
 
@@ -66,19 +69,36 @@ Public Class Form1
         End If
     End Sub
 
-    Function MyGetDirectories(path) As String()
+    Class ErrorData(Of T)
+        Public Data As T
+        Public Err As Exception = Nothing
+    End Class
+
+    Function MyGetDirectories(path) As ErrorData(Of String())
         Try
-            Return IO.Directory.GetDirectories(path)
+            'Throw New Exception("Test error2")
+            Return New ErrorData(Of String()) With {
+                .Data = IO.Directory.GetDirectories(path)
+            }
         Catch ex As Exception
-            Return {}
+            Return New ErrorData(Of String()) With {
+                .Data = {},
+                .Err = ex
+            }
         End Try
     End Function
 
-    Function MyGetFiles(path) As String()
+    Function MyGetFiles(path) As ErrorData(Of String())
         Try
-            Return IO.Directory.GetFiles(path)
+            'Throw New Exception("Test error1")
+            Return New ErrorData(Of String()) With {
+                .Data = IO.Directory.GetFiles(path)
+            }
         Catch ex As Exception
-            Return {}
+            Return New ErrorData(Of String()) With {
+                .Data = {},
+                .Err = ex
+            }
         End Try
     End Function
 
@@ -123,141 +143,200 @@ Public Class Form1
             End Try
         End Set
     End Property
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvErrors.CellContentClick
+        If e.ColumnIndex = 4 AndAlso e.RowIndex >= 0 Then
+            ' Handle the button click
+            Dim exView As New Exception_Viewer(DgvErrors.Rows(DgvErrors.CurrentRow.Index))
+            exView.ShowDialog()
+        End If
+    End Sub
+
 
     Private Sub Timer_Tick(e As AOA_Timer.TickEventInfo) Handles _TimerUploderFileChecker.Tick
         If e.IsTimeReached Then
-            Dim p = fscProcessSettings.GetSettings
-            Dim c = fscSessionOptions.GetSettings
-            If p IsNot Nothing AndAlso p.checkIntervalMins > 0 Then
+
+            Dim process_Settings = fscProcessSettings.GetSettings
+            Dim winscpConnectionOptions = fscSessionOptions.GetSettings
+            If process_Settings IsNot Nothing AndAlso process_Settings.checkIntervalMins > 0 Then
+                If DgvErrors.RowCount >= 300 Then
+                    DgvErrors.Rows.Clear()
+                End If
+                If DgvErrors.RowCount > 0 Then
+                    DgvErrors.Rows.Add("-----------------------------------")
+                End If
                 Dim dateFolder As String = GetDateFolder()
                 'Dim func = Function(folder As String) As String
                 '              Return String.Concat(p.destinationDirectory, "/", folder, "/Output/", dateFolder)
                 '           End Function
-                RichTextBox2.Text = "Scan files from: " & p.sourceDirectory
                 For Each type As FileTypeEnum In Types
-                    Dim dest As String = String.Concat(p.FtpDestinationDirectory, "/", dateFolder)
+                    Dim dest As String = String.Concat(process_Settings.FtpDestinationDirectory, "/", dateFolder)
                     Dim folderOutputWithDate As String = GetOutputFolder(type, dateFolder)
-                    Dim path As String = IO.Path.Combine(p.sourceDirectory, folderOutputWithDate)
-                    RichTextBox2.Text = RichTextBox2.Text & vbNewLine & vbTab & folderOutputWithDate
-                    Select Case type
-                        Case FileTypeEnum.BabyFood
-                            Dim FtpDestinationDirectory = p.FtpDestinationDirectory & "/receipts/BABYFOODS/ddc output"
-                            For Each File_ As String In MyGetFiles(path).ToList
-                                If IsAddable(File_) Then
-                                    Dim upload As New UploadFile(File_, FtpDestinationDirectory, c)
-                                    upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
-                                    upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BabyFood
-                                    upload.setup.toZip = True
-                                    Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "Baby Food", "to zip", "For Upload")
-                                    Dgv.Rows(indx).Tag = upload
-                                End If
-                            Next
-                            For Each Directory_ As String In MyGetDirectories(path).ToList
-                                If IsAddable(Directory_) Then
-                                    Dim upload As New UploadFile(Directory_, FtpDestinationDirectory, c)
-                                    upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
-                                    upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BabyFood
-                                    upload.setup.toZip = True
-                                    Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(Directory_), "Baby Food", "to zip", "For Upload")
-                                    Dgv.Rows(indx).Tag = upload
-                                End If
-                            Next
-                        Case FileTypeEnum.BrandBank
-                            Dim FtpDestinationDirectory = p.FtpDestinationDirectory & "/receipts/INGREDIENTS/Brandbank"
-                            For Each File_ As String In MyGetFiles(path).ToList
-                                If IsAddable(File_) Then
-                                    Dim upload As New UploadFile(File_, FtpDestinationDirectory, c)
-                                    upload.setup.toZip = True
-                                    upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
-                                    upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BrandBank
-                                    Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "BrandBank", "to zip", "For Upload")
-                                    Dgv.Rows(indx).Tag = upload
-                                End If
-                            Next
-                            For Each Directory_ As String In MyGetDirectories(path).ToList
-                                If IsAddable(Directory_) Then
-                                    Dim upload As New UploadFile(Directory_, FtpDestinationDirectory, c)
-                                    upload.setup.toZip = True
-                                    upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
-                                    upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BrandBank
-                                    Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(Directory_), "BrandBank", "to zip", "For Upload")
-                                    Dgv.Rows(indx).Tag = upload
-                                End If
-                            Next
-                        Case FileTypeEnum.ProductLibrary
-                            Dim FtpDestinationDirectory = p.FtpDestinationDirectory & "/receipts/NUTRITION_IMAGES/Request_Output"
-                            For Each File_ As String In MyGetFiles(path).ToList
-                                If IsAddable(File_) Then
-                                    Dim upload As New UploadFile(File_, FtpDestinationDirectory, c)
-                                    upload.setup.toZip = True
-                                    upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
-                                    upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.ProductLibrary
-                                    Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "Product Library", "to zip", "For Upload")
-                                    Dgv.Rows(indx).Tag = upload
-                                End If
-                            Next
-                            For Each Directory_ As String In MyGetDirectories(path).ToList
-                                If IsAddable(Directory_) Then
-                                    Dim upload As New UploadFile(Directory_, FtpDestinationDirectory, c)
-                                    upload.setup.toZip = True
-                                    upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
-                                    upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.ProductLibrary
-                                    Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(Directory_), "Product Library", "to zip", "For Upload")
-                                    Dgv.Rows(indx).Tag = upload
-                                End If
-                            Next
-                        Case FileTypeEnum.RequestNutrition
-                            Dim FtpDestinationDirectory = p.FtpDestinationDirectory & "/receipts/NUTRITION_IMAGES/Request_Output"
-                            For Each File_ As String In MyGetFiles(path).ToList
-                                If IsAddable(File_) Then
-                                    Dim upload As New UploadFile(File_, FtpDestinationDirectory, c)
-                                    upload.setup.toZip = True
-                                    upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
-                                    upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.RequestNutrition
-                                    Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "Request Nutrition", "to zip", "For Upload")
-                                    Dgv.Rows(indx).Tag = upload
-                                End If
-                            Next
-                            For Each Directory_ As String In MyGetDirectories(path).ToList
-                                If IsAddable(Directory_) Then
-                                    Dim upload As New UploadFile(Directory_, FtpDestinationDirectory, c)
-                                    upload.setup.toZip = True
-                                    upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
-                                    upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.RequestNutrition
-                                    Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(Directory_), "Request Nutrition", "to zip", "For Upload")
-                                    Dgv.Rows(indx).Tag = upload
-                                End If
-                            Next
-                        Case FileTypeEnum.Irish
-                            Dim FtpDestinationDirectory = p.FtpDestinationDirectory & "/receipts/receiptsIE"
-                            For Each File_ As String In MyGetFiles(path).ToList
-                                If IsAddable(File_) Then
-                                    Dim upload As New UploadFile(File_, FtpDestinationDirectory, c)
-                                    upload.setup.toZip = False
-                                    upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
-                                    upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.Irish
-                                    Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "Irish", "---", "For Upload")
-                                    Dgv.Rows(indx).Tag = upload
-                                End If
-                            Next
-                        Case FileTypeEnum.TnsSs
-                            Dim FtpDestinationDirectory = p.FtpDestinationDirectory & "/receipts"
-                            For Each File_ As String In MyGetFiles(path).ToList
-                                If IsAddable(File_) Then
-                                    Dim upload As New UploadFile(File_, FtpDestinationDirectory, c)
-                                    upload.setup.toZip = False
-                                    upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
-                                    upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.TnsSs
-                                    Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "TNS SS", "---", "For Upload")
-                                    Dgv.Rows(indx).Tag = upload
-                                End If
-                            Next
-                    End Select
+                    Dim path As String = IO.Path.Combine(process_Settings.sourceDirectory, folderOutputWithDate)
+                    Dim addedIndex As Integer = DgvErrors.Rows.Add(type.ToString, path)
+                    Dim tmpFiles As ErrorData(Of String()) = MyGetFiles(path)
+                    Dim tmpDirectories As ErrorData(Of String()) = MyGetDirectories(path)
+
+                    Dim validateFiles As Action = Sub()
+                                                      If tmpFiles.Err IsNot Nothing Then
+                                                          Dim vl = DgvErrors.Rows(addedIndex).Cells(3).Value
+                                                          DgvErrors.Rows(addedIndex).Cells(3).Value = $"{vl} | Scan files Error"
+                                                          DgvErrors.Rows(addedIndex).Cells(0).Tag = tmpFiles.Err
+                                                      Else
+                                                          If tmpFiles.Data.Length < 1 Then
+                                                              DgvErrors.Rows(addedIndex).Cells(2).Value = DgvErrors.Rows(addedIndex).Cells(2).Value & "No Files found"
+                                                          End If
+                                                      End If
+                                                  End Sub
+                    Dim validatedirectories As Action = Sub()
+                                                            If tmpDirectories.Err IsNot Nothing Then
+                                                                Dim vl = DgvErrors.Rows(addedIndex).Cells(3).Value
+                                                                DgvErrors.Rows(addedIndex).Cells(3).Value = $"{vl} | Scan directory Error"
+                                                                DgvErrors.Rows(addedIndex).Cells(1).Tag = tmpDirectories.Err
+                                                            Else
+                                                                If tmpDirectories.Data.Length < 1 OrElse (tmpDirectories.Data.Length = 1 AndAlso tmpDirectories.Data(0).ToUpper.EndsWith("UPLOADED")) Then
+                                                                    DgvErrors.Rows(addedIndex).Cells(2).Value = DgvErrors.Rows(addedIndex).Cells(2).Value & " | No Directories found"
+                                                                End If
+                                                            End If
+                                                        End Sub
+                    DgvErrors.Rows(addedIndex).Cells(4).Value = "View"
+                    If Not IO.Directory.Exists(path) Then
+                        DgvErrors.Rows(addedIndex).Cells(2).Value = "Directory does not exist."
+                    Else
+                        Select Case type
+                            Case FileTypeEnum.BabyFood
+                                Dim FtpDestinationDirectory = process_Settings.FtpDestinationDirectory & "/receipts/BABYFOODS/ddc output"
+                                For Each File_ As String In tmpFiles.Data.ToList
+                                    If IsAddable(File_) Then
+                                        Dim upload As New UploadFile(File_, FtpDestinationDirectory, winscpConnectionOptions)
+                                        upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
+                                        upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BabyFood
+                                        upload.setup.toZip = True
+                                        Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "Baby Food", "to zip", "For Upload")
+                                        Dgv.Rows(indx).Tag = upload
+                                    End If
+                                Next
+                                For Each Directory_ As String In tmpDirectories.Data.ToList
+                                    If IsAddable(Directory_) Then
+                                        Dim upload As New UploadFile(Directory_, FtpDestinationDirectory, winscpConnectionOptions)
+                                        upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
+                                        upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BabyFood
+                                        upload.setup.toZip = True
+                                        Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(Directory_), "Baby Food", "to zip", "For Upload")
+                                        Dgv.Rows(indx).Tag = upload
+                                    End If
+                                Next
+                                validateFiles()
+                                validatedirectories()
+                            Case FileTypeEnum.BrandBank
+                                Dim FtpDestinationDirectory = process_Settings.FtpDestinationDirectory & "/receipts/INGREDIENTS/Brandbank"
+                                For Each File_ As String In tmpFiles.Data.ToList
+                                    If IsAddable(File_) Then
+                                        Dim upload As New UploadFile(File_, FtpDestinationDirectory, winscpConnectionOptions)
+                                        upload.setup.toZip = True
+                                        upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
+                                        upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BrandBank
+                                        Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "BrandBank", "to zip", "For Upload")
+                                        Dgv.Rows(indx).Tag = upload
+                                    End If
+                                Next
+                                For Each Directory_ As String In tmpDirectories.Data.ToList
+                                    If IsAddable(Directory_) Then
+                                        Dim upload As New UploadFile(Directory_, FtpDestinationDirectory, winscpConnectionOptions)
+                                        upload.setup.toZip = True
+                                        upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
+                                        upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.BrandBank
+                                        Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(Directory_), "BrandBank", "to zip", "For Upload")
+                                        Dgv.Rows(indx).Tag = upload
+                                    End If
+                                Next
+                                validateFiles()
+                                validatedirectories()
+                            Case FileTypeEnum.ProductLibrary
+                                Dim FtpDestinationDirectory = process_Settings.FtpDestinationDirectory & "/receipts/NUTRITION_IMAGES/Request_Output"
+                                For Each File_ As String In tmpFiles.Data.ToList
+                                    If IsAddable(File_) Then
+                                        Dim upload As New UploadFile(File_, FtpDestinationDirectory, winscpConnectionOptions)
+                                        upload.setup.toZip = True
+                                        upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
+                                        upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.ProductLibrary
+                                        Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "Product Library", "to zip", "For Upload")
+                                        Dgv.Rows(indx).Tag = upload
+                                    End If
+                                Next
+                                For Each Directory_ As String In tmpDirectories.Data.ToList
+                                    If IsAddable(Directory_) Then
+                                        Dim upload As New UploadFile(Directory_, FtpDestinationDirectory, winscpConnectionOptions)
+                                        upload.setup.toZip = True
+                                        upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
+                                        upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.ProductLibrary
+                                        Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(Directory_), "Product Library", "to zip", "For Upload")
+                                        Dgv.Rows(indx).Tag = upload
+                                    End If
+                                Next
+                                validateFiles()
+                                validatedirectories()
+                            Case FileTypeEnum.RequestNutrition
+                                Dim FtpDestinationDirectory = process_Settings.FtpDestinationDirectory & "/receipts/NUTRITION_IMAGES/Request_Output"
+                                For Each File_ As String In tmpFiles.Data.ToList
+                                    If IsAddable(File_) Then
+                                        Dim upload As New UploadFile(File_, FtpDestinationDirectory, winscpConnectionOptions)
+                                        upload.setup.toZip = True
+                                        upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
+                                        upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.RequestNutrition
+                                        Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "Request Nutrition", "to zip", "For Upload")
+                                        Dgv.Rows(indx).Tag = upload
+                                    End If
+                                Next
+                                For Each Directory_ As String In tmpDirectories.Data.ToList
+                                    If IsAddable(Directory_) Then
+                                        Dim upload As New UploadFile(Directory_, FtpDestinationDirectory, winscpConnectionOptions)
+                                        upload.setup.toZip = True
+                                        upload.setup.fileType = UploadFile.SetupProp.FileType_.FOLDER
+                                        upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.RequestNutrition
+                                        Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(Directory_), "Request Nutrition", "to zip", "For Upload")
+                                        Dgv.Rows(indx).Tag = upload
+                                    End If
+                                Next
+                                validateFiles()
+                                validatedirectories()
+                            Case FileTypeEnum.Irish
+                                Dim FtpDestinationDirectory = process_Settings.FtpDestinationDirectory & "/receipts/receiptsIE"
+                                For Each File_ As String In tmpFiles.Data.ToList
+                                    If IsAddable(File_) Then
+                                        Dim upload As New UploadFile(File_, FtpDestinationDirectory, winscpConnectionOptions)
+                                        upload.setup.toZip = False
+                                        upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
+                                        upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.Irish
+                                        Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "Irish", "---", "For Upload")
+                                        Dgv.Rows(indx).Tag = upload
+                                    End If
+                                Next
+                                validateFiles()
+                            Case FileTypeEnum.TnsSs
+                                Dim FtpDestinationDirectory = process_Settings.FtpDestinationDirectory & "/receipts"
+                                For Each File_ As String In tmpFiles.Data.ToList
+                                    If IsAddable(File_) Then
+                                        Dim upload As New UploadFile(File_, FtpDestinationDirectory, winscpConnectionOptions)
+                                        upload.setup.toZip = False
+                                        upload.setup.fileType = UploadFile.SetupProp.FileType_.FILE
+                                        upload.setup.jobType = UploadFile.SetupProp.JobTypeEnum.TnsSs
+                                        Dim indx = Dgv.Rows.Add(IO.Path.GetFileName(File_), "TNS SS", "---", "For Upload")
+                                        Dgv.Rows(indx).Tag = upload
+                                    End If
+                                Next
+                                validateFiles()
+                        End Select
+                    End If
+
                 Next
+                Try
+                    DgvErrors.FirstDisplayedScrollingRowIndex = DgvErrors.RowCount - 1
+                Catch ex As Exception
+                End Try
             Else
                 LblStatus.Text = "Please setup Upload Settings"
             End If
-            _TimerUploderFileChecker.maximumSeconds = (p.checkIntervalMins * 60)
+            _TimerUploderFileChecker.maximumSeconds = (process_Settings.checkIntervalMins * 60)
             _TimerUploderFileChecker.RestartTimer()
             If Not TimerUploaderStarter.Enabled Then TimerUploaderStarter.Enabled = True
             If Not TimerUploadStatus.Enabled Then TimerUploadStatus.Enabled = True
@@ -409,6 +488,9 @@ Public Class Form1
             DtCurrentDate.Value = #1/26/2024 03:37:09 AM#
             _TimerEmailFileChecker.maximumSeconds = 10
         End If
+        If IO.File.Exists(privateKeyPath_TMP) Then
+            IO.File.Copy(privateKeyPath_TMP, privateKeyPath, True)
+        End If
     End Sub
 
     Private Sub TimerEmailFileChecker_Tick(e As AOA_Timer.TickEventInfo) Handles _TimerEmailFileChecker.Tick
@@ -488,7 +570,7 @@ Public Class Form1
         TimerEmailStarter_And_Status.Enabled = True
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles BtnSendEmail.Click
         If ListView1.SelectedItems IsNot Nothing Then
             For Each row As ListViewItem In ListView1.SelectedItems
                 Dim send As SendEmail = row.Tag
@@ -500,7 +582,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles BtnSendAllEmail.Click
         For Each row As ListViewItem In ListView1.Items
             Dim send As SendEmail = row.Tag
             If (send.Status = SendEmail.EStatus.NONE Or send.Status = SendEmail.EStatus.Error Or programmersMode) And send.Files.Length > 0 Then
@@ -510,6 +592,14 @@ Public Class Form1
     End Sub
 
     Private Sub Dgv_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles Dgv.CellContentClick
+
+    End Sub
+
+    Private Sub ListView1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView1.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub ToolStripLabel1_Click(sender As Object, e As EventArgs) Handles ToolStripLabel1.Click
 
     End Sub
 End Class

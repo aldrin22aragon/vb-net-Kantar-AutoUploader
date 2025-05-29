@@ -79,14 +79,11 @@ Public Class FtpSettings
             MessageBox.Show("Successfully Connected", "FTP Test", MessageBoxButtons.OK, MessageBoxIcon.Information)
             session.Dispose()
             session = Nothing
-            BtnTestConnect.Text = "Test Connection"
-            BtnTestConnect.Enabled = True
         Catch ex As Exception
             MessageBox.Show("Error Connecting to FTP Protocol!" & vbNewLine & ex.Message, "Oops", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            BtnTestConnect.Text = "Test Connection"
-            BtnTestConnect.Enabled = True
-            Exit Sub
         End Try
+        BtnTestConnect.Text = "Test Connection"
+        BtnTestConnect.Enabled = True
     End Sub
 
 

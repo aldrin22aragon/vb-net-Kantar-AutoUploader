@@ -6,6 +6,7 @@ Module Gloabals
     ReadOnly fscProcessSettingsFilePath As String = IO.Path.Combine(settingFolder, "process-settings.drihnz")
     ReadOnly fscEmailSettingsFilePath As String = IO.Path.Combine(settingFolder, "email-settings.drihnz")
     Public ReadOnly privateKeyPath As String = IO.Path.Combine(settingFolder, "key-file.ppk")
+    Public ReadOnly privateKeyPath_TMP As String = IO.Path.Combine(settingFolder, "tmp_key-file.ppk")
     '
     Public fscSessionOptions As New FileSettingsCreator2(Of SessionOptions)(fscSessionOptionsFilePath, New SessionOptions)
     Public fscProcessSettings As New FileSettingsCreator2(Of ProcessSettings)(fscProcessSettingsFilePath, New ProcessSettings)

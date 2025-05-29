@@ -38,8 +38,8 @@ Partial Class FtpSettings
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.TxKeyFile = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         CType(Me.TxtPort, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -58,7 +58,7 @@ Partial Class FtpSettings
         '
         Me.BtnSave.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnSave.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnSave.Location = New System.Drawing.Point(254, 270)
+        Me.BtnSave.Location = New System.Drawing.Point(254, 237)
         Me.BtnSave.Name = "BtnSave"
         Me.BtnSave.Size = New System.Drawing.Size(65, 25)
         Me.BtnSave.TabIndex = 1
@@ -70,7 +70,7 @@ Partial Class FtpSettings
         Me.BtnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.BtnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.BtnCancel.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnCancel.Location = New System.Drawing.Point(325, 270)
+        Me.BtnCancel.Location = New System.Drawing.Point(325, 237)
         Me.BtnCancel.Name = "BtnCancel"
         Me.BtnCancel.Size = New System.Drawing.Size(65, 25)
         Me.BtnCancel.TabIndex = 0
@@ -81,7 +81,7 @@ Partial Class FtpSettings
         '
         Me.BtnTestConnect.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.BtnTestConnect.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtnTestConnect.Location = New System.Drawing.Point(12, 270)
+        Me.BtnTestConnect.Location = New System.Drawing.Point(12, 237)
         Me.BtnTestConnect.Name = "BtnTestConnect"
         Me.BtnTestConnect.Size = New System.Drawing.Size(101, 25)
         Me.BtnTestConnect.TabIndex = 2
@@ -213,17 +213,6 @@ Partial Class FtpSettings
         Me.Label1.TabIndex = 104
         Me.Label1.Text = "Port"
         '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.ForeColor = System.Drawing.Color.Blue
-        Me.Label3.Location = New System.Drawing.Point(33, 189)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(47, 13)
-        Me.Label3.TabIndex = 106
-        Me.Label3.Text = "Key File"
-        '
         'TxKeyFile
         '
         Me.TxKeyFile.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -235,11 +224,22 @@ Partial Class FtpSettings
         Me.TxKeyFile.Size = New System.Drawing.Size(304, 22)
         Me.TxKeyFile.TabIndex = 105
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.Blue
+        Me.Label3.Location = New System.Drawing.Point(33, 189)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(47, 13)
+        Me.Label3.TabIndex = 106
+        Me.Label3.Text = "Key File"
+        '
         'FtpSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(405, 307)
+        Me.ClientSize = New System.Drawing.Size(405, 274)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.TxKeyFile)
         Me.Controls.Add(Me.Label1)
@@ -285,6 +285,6 @@ Partial Class FtpSettings
     Friend WithEvents Label2 As Label
     Friend WithEvents Label11 As Label
     Friend WithEvents Label1 As Label
-    Friend WithEvents Label3 As Label
     Friend WithEvents TxKeyFile As TextBox
+    Friend WithEvents Label3 As Label
 End Class
