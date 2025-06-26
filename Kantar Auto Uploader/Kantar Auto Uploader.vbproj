@@ -135,6 +135,12 @@
     <Compile Include="forms\Form Process Settings.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="forms\Info.Designer.vb">
+      <DependentUpon>Info.vb</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Info.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="forms\MyFolderBrowser.Designer.vb">
       <DependentUpon>MyFolderBrowser.vb</DependentUpon>
     </Compile>
@@ -198,6 +204,9 @@
     <EmbeddedResource Include="forms\Form Process Settings.resx">
       <DependentUpon>Form Process Settings.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\Info.resx">
+      <DependentUpon>Info.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\MyFolderBrowser.resx">
       <DependentUpon>MyFolderBrowser.vb</DependentUpon>
     </EmbeddedResource>
@@ -222,6 +231,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="reminders.txt" />
     <Content Include="upload %281%29.ico" />
     <Content Include="upload.ico" />
   </ItemGroup>

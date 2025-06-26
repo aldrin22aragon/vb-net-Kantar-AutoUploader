@@ -40,6 +40,7 @@ Partial Class FtpSettings
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TxKeyFile = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         CType(Me.TxtPort, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -48,7 +49,7 @@ Partial Class FtpSettings
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Blue
-        Me.Label5.Location = New System.Drawing.Point(27, 161)
+        Me.Label5.Location = New System.Drawing.Point(27, 179)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(53, 13)
         Me.Label5.TabIndex = 103
@@ -93,7 +94,7 @@ Partial Class FtpSettings
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Blue
-        Me.Label4.Location = New System.Drawing.Point(30, 133)
+        Me.Label4.Location = New System.Drawing.Point(30, 151)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(50, 13)
         Me.Label4.TabIndex = 99
@@ -107,7 +108,7 @@ Partial Class FtpSettings
         Me.CmbConnectionType.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CmbConnectionType.FormattingEnabled = True
         Me.CmbConnectionType.Items.AddRange(New Object() {"FTP", "SFTP"})
-        Me.CmbConnectionType.Location = New System.Drawing.Point(86, 132)
+        Me.CmbConnectionType.Location = New System.Drawing.Point(86, 150)
         Me.CmbConnectionType.Name = "CmbConnectionType"
         Me.CmbConnectionType.Size = New System.Drawing.Size(304, 21)
         Me.CmbConnectionType.TabIndex = 98
@@ -117,7 +118,7 @@ Partial Class FtpSettings
         Me.TxtHostkey.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TxtHostkey.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TxtHostkey.Location = New System.Drawing.Point(86, 159)
+        Me.TxtHostkey.Location = New System.Drawing.Point(86, 177)
         Me.TxtHostkey.Name = "TxtHostkey"
         Me.TxtHostkey.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
         Me.TxtHostkey.Size = New System.Drawing.Size(304, 22)
@@ -130,7 +131,7 @@ Partial Class FtpSettings
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TxtPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TxtPort.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TxtPort.Location = New System.Drawing.Point(86, 102)
+        Me.TxtPort.Location = New System.Drawing.Point(86, 120)
         Me.TxtPort.Maximum = New Decimal(New Integer() {32500, 0, 0, 0})
         Me.TxtPort.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.TxtPort.Name = "TxtPort"
@@ -143,7 +144,7 @@ Partial Class FtpSettings
         Me.TxtPassword.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TxtPassword.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TxtPassword.Location = New System.Drawing.Point(86, 74)
+        Me.TxtPassword.Location = New System.Drawing.Point(86, 92)
         Me.TxtPassword.Name = "TxtPassword"
         Me.TxtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(9679)
         Me.TxtPassword.Size = New System.Drawing.Size(304, 22)
@@ -154,7 +155,7 @@ Partial Class FtpSettings
         Me.TxtUsername.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TxtUsername.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TxtUsername.Location = New System.Drawing.Point(86, 46)
+        Me.TxtUsername.Location = New System.Drawing.Point(86, 64)
         Me.TxtUsername.Name = "TxtUsername"
         Me.TxtUsername.Size = New System.Drawing.Size(304, 22)
         Me.TxtUsername.TabIndex = 93
@@ -164,7 +165,7 @@ Partial Class FtpSettings
         Me.TxtHost.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TxtHost.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TxtHost.Location = New System.Drawing.Point(86, 18)
+        Me.TxtHost.Location = New System.Drawing.Point(86, 36)
         Me.TxtHost.Name = "TxtHost"
         Me.TxtHost.Size = New System.Drawing.Size(304, 22)
         Me.TxtHost.TabIndex = 92
@@ -174,7 +175,7 @@ Partial Class FtpSettings
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.ForeColor = System.Drawing.Color.Blue
-        Me.Label10.Location = New System.Drawing.Point(25, 77)
+        Me.Label10.Location = New System.Drawing.Point(25, 95)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(55, 13)
         Me.Label10.TabIndex = 89
@@ -185,7 +186,7 @@ Partial Class FtpSettings
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Blue
-        Me.Label2.Location = New System.Drawing.Point(49, 21)
+        Me.Label2.Location = New System.Drawing.Point(49, 39)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(31, 13)
         Me.Label2.TabIndex = 87
@@ -196,7 +197,7 @@ Partial Class FtpSettings
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.ForeColor = System.Drawing.Color.Blue
-        Me.Label11.Location = New System.Drawing.Point(22, 49)
+        Me.Label11.Location = New System.Drawing.Point(22, 67)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(58, 13)
         Me.Label11.TabIndex = 90
@@ -207,7 +208,7 @@ Partial Class FtpSettings
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Blue
-        Me.Label1.Location = New System.Drawing.Point(52, 105)
+        Me.Label1.Location = New System.Drawing.Point(52, 123)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(28, 13)
         Me.Label1.TabIndex = 104
@@ -218,7 +219,7 @@ Partial Class FtpSettings
         Me.TxKeyFile.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TxKeyFile.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TxKeyFile.Location = New System.Drawing.Point(86, 187)
+        Me.TxKeyFile.Location = New System.Drawing.Point(86, 205)
         Me.TxKeyFile.Name = "TxKeyFile"
         Me.TxKeyFile.ReadOnly = True
         Me.TxKeyFile.Size = New System.Drawing.Size(304, 22)
@@ -229,17 +230,28 @@ Partial Class FtpSettings
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Segoe UI Semibold", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Blue
-        Me.Label3.Location = New System.Drawing.Point(33, 189)
+        Me.Label3.Location = New System.Drawing.Point(33, 207)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(47, 13)
         Me.Label3.TabIndex = 106
         Me.Label3.Text = "Key File"
+        '
+        'Button1
+        '
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button1.Location = New System.Drawing.Point(357, 0)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(33, 23)
+        Me.Button1.TabIndex = 107
+        Me.Button1.Text = "?"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'FtpSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(405, 274)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.TxKeyFile)
         Me.Controls.Add(Me.Label1)
@@ -287,4 +299,5 @@ Partial Class FtpSettings
     Friend WithEvents Label1 As Label
     Friend WithEvents TxKeyFile As TextBox
     Friend WithEvents Label3 As Label
+    Friend WithEvents Button1 As Button
 End Class
